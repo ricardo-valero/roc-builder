@@ -33,20 +33,22 @@ roc test package/main.roc
 ## Html in 10 lines
 
 ```roc
-import html.Html exposing [render, body, h1, p, a, text]
-import html.Html/Attribute exposing [href]
+import html.Html
+import html.Attribute
 
 page = Html.html([], [
-    body([], [
-        h1([], [text("Roc")]),
-        p([], [
-            text("My favourite language is "),
-            a([href("https://roc-lang.org/")], [text("Roc")]),
+    Html.body([], [
+        Html.h1([], [Html.text("Roc")]),
+        Html.p([], [
+            Html.text("My favourite language is "),
+            Html.a([Attribute.href("https://roc-lang.org/")], [Html.text("Roc")]),
         ]),
     ]),
 ])
-# render(page) == "<!DOCTYPE html><html>...</html>", text always escaped
+# Html.render(page) == "<!DOCTYPE html><html>...</html>", text always escaped
 ```
+
+See `examples/hello.roc` for the runnable version.
 
 Void elements (`br`, `img`, ...) take no children — by type, not by runtime
 check. Boolean attributes render bare (`disabled`, never `disabled=""`).
@@ -60,6 +62,26 @@ The `Html` module keeps the same Elm-style surface (`div([attrs], [children])`,
 - void elements take a single `attrs` argument (no empty children list)
 - boolean attributes use flag constructors: `disabled` instead of `disabled("")`
 - `attribute("name")("value")` becomes `Attribute.custom("name", "value")`
+- Roc keywords force a few renames: `Attribute.for_`, `Attribute.type_`,
+  and the `<var>` element is `Html.var_`
+
+## Sql (experimental)
+
+```roc
+books = Sql.table("books", |c| { id: c("id"), genre: c("genre") })
+
+out = Sql.from(books.name)
+    .where_(books.cols.genre.eq(Expr.text("scifi")))   # literals become params
+    .select([books.cols.genre, Expr.count_all.as_("n")])
+    .render(Postgres)
+# out.sql    == "SELECT books.genre, COUNT(*) AS n FROM books WHERE books.genre = $1"
+# out.params == [Text("scifi")]
+```
+
+Clause order is enforced at compile time (a phantom stage parameter):
+`having` before `group_by`, or `where_` after `select`, is a type error.
+A misspelled column on a schema record is a compile error too. Not exported
+yet — the module is exercised by `roc test package/main.roc` only.
 
 ## Provenance
 
