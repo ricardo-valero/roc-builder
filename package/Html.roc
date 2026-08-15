@@ -187,15 +187,15 @@ Html := [
             CustomEl(tag_name, attrs, kids) => El(tag_name, attrs, kids)
         }
 
-    ## Render to a complete document, prefixed with `<!DOCTYPE html>`.
+    ## Render just the node — for fragments.
     render : Html -> Str
     render = |node|
-        node.render_help(SafeStr.with_capacity(15 + node.size_hint()).push_raw("<!DOCTYPE html>")).to_str()
-
-    ## Render just the node, no doctype — for fragments.
-    render_without_doc_type : Html -> Str
-    render_without_doc_type = |node|
         node.render_help(SafeStr.with_capacity(node.size_hint())).to_str()
+
+    ## Render a complete document, prefixed with `<!DOCTYPE html>`.
+    render_doc : Html -> Str
+    render_doc = |node|
+        node.render_help(SafeStr.with_capacity(15 + node.size_hint()).push_raw("<!DOCTYPE html>")).to_str()
 
     # -- rendering internals --------------------------------------------------
 
@@ -276,52 +276,52 @@ Html := [
 expect {
     doc : Html
     doc = Html([], [Body([], [P([Custom("example", "test")], [Text("Hello, World!")])])])
-    doc.render() == "<!DOCTYPE html><html><body><p example=\"test\">Hello, World!</p></body></html>"
+    doc.render_doc() == "<!DOCTYPE html><html><body><p example=\"test\">Hello, World!</p></body></html>"
 }
 
 # Boolean attributes render bare — never `=""`.
 expect {
     doc : Html
     doc = Html([], [Body([], [P([Disabled], [Text("Hello, World!")])])])
-    doc.render() == "<!DOCTYPE html><html><body><p disabled>Hello, World!</p></body></html>"
+    doc.render_doc() == "<!DOCTYPE html><html><body><p disabled>Hello, World!</p></body></html>"
 }
 
 # Text nodes are escaped.
 expect {
     doc : Html
     doc = Html([], [Body([], [P([], [Text("<script>alert('hi')</script>")])])])
-    doc.render() == "<!DOCTYPE html><html><body><p>&lt;script&gt;alert(&#39;hi&#39;)&lt;/script&gt;</p></body></html>"
+    doc.render_doc() == "<!DOCTYPE html><html><body><p>&lt;script&gt;alert(&#39;hi&#39;)&lt;/script&gt;</p></body></html>"
 }
 
 # A bare text node, no doctype.
-expect Html.render_without_doc_type(Text("<script>alert('hi')</script>")) == "&lt;script&gt;alert(&#39;hi&#39;)&lt;/script&gt;"
+expect Html.render(Text("<script>alert('hi')</script>")) == "&lt;script&gt;alert(&#39;hi&#39;)&lt;/script&gt;"
 
 # Deliberate raw HTML passes through unescaped.
-expect Html.render_without_doc_type(DangerousRaw("<script>alert('This JavaScript will run')</script>")) == "<script>alert('This JavaScript will run')</script>"
+expect Html.render(DangerousRaw("<script>alert('This JavaScript will run')</script>")) == "<script>alert('This JavaScript will run')</script>"
 
 # Attribute values are escaped for the double-quoted context.
 expect {
     doc : Html
     doc = A([Href("https://example.com/?q=\"x\"&y=1")], [Text("link")])
-    doc.render_without_doc_type() == "<a href=\"https://example.com/?q=&quot;x&quot;&amp;y=1\">link</a>"
+    doc.render() == "<a href=\"https://example.com/?q=&quot;x&quot;&amp;y=1\">link</a>"
 }
 
 # Void elements: attrs only, no closing tag — children are unrepresentable.
-expect Html.render_without_doc_type(Br([])) == "<br>"
-expect Html.render_without_doc_type(Img([Src("cat.png"), Alt("A cat")])) == "<img src=\"cat.png\" alt=\"A cat\">"
+expect Html.render(Br([])) == "<br>"
+expect Html.render(Img([Src("cat.png"), Alt("A cat")])) == "<img src=\"cat.png\" alt=\"A cat\">"
 
 # Custom elements render like any non-void element.
-expect Html.render_without_doc_type(CustomEl("my-widget", [Id("w")], [Text("hi")])) == "<my-widget id=\"w\">hi</my-widget>"
+expect Html.render(CustomEl("my-widget", [Id("w")], [Text("hi")])) == "<my-widget id=\"w\">hi</my-widget>"
 
 # data-* / aria-* escape hatches.
-expect Html.render_without_doc_type(Div([Data("count", "3"), Aria("label", "Close")], [])) == "<div data-count=\"3\" aria-label=\"Close\"></div>"
+expect Html.render(Div([Data("count", "3"), Aria("label", "Close")], [])) == "<div data-count=\"3\" aria-label=\"Close\"></div>"
 
 # Empty non-void elements keep an explicit closing tag.
-expect Html.render_without_doc_type(Div([], [])) == "<div></div>"
+expect Html.render(Div([], [])) == "<div></div>"
 
 # Elements whose names are Roc keywords are fine as variants: Var, Form, For...
-expect Html.render_without_doc_type(Var([], [Text("x")])) == "<var>x</var>"
-expect Html.render_without_doc_type(Label([For("id1")], [Text("x")])) == "<label for=\"id1\">x</label>"
+expect Html.render(Var([], [Text("x")])) == "<var>x</var>"
+expect Html.render(Label([For("id1")], [Text("x")])) == "<label for=\"id1\">x</label>"
 
 # Same name as element and attribute disambiguates by position: Cite/Cite.
-expect Html.render_without_doc_type(Blockquote([Cite("src")], [Cite([], [Text("q")])])) == "<blockquote cite=\"src\"><cite>q</cite></blockquote>"
+expect Html.render(Blockquote([Cite("src")], [Cite([], [Text("q")])])) == "<blockquote cite=\"src\"><cite>q</cite></blockquote>"

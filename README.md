@@ -48,7 +48,8 @@ page = Html([], [
         ]),
     ]),
 ])
-# Html.render(page) == "<!DOCTYPE html><html>...</html>", text always escaped
+# Html.render_doc(page) == "<!DOCTYPE html><html>...</html>", text always escaped
+# Html.render(page) renders the fragment without the doctype
 ```
 
 Void elements (`Br`, `Img`, ...) have no children slot, so a void element
@@ -68,6 +69,8 @@ mechanical case changes:
 - void elements take a single attrs argument (no empty children list)
 - `attribute("name")("value")` becomes `Custom("name", "value")`
 - `Html.dangerously_include_unescaped_html` becomes `DangerousRaw`
+- `render` now renders fragments (was `render_without_doc_type`); the
+  doctype-prefixed document render is `render_doc`
 - keyword clashes disappear: `Var`, `For(...)`, `Type(...)` are ordinary
   variants (uppercase never collides with Roc keywords)
 

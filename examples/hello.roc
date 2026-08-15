@@ -29,5 +29,5 @@ main! = |_args| {
             ),
         ],
     )
-    Stdout.line!(Html.render(page))
+    Stdout.line!(Html.render_doc(page))
 }
