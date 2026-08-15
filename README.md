@@ -100,22 +100,28 @@ annotations (`List([Class(Str), ..])`); the `<object>` `data` attribute is
 
 ## Sql (experimental)
 
+Queries are scoped data — each clause's continuation union offers only the
+clauses SQL allows next, so an out-of-order or repeated clause is
+unrepresentable, and every complete query provably contains exactly one
+SELECT:
+
 ```roc
 books = Sql.table("books", |c| { id: c("id"), genre: c("genre") })
 
-out = Sql.from(books.name)
-    .where_(books.cols.genre.eq(Expr.text("scifi")))   # literals become params
-    .select([books.cols.genre, Expr.count_all.as_("n")])
-    .render(Postgres)
-# out.sql    == "SELECT books.genre, COUNT(*) AS n FROM books WHERE books.genre = $1"
-# out.params == [Text("scifi")]
+q : Sql.Sql
+q = From(books.name,
+        Where(Expr.of(books.cols.genre).eq(Expr.text("scifi")),
+            Select([books.cols.genre, Expr.count_all.as_("n").raw()], Done)))
+# q.render(Postgres) == { sql: "SELECT books.genre, COUNT(*) AS n FROM books WHERE books.genre = $1",
+#                         params: [Text("scifi")] }
 ```
 
-Clause order is enforced at compile time (a phantom stage parameter):
-`having` before `group_by`, or `where_` after `select`, is a type error.
-A misspelled column on a schema record is a compile error too. Not exported
-yet — the module is exercised by `roc test package/main.roc` only.
-
+Conditions are kind-typed: `Where(Expr.i64(5), ...)` and
+`Expr.text("x").eq(Expr.i64(1))` are type errors. Literals only ever render
+as placeholders — `Frag`'s `push`/`bind` are the sole ways into the SQL
+string, so injection is unrepresentable too. SELECT/GROUP BY lists are
+heterogeneous: schema columns drop in raw; computed expressions end with
+`.raw()`. Still not exported; exercised by `roc test package/main.roc`.
 ## Provenance
 
 Grew out of two experiments: the `wip-element-api` branch of a roc-html fork
