@@ -488,92 +488,27 @@ Html := [
     push_global_attr = |out, attr|
         match attr {
             Accesskey(v) => out.attr("accesskey", v)
-            Autocapitalize(v) => {
-                word = match v {
-                    Off => "off"
-                    On => "on"
-                    None => "none"
-                    Sentences => "sentences"
-                    Words => "words"
-                    Characters => "characters"
-                }
-                out.attr_trusted("autocapitalize", word)
-            }
+            Autocapitalize(v) => out.attr_trusted("autocapitalize", Html.autocapitalize_word(v))
             Autofocus => out.flag("autofocus")
             Class(v) => out.attr("class", v)
-            Contenteditable(v) => {
-                word = match v {
-                    True => "true"
-                    False => "false"
-                    PlaintextOnly => "plaintext-only"
-                }
-                out.attr_trusted("contenteditable", word)
-            }
-            Dir(v) => {
-                word = match v {
-                    Ltr => "ltr"
-                    Rtl => "rtl"
-                    Auto => "auto"
-                }
-                out.attr_trusted("dir", word)
-            }
-            Draggable(v) => {
-                word = match v {
-                    True => "true"
-                    False => "false"
-                }
-                out.attr_trusted("draggable", word)
-            }
-            Enterkeyhint(v) => {
-                word = match v {
-                    Enter => "enter"
-                    Done => "done"
-                    Go => "go"
-                    Next => "next"
-                    Previous => "previous"
-                    Search => "search"
-                    Send => "send"
-                }
-                out.attr_trusted("enterkeyhint", word)
-            }
+            Contenteditable(v) => out.attr_trusted("contenteditable", Html.contenteditable_word(v))
+            Dir(v) => out.attr_trusted("dir", Html.dir_word(v))
+            Draggable(v) => out.attr_trusted("draggable", Html.draggable_word(v))
+            Enterkeyhint(v) => out.attr_trusted("enterkeyhint", Html.enterkeyhint_word(v))
             Hidden => out.flag("hidden")
             Id(v) => out.attr("id", v)
             Inert => out.flag("inert")
-            Inputmode(v) => {
-                word = match v {
-                    None => "none"
-                    Text => "text"
-                    Decimal => "decimal"
-                    Numeric => "numeric"
-                    Tel => "tel"
-                    Search => "search"
-                    Email => "email"
-                    Url => "url"
-                }
-                out.attr_trusted("inputmode", word)
-            }
+            Inputmode(v) => out.attr_trusted("inputmode", Html.inputmode_word(v))
             Itemprop(v) => out.attr("itemprop", v)
             Itemscope => out.flag("itemscope")
             Lang(v) => out.attr("lang", v)
             Role(v) => out.attr("role", v)
             Slot(v) => out.attr("slot", v)
-            Spellcheck(v) => {
-                word = match v {
-                    True => "true"
-                    False => "false"
-                }
-                out.attr_trusted("spellcheck", word)
-            }
+            Spellcheck(v) => out.attr_trusted("spellcheck", Html.spellcheck_word(v))
             Style(v) => out.attr("style", v)
             Tabindex(v) => out.attr_trusted("tabindex", v.to_str())
             Title(v) => out.attr("title", v)
-            Translate(v) => {
-                word = match v {
-                    Yes => "yes"
-                    No => "no"
-                }
-                out.attr_trusted("translate", word)
-            }
+            Translate(v) => out.attr_trusted("translate", Html.translate_word(v))
             Custom(k, v) => out.attr(k, v)
             Data(k, v) => out.attr("data-${k}", v)
             Aria(k, v) => out.attr("aria-${k}", v)
@@ -592,6 +527,182 @@ Html := [
         out
     }
 
+    # Enumerated attribute vocabularies — each defined exactly once.
+    # (Enctype/Formenctype and Method/Formmethod share theirs.)
+
+    autocapitalize_word : [Off, On, None, Sentences, Words, Characters] -> Str
+    autocapitalize_word = |v|
+        match v {
+            Off => "off"
+            On => "on"
+            None => "none"
+            Sentences => "sentences"
+            Words => "words"
+            Characters => "characters"
+        }
+
+    capture_word : [User, Environment] -> Str
+    capture_word = |v|
+        match v {
+            User => "user"
+            Environment => "environment"
+        }
+
+    contenteditable_word : [True, False, PlaintextOnly] -> Str
+    contenteditable_word = |v|
+        match v {
+            True => "true"
+            False => "false"
+            PlaintextOnly => "plaintext-only"
+        }
+
+    crossorigin_word : [Anonymous, UseCredentials] -> Str
+    crossorigin_word = |v|
+        match v {
+            Anonymous => "anonymous"
+            UseCredentials => "use-credentials"
+        }
+
+    decoding_word : [Sync, Async, Auto] -> Str
+    decoding_word = |v|
+        match v {
+            Sync => "sync"
+            Async => "async"
+            Auto => "auto"
+        }
+
+    dir_word : [Ltr, Rtl, Auto] -> Str
+    dir_word = |v|
+        match v {
+            Ltr => "ltr"
+            Rtl => "rtl"
+            Auto => "auto"
+        }
+
+    draggable_word : [True, False] -> Str
+    draggable_word = |v|
+        match v {
+            True => "true"
+            False => "false"
+        }
+
+    enctype_word : [FormUrlEncoded, MultipartFormData, TextPlain] -> Str
+    enctype_word = |v|
+        match v {
+            FormUrlEncoded => "application/x-www-form-urlencoded"
+            MultipartFormData => "multipart/form-data"
+            TextPlain => "text/plain"
+        }
+
+    enterkeyhint_word : [Enter, Done, Go, Next, Previous, Search, Send] -> Str
+    enterkeyhint_word = |v|
+        match v {
+            Enter => "enter"
+            Done => "done"
+            Go => "go"
+            Next => "next"
+            Previous => "previous"
+            Search => "search"
+            Send => "send"
+        }
+
+    inputmode_word : [None, Text, Decimal, Numeric, Tel, Search, Email, Url] -> Str
+    inputmode_word = |v|
+        match v {
+            None => "none"
+            Text => "text"
+            Decimal => "decimal"
+            Numeric => "numeric"
+            Tel => "tel"
+            Search => "search"
+            Email => "email"
+            Url => "url"
+        }
+
+    kind_word : [Subtitles, Captions, Descriptions, Chapters, Metadata] -> Str
+    kind_word = |v|
+        match v {
+            Subtitles => "subtitles"
+            Captions => "captions"
+            Descriptions => "descriptions"
+            Chapters => "chapters"
+            Metadata => "metadata"
+        }
+
+    loading_word : [Lazy, Eager] -> Str
+    loading_word = |v|
+        match v {
+            Lazy => "lazy"
+            Eager => "eager"
+        }
+
+    method_word : [Get, Post, Dialog] -> Str
+    method_word = |v|
+        match v {
+            Get => "get"
+            Post => "post"
+            Dialog => "dialog"
+        }
+
+    preload_word : [None, Metadata, Auto] -> Str
+    preload_word = |v|
+        match v {
+            None => "none"
+            Metadata => "metadata"
+            Auto => "auto"
+        }
+
+    referrerpolicy_word : [NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl] -> Str
+    referrerpolicy_word = |v|
+        match v {
+            NoReferrer => "no-referrer"
+            NoReferrerWhenDowngrade => "no-referrer-when-downgrade"
+            Origin => "origin"
+            OriginWhenCrossOrigin => "origin-when-cross-origin"
+            SameOrigin => "same-origin"
+            StrictOrigin => "strict-origin"
+            StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
+            UnsafeUrl => "unsafe-url"
+        }
+
+    scope_word : [Row, Col, Rowgroup, Colgroup] -> Str
+    scope_word = |v|
+        match v {
+            Row => "row"
+            Col => "col"
+            Rowgroup => "rowgroup"
+            Colgroup => "colgroup"
+        }
+
+    shape_word : [Rect, Circle, Poly, Default] -> Str
+    shape_word = |v|
+        match v {
+            Rect => "rect"
+            Circle => "circle"
+            Poly => "poly"
+            Default => "default"
+        }
+
+    spellcheck_word : [True, False] -> Str
+    spellcheck_word = |v|
+        match v {
+            True => "true"
+            False => "false"
+        }
+
+    translate_word : [Yes, No] -> Str
+    translate_word = |v|
+        match v {
+            Yes => "yes"
+            No => "no"
+        }
+
+    wrap_word : [Soft, Hard] -> Str
+    wrap_word = |v|
+        match v {
+            Soft => "soft"
+            Hard => "hard"
+        }
     # Per-element emitters: ONLY that element's specific attrs, then
     # delegation to push_global_attr for everything shared.
 
@@ -632,27 +743,9 @@ Html := [
             out = match attrs.get(i) ?? Hidden {
                 Allow(v) => out.attr("allow", v)
                 Height(v) => out.attr_trusted("height", v.to_str())
-                Loading(v) => {
-                    word = match v {
-                        Lazy => "lazy"
-                        Eager => "eager"
-                    }
-                    out.attr_trusted("loading", word)
-                }
+                Loading(v) => out.attr_trusted("loading", Html.loading_word(v))
                 Name(v) => out.attr("name", v)
-                Referrerpolicy(v) => {
-                    word = match v {
-                        NoReferrer => "no-referrer"
-                        NoReferrerWhenDowngrade => "no-referrer-when-downgrade"
-                        Origin => "origin"
-                        OriginWhenCrossOrigin => "origin-when-cross-origin"
-                        SameOrigin => "same-origin"
-                        StrictOrigin => "strict-origin"
-                        StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
-                        UnsafeUrl => "unsafe-url"
-                    }
-                    out.attr_trusted("referrerpolicy", word)
-                }
+                Referrerpolicy(v) => out.attr_trusted("referrerpolicy", Html.referrerpolicy_word(v))
                 Sandbox(v) => out.attr("sandbox", v)
                 Src(v) => out.attr("src", v)
                 Srcdoc(v) => out.attr("srcdoc", v)
@@ -706,22 +799,8 @@ Html := [
                 Disabled => out.flag("disabled")
                 Form(v) => out.attr("form", v)
                 Formaction(v) => out.attr("formaction", v)
-                Formenctype(v) => {
-                    word = match v {
-                        FormUrlEncoded => "application/x-www-form-urlencoded"
-                        MultipartFormData => "multipart/form-data"
-                        TextPlain => "text/plain"
-                    }
-                    out.attr_trusted("formenctype", word)
-                }
-                Formmethod(v) => {
-                    word = match v {
-                        Get => "get"
-                        Post => "post"
-                        Dialog => "dialog"
-                    }
-                    out.attr_trusted("formmethod", word)
-                }
+                Formenctype(v) => out.attr_trusted("formenctype", Html.enctype_word(v))
+                Formmethod(v) => out.attr_trusted("formmethod", Html.method_word(v))
                 Formnovalidate => out.flag("formnovalidate")
                 Formtarget(v) => out.attr("formtarget", v)
                 Name(v) => out.attr("name", v)
@@ -759,22 +838,8 @@ Html := [
                 AcceptCharset(v) => out.attr("accept-charset", v)
                 Action(v) => out.attr("action", v)
                 Autocomplete(v) => out.attr("autocomplete", v)
-                Enctype(v) => {
-                    word = match v {
-                        FormUrlEncoded => "application/x-www-form-urlencoded"
-                        MultipartFormData => "multipart/form-data"
-                        TextPlain => "text/plain"
-                    }
-                    out.attr_trusted("enctype", word)
-                }
-                Method(v) => {
-                    word = match v {
-                        Get => "get"
-                        Post => "post"
-                        Dialog => "dialog"
-                    }
-                    out.attr_trusted("method", word)
-                }
+                Enctype(v) => out.attr_trusted("enctype", Html.enctype_word(v))
+                Method(v) => out.attr_trusted("method", Html.method_word(v))
                 Name(v) => out.attr("name", v)
                 Novalidate => out.flag("novalidate")
                 Rel(v) => out.attr("rel", v)
@@ -920,13 +985,7 @@ Html := [
                 Readonly => out.flag("readonly")
                 Required => out.flag("required")
                 Rows(v) => out.attr_trusted("rows", v.to_str())
-                Wrap(v) => {
-                    word = match v {
-                        Soft => "soft"
-                        Hard => "hard"
-                    }
-                    out.attr_trusted("wrap", word)
-                }
+                Wrap(v) => out.attr_trusted("wrap", Html.wrap_word(v))
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -942,23 +1001,10 @@ Html := [
             out = match attrs.get(i) ?? Hidden {
                 Autoplay => out.flag("autoplay")
                 Controls => out.flag("controls")
-                Crossorigin(v) => {
-                    word = match v {
-                        Anonymous => "anonymous"
-                        UseCredentials => "use-credentials"
-                    }
-                    out.attr_trusted("crossorigin", word)
-                }
+                Crossorigin(v) => out.attr_trusted("crossorigin", Html.crossorigin_word(v))
                 Loop => out.flag("loop")
                 Muted => out.flag("muted")
-                Preload(v) => {
-                    word = match v {
-                        None => "none"
-                        Metadata => "metadata"
-                        Auto => "auto"
-                    }
-                    out.attr_trusted("preload", word)
-                }
+                Preload(v) => out.attr_trusted("preload", Html.preload_word(v))
                 Src(v) => out.attr("src", v)
                 other => Html.push_global_attr(out, other)
             }
@@ -989,26 +1035,13 @@ Html := [
             out = match attrs.get(i) ?? Hidden {
                 Autoplay => out.flag("autoplay")
                 Controls => out.flag("controls")
-                Crossorigin(v) => {
-                    word = match v {
-                        Anonymous => "anonymous"
-                        UseCredentials => "use-credentials"
-                    }
-                    out.attr_trusted("crossorigin", word)
-                }
+                Crossorigin(v) => out.attr_trusted("crossorigin", Html.crossorigin_word(v))
                 Height(v) => out.attr_trusted("height", v.to_str())
                 Loop => out.flag("loop")
                 Muted => out.flag("muted")
                 Playsinline => out.flag("playsinline")
                 Poster(v) => out.attr("poster", v)
-                Preload(v) => {
-                    word = match v {
-                        None => "none"
-                        Metadata => "metadata"
-                        Auto => "auto"
-                    }
-                    out.attr_trusted("preload", word)
-                }
+                Preload(v) => out.attr_trusted("preload", Html.preload_word(v))
                 Src(v) => out.attr("src", v)
                 Width(v) => out.attr_trusted("width", v.to_str())
                 other => Html.push_global_attr(out, other)
@@ -1028,19 +1061,7 @@ Html := [
                 Href(v) => out.attr("href", v)
                 Hreflang(v) => out.attr("hreflang", v)
                 Ping(v) => out.attr("ping", v)
-                Referrerpolicy(v) => {
-                    word = match v {
-                        NoReferrer => "no-referrer"
-                        NoReferrerWhenDowngrade => "no-referrer-when-downgrade"
-                        Origin => "origin"
-                        OriginWhenCrossOrigin => "origin-when-cross-origin"
-                        SameOrigin => "same-origin"
-                        StrictOrigin => "strict-origin"
-                        StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
-                        UnsafeUrl => "unsafe-url"
-                    }
-                    out.attr_trusted("referrerpolicy", word)
-                }
+                Referrerpolicy(v) => out.attr_trusted("referrerpolicy", Html.referrerpolicy_word(v))
                 Rel(v) => out.attr("rel", v)
                 Target(v) => out.attr("target", v)
                 Type(v) => out.attr("type", v)
@@ -1129,29 +1150,11 @@ Html := [
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
                 Async => out.flag("async")
-                Crossorigin(v) => {
-                    word = match v {
-                        Anonymous => "anonymous"
-                        UseCredentials => "use-credentials"
-                    }
-                    out.attr_trusted("crossorigin", word)
-                }
+                Crossorigin(v) => out.attr_trusted("crossorigin", Html.crossorigin_word(v))
                 Defer => out.flag("defer")
                 Integrity(v) => out.attr("integrity", v)
                 Nomodule => out.flag("nomodule")
-                Referrerpolicy(v) => {
-                    word = match v {
-                        NoReferrer => "no-referrer"
-                        NoReferrerWhenDowngrade => "no-referrer-when-downgrade"
-                        Origin => "origin"
-                        OriginWhenCrossOrigin => "origin-when-cross-origin"
-                        SameOrigin => "same-origin"
-                        StrictOrigin => "strict-origin"
-                        StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
-                        UnsafeUrl => "unsafe-url"
-                    }
-                    out.attr_trusted("referrerpolicy", word)
-                }
+                Referrerpolicy(v) => out.attr_trusted("referrerpolicy", Html.referrerpolicy_word(v))
                 Src(v) => out.attr("src", v)
                 Type(v) => out.attr("type", v)
                 other => Html.push_global_attr(out, other)
@@ -1201,15 +1204,7 @@ Html := [
                 Colspan(v) => out.attr_trusted("colspan", v.to_str())
                 Headers(v) => out.attr("headers", v)
                 Rowspan(v) => out.attr_trusted("rowspan", v.to_str())
-                Scope(v) => {
-                    word = match v {
-                        Row => "row"
-                        Col => "col"
-                        Rowgroup => "rowgroup"
-                        Colgroup => "colgroup"
-                    }
-                    out.attr_trusted("scope", word)
-                }
+                Scope(v) => out.attr_trusted("scope", Html.scope_word(v))
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1244,29 +1239,9 @@ Html := [
                 Download(v) => out.attr("download", v)
                 Href(v) => out.attr("href", v)
                 Ping(v) => out.attr("ping", v)
-                Referrerpolicy(v) => {
-                    word = match v {
-                        NoReferrer => "no-referrer"
-                        NoReferrerWhenDowngrade => "no-referrer-when-downgrade"
-                        Origin => "origin"
-                        OriginWhenCrossOrigin => "origin-when-cross-origin"
-                        SameOrigin => "same-origin"
-                        StrictOrigin => "strict-origin"
-                        StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
-                        UnsafeUrl => "unsafe-url"
-                    }
-                    out.attr_trusted("referrerpolicy", word)
-                }
+                Referrerpolicy(v) => out.attr_trusted("referrerpolicy", Html.referrerpolicy_word(v))
                 Rel(v) => out.attr("rel", v)
-                Shape(v) => {
-                    word = match v {
-                        Rect => "rect"
-                        Circle => "circle"
-                        Poly => "poly"
-                        Default => "default"
-                    }
-                    out.attr_trusted("shape", word)
-                }
+                Shape(v) => out.attr_trusted("shape", Html.shape_word(v))
                 Target(v) => out.attr("target", v)
                 other => Html.push_global_attr(out, other)
             }
@@ -1314,43 +1289,12 @@ Html := [
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
                 Alt(v) => out.attr("alt", v)
-                Crossorigin(v) => {
-                    word = match v {
-                        Anonymous => "anonymous"
-                        UseCredentials => "use-credentials"
-                    }
-                    out.attr_trusted("crossorigin", word)
-                }
-                Decoding(v) => {
-                    word = match v {
-                        Sync => "sync"
-                        Async => "async"
-                        Auto => "auto"
-                    }
-                    out.attr_trusted("decoding", word)
-                }
+                Crossorigin(v) => out.attr_trusted("crossorigin", Html.crossorigin_word(v))
+                Decoding(v) => out.attr_trusted("decoding", Html.decoding_word(v))
                 Height(v) => out.attr_trusted("height", v.to_str())
                 Ismap => out.flag("ismap")
-                Loading(v) => {
-                    word = match v {
-                        Lazy => "lazy"
-                        Eager => "eager"
-                    }
-                    out.attr_trusted("loading", word)
-                }
-                Referrerpolicy(v) => {
-                    word = match v {
-                        NoReferrer => "no-referrer"
-                        NoReferrerWhenDowngrade => "no-referrer-when-downgrade"
-                        Origin => "origin"
-                        OriginWhenCrossOrigin => "origin-when-cross-origin"
-                        SameOrigin => "same-origin"
-                        StrictOrigin => "strict-origin"
-                        StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
-                        UnsafeUrl => "unsafe-url"
-                    }
-                    out.attr_trusted("referrerpolicy", word)
-                }
+                Loading(v) => out.attr_trusted("loading", Html.loading_word(v))
+                Referrerpolicy(v) => out.attr_trusted("referrerpolicy", Html.referrerpolicy_word(v))
                 Sizes(v) => out.attr("sizes", v)
                 Src(v) => out.attr("src", v)
                 Srcset(v) => out.attr("srcset", v)
@@ -1372,34 +1316,14 @@ Html := [
                 Accept(v) => out.attr("accept", v)
                 Alt(v) => out.attr("alt", v)
                 Autocomplete(v) => out.attr("autocomplete", v)
-                Capture(v) => {
-                    word = match v {
-                        User => "user"
-                        Environment => "environment"
-                    }
-                    out.attr_trusted("capture", word)
-                }
+                Capture(v) => out.attr_trusted("capture", Html.capture_word(v))
                 Checked => out.flag("checked")
                 Dirname(v) => out.attr("dirname", v)
                 Disabled => out.flag("disabled")
                 Form(v) => out.attr("form", v)
                 Formaction(v) => out.attr("formaction", v)
-                Formenctype(v) => {
-                    word = match v {
-                        FormUrlEncoded => "application/x-www-form-urlencoded"
-                        MultipartFormData => "multipart/form-data"
-                        TextPlain => "text/plain"
-                    }
-                    out.attr_trusted("formenctype", word)
-                }
-                Formmethod(v) => {
-                    word = match v {
-                        Get => "get"
-                        Post => "post"
-                        Dialog => "dialog"
-                    }
-                    out.attr_trusted("formmethod", word)
-                }
+                Formenctype(v) => out.attr_trusted("formenctype", Html.enctype_word(v))
+                Formmethod(v) => out.attr_trusted("formmethod", Html.method_word(v))
                 Formnovalidate => out.flag("formnovalidate")
                 Formtarget(v) => out.attr("formtarget", v)
                 Height(v) => out.attr_trusted("height", v.to_str())
@@ -1433,31 +1357,13 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Crossorigin(v) => {
-                    word = match v {
-                        Anonymous => "anonymous"
-                        UseCredentials => "use-credentials"
-                    }
-                    out.attr_trusted("crossorigin", word)
-                }
+                Crossorigin(v) => out.attr_trusted("crossorigin", Html.crossorigin_word(v))
                 Disabled => out.flag("disabled")
                 Href(v) => out.attr("href", v)
                 Hreflang(v) => out.attr("hreflang", v)
                 Integrity(v) => out.attr("integrity", v)
                 Media(v) => out.attr("media", v)
-                Referrerpolicy(v) => {
-                    word = match v {
-                        NoReferrer => "no-referrer"
-                        NoReferrerWhenDowngrade => "no-referrer-when-downgrade"
-                        Origin => "origin"
-                        OriginWhenCrossOrigin => "origin-when-cross-origin"
-                        SameOrigin => "same-origin"
-                        StrictOrigin => "strict-origin"
-                        StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
-                        UnsafeUrl => "unsafe-url"
-                    }
-                    out.attr_trusted("referrerpolicy", word)
-                }
+                Referrerpolicy(v) => out.attr_trusted("referrerpolicy", Html.referrerpolicy_word(v))
                 Rel(v) => out.attr("rel", v)
                 Sizes(v) => out.attr("sizes", v)
                 Type(v) => out.attr("type", v)
@@ -1513,16 +1419,7 @@ Html := [
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
                 Default => out.flag("default")
-                Kind(v) => {
-                    word = match v {
-                        Subtitles => "subtitles"
-                        Captions => "captions"
-                        Descriptions => "descriptions"
-                        Chapters => "chapters"
-                        Metadata => "metadata"
-                    }
-                    out.attr_trusted("kind", word)
-                }
+                Kind(v) => out.attr_trusted("kind", Html.kind_word(v))
                 Label(v) => out.attr("label", v)
                 Src(v) => out.attr("src", v)
                 Srclang(v) => out.attr("srclang", v)
@@ -1548,13 +1445,7 @@ Html := [
                 Async => out.flag("async")
                 Autocomplete(v) => out.attr("autocomplete", v)
                 Autoplay => out.flag("autoplay")
-                Capture(v) => {
-                    word = match v {
-                        User => "user"
-                        Environment => "environment"
-                    }
-                    out.attr_trusted("capture", word)
-                }
+                Capture(v) => out.attr_trusted("capture", Html.capture_word(v))
                 Charset(v) => out.attr("charset", v)
                 Checked => out.flag("checked")
                 Cite(v) => out.attr("cite", v)
@@ -1563,54 +1454,20 @@ Html := [
                 Content(v) => out.attr("content", v)
                 Controls => out.flag("controls")
                 Coords(v) => out.attr("coords", v)
-                Crossorigin(v) => {
-                    word = match v {
-                        Anonymous => "anonymous"
-                        UseCredentials => "use-credentials"
-                    }
-                    out.attr_trusted("crossorigin", word)
-                }
+                Crossorigin(v) => out.attr_trusted("crossorigin", Html.crossorigin_word(v))
                 Datetime(v) => out.attr("datetime", v)
-                Decoding(v) => {
-                    word = match v {
-                        Sync => "sync"
-                        Async => "async"
-                        Auto => "auto"
-                    }
-                    out.attr_trusted("decoding", word)
-                }
+                Decoding(v) => out.attr_trusted("decoding", Html.decoding_word(v))
                 Default => out.flag("default")
                 Defer => out.flag("defer")
                 Dirname(v) => out.attr("dirname", v)
                 Disabled => out.flag("disabled")
                 Download(v) => out.attr("download", v)
-                Enctype(v) => {
-                    word = match v {
-                        FormUrlEncoded => "application/x-www-form-urlencoded"
-                        MultipartFormData => "multipart/form-data"
-                        TextPlain => "text/plain"
-                    }
-                    out.attr_trusted("enctype", word)
-                }
+                Enctype(v) => out.attr_trusted("enctype", Html.enctype_word(v))
                 For(v) => out.attr("for", v)
                 Form(v) => out.attr("form", v)
                 Formaction(v) => out.attr("formaction", v)
-                Formenctype(v) => {
-                    word = match v {
-                        FormUrlEncoded => "application/x-www-form-urlencoded"
-                        MultipartFormData => "multipart/form-data"
-                        TextPlain => "text/plain"
-                    }
-                    out.attr_trusted("formenctype", word)
-                }
-                Formmethod(v) => {
-                    word = match v {
-                        Get => "get"
-                        Post => "post"
-                        Dialog => "dialog"
-                    }
-                    out.attr_trusted("formmethod", word)
-                }
+                Formenctype(v) => out.attr_trusted("formenctype", Html.enctype_word(v))
+                Formmethod(v) => out.attr_trusted("formmethod", Html.method_word(v))
                 Formnovalidate => out.flag("formnovalidate")
                 Formtarget(v) => out.attr("formtarget", v)
                 Headers(v) => out.attr("headers", v)
@@ -1621,38 +1478,16 @@ Html := [
                 HttpEquiv(v) => out.attr("http-equiv", v)
                 Integrity(v) => out.attr("integrity", v)
                 Ismap => out.flag("ismap")
-                Kind(v) => {
-                    word = match v {
-                        Subtitles => "subtitles"
-                        Captions => "captions"
-                        Descriptions => "descriptions"
-                        Chapters => "chapters"
-                        Metadata => "metadata"
-                    }
-                    out.attr_trusted("kind", word)
-                }
+                Kind(v) => out.attr_trusted("kind", Html.kind_word(v))
                 Label(v) => out.attr("label", v)
                 List(v) => out.attr("list", v)
-                Loading(v) => {
-                    word = match v {
-                        Lazy => "lazy"
-                        Eager => "eager"
-                    }
-                    out.attr_trusted("loading", word)
-                }
+                Loading(v) => out.attr_trusted("loading", Html.loading_word(v))
                 Loop => out.flag("loop")
                 Low(v) => out.attr_trusted("low", v.to_str())
                 Max(v) => out.attr("max", v)
                 Maxlength(v) => out.attr_trusted("maxlength", v.to_str())
                 Media(v) => out.attr("media", v)
-                Method(v) => {
-                    word = match v {
-                        Get => "get"
-                        Post => "post"
-                        Dialog => "dialog"
-                    }
-                    out.attr_trusted("method", word)
-                }
+                Method(v) => out.attr_trusted("method", Html.method_word(v))
                 Min(v) => out.attr("min", v)
                 Minlength(v) => out.attr_trusted("minlength", v.to_str())
                 Multiple => out.flag("multiple")
@@ -1668,53 +1503,18 @@ Html := [
                 Placeholder(v) => out.attr("placeholder", v)
                 Playsinline => out.flag("playsinline")
                 Poster(v) => out.attr("poster", v)
-                Preload(v) => {
-                    word = match v {
-                        None => "none"
-                        Metadata => "metadata"
-                        Auto => "auto"
-                    }
-                    out.attr_trusted("preload", word)
-                }
+                Preload(v) => out.attr_trusted("preload", Html.preload_word(v))
                 Readonly => out.flag("readonly")
-                Referrerpolicy(v) => {
-                    word = match v {
-                        NoReferrer => "no-referrer"
-                        NoReferrerWhenDowngrade => "no-referrer-when-downgrade"
-                        Origin => "origin"
-                        OriginWhenCrossOrigin => "origin-when-cross-origin"
-                        SameOrigin => "same-origin"
-                        StrictOrigin => "strict-origin"
-                        StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
-                        UnsafeUrl => "unsafe-url"
-                    }
-                    out.attr_trusted("referrerpolicy", word)
-                }
+                Referrerpolicy(v) => out.attr_trusted("referrerpolicy", Html.referrerpolicy_word(v))
                 Rel(v) => out.attr("rel", v)
                 Required => out.flag("required")
                 Reversed => out.flag("reversed")
                 Rows(v) => out.attr_trusted("rows", v.to_str())
                 Rowspan(v) => out.attr_trusted("rowspan", v.to_str())
                 Sandbox(v) => out.attr("sandbox", v)
-                Scope(v) => {
-                    word = match v {
-                        Row => "row"
-                        Col => "col"
-                        Rowgroup => "rowgroup"
-                        Colgroup => "colgroup"
-                    }
-                    out.attr_trusted("scope", word)
-                }
+                Scope(v) => out.attr_trusted("scope", Html.scope_word(v))
                 Selected => out.flag("selected")
-                Shape(v) => {
-                    word = match v {
-                        Rect => "rect"
-                        Circle => "circle"
-                        Poly => "poly"
-                        Default => "default"
-                    }
-                    out.attr_trusted("shape", word)
-                }
+                Shape(v) => out.attr_trusted("shape", Html.shape_word(v))
                 Size(v) => out.attr_trusted("size", v.to_str())
                 Sizes(v) => out.attr("sizes", v)
                 Span(v) => out.attr_trusted("span", v.to_str())
@@ -1729,13 +1529,7 @@ Html := [
                 Usemap(v) => out.attr("usemap", v)
                 Value(v) => out.attr("value", v)
                 Width(v) => out.attr_trusted("width", v.to_str())
-                Wrap(v) => {
-                    word = match v {
-                        Soft => "soft"
-                        Hard => "hard"
-                    }
-                    out.attr_trusted("wrap", word)
-                }
+                Wrap(v) => out.attr_trusted("wrap", Html.wrap_word(v))
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
