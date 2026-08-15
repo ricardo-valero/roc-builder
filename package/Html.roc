@@ -487,7 +487,7 @@ Html := [
     push_global_attr : SafeStr, GlobalAttrs([..]) -> SafeStr
     push_global_attr = |out, attr|
         match attr {
-            Accesskey(v) => out.push_raw(" accesskey=\"").push_escaped(v).push_raw("\"")
+            Accesskey(v) => out.attr("accesskey", v)
             Autocapitalize(v) => {
                 word = match v {
                     Off => "off"
@@ -497,17 +497,17 @@ Html := [
                     Words => "words"
                     Characters => "characters"
                 }
-                out.push_raw(" autocapitalize=\"").push_raw(word).push_raw("\"")
+                out.attr_trusted("autocapitalize", word)
             }
-            Autofocus => out.push_raw(" autofocus")
-            Class(v) => out.push_raw(" class=\"").push_escaped(v).push_raw("\"")
+            Autofocus => out.flag("autofocus")
+            Class(v) => out.attr("class", v)
             Contenteditable(v) => {
                 word = match v {
                     True => "true"
                     False => "false"
                     PlaintextOnly => "plaintext-only"
                 }
-                out.push_raw(" contenteditable=\"").push_raw(word).push_raw("\"")
+                out.attr_trusted("contenteditable", word)
             }
             Dir(v) => {
                 word = match v {
@@ -515,14 +515,14 @@ Html := [
                     Rtl => "rtl"
                     Auto => "auto"
                 }
-                out.push_raw(" dir=\"").push_raw(word).push_raw("\"")
+                out.attr_trusted("dir", word)
             }
             Draggable(v) => {
                 word = match v {
                     True => "true"
                     False => "false"
                 }
-                out.push_raw(" draggable=\"").push_raw(word).push_raw("\"")
+                out.attr_trusted("draggable", word)
             }
             Enterkeyhint(v) => {
                 word = match v {
@@ -534,11 +534,11 @@ Html := [
                     Search => "search"
                     Send => "send"
                 }
-                out.push_raw(" enterkeyhint=\"").push_raw(word).push_raw("\"")
+                out.attr_trusted("enterkeyhint", word)
             }
-            Hidden => out.push_raw(" hidden")
-            Id(v) => out.push_raw(" id=\"").push_escaped(v).push_raw("\"")
-            Inert => out.push_raw(" inert")
+            Hidden => out.flag("hidden")
+            Id(v) => out.attr("id", v)
+            Inert => out.flag("inert")
             Inputmode(v) => {
                 word = match v {
                     None => "none"
@@ -550,33 +550,33 @@ Html := [
                     Email => "email"
                     Url => "url"
                 }
-                out.push_raw(" inputmode=\"").push_raw(word).push_raw("\"")
+                out.attr_trusted("inputmode", word)
             }
-            Itemprop(v) => out.push_raw(" itemprop=\"").push_escaped(v).push_raw("\"")
-            Itemscope => out.push_raw(" itemscope")
-            Lang(v) => out.push_raw(" lang=\"").push_escaped(v).push_raw("\"")
-            Role(v) => out.push_raw(" role=\"").push_escaped(v).push_raw("\"")
-            Slot(v) => out.push_raw(" slot=\"").push_escaped(v).push_raw("\"")
+            Itemprop(v) => out.attr("itemprop", v)
+            Itemscope => out.flag("itemscope")
+            Lang(v) => out.attr("lang", v)
+            Role(v) => out.attr("role", v)
+            Slot(v) => out.attr("slot", v)
             Spellcheck(v) => {
                 word = match v {
                     True => "true"
                     False => "false"
                 }
-                out.push_raw(" spellcheck=\"").push_raw(word).push_raw("\"")
+                out.attr_trusted("spellcheck", word)
             }
-            Style(v) => out.push_raw(" style=\"").push_escaped(v).push_raw("\"")
-            Tabindex(v) => out.push_raw(" tabindex=\"").push_raw(v.to_str()).push_raw("\"")
-            Title(v) => out.push_raw(" title=\"").push_escaped(v).push_raw("\"")
+            Style(v) => out.attr("style", v)
+            Tabindex(v) => out.attr_trusted("tabindex", v.to_str())
+            Title(v) => out.attr("title", v)
             Translate(v) => {
                 word = match v {
                     Yes => "yes"
                     No => "no"
                 }
-                out.push_raw(" translate=\"").push_raw(word).push_raw("\"")
+                out.attr_trusted("translate", word)
             }
-            Custom(k, v) => out.push_raw(" ").push_raw(k).push_raw("=\"").push_escaped(v).push_raw("\"")
-            Data(k, v) => out.push_raw(" data-").push_raw(k).push_raw("=\"").push_escaped(v).push_raw("\"")
-            Aria(k, v) => out.push_raw(" aria-").push_raw(k).push_raw("=\"").push_escaped(v).push_raw("\"")
+            Custom(k, v) => out.attr(k, v)
+            Data(k, v) => out.attr("data-${k}", v)
+            Aria(k, v) => out.attr("aria-${k}", v)
             _ => crash("unreachable: non-global attribute delegated to push_global_attr")
         }
 
@@ -601,8 +601,8 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Cite(v) => out.push_raw(" cite=\"").push_escaped(v).push_raw("\"")
-                Datetime(v) => out.push_raw(" datetime=\"").push_escaped(v).push_raw("\"")
+                Cite(v) => out.attr("cite", v)
+                Datetime(v) => out.attr("datetime", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -616,7 +616,7 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Media(v) => out.push_raw(" media=\"").push_escaped(v).push_raw("\"")
+                Media(v) => out.attr("media", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -630,16 +630,16 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Allow(v) => out.push_raw(" allow=\"").push_escaped(v).push_raw("\"")
-                Height(v) => out.push_raw(" height=\"").push_raw(v.to_str()).push_raw("\"")
+                Allow(v) => out.attr("allow", v)
+                Height(v) => out.attr_trusted("height", v.to_str())
                 Loading(v) => {
                     word = match v {
                         Lazy => "lazy"
                         Eager => "eager"
                     }
-                    out.push_raw(" loading=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("loading", word)
                 }
-                Name(v) => out.push_raw(" name=\"").push_escaped(v).push_raw("\"")
+                Name(v) => out.attr("name", v)
                 Referrerpolicy(v) => {
                     word = match v {
                         NoReferrer => "no-referrer"
@@ -651,12 +651,12 @@ Html := [
                         StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
                         UnsafeUrl => "unsafe-url"
                     }
-                    out.push_raw(" referrerpolicy=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("referrerpolicy", word)
                 }
-                Sandbox(v) => out.push_raw(" sandbox=\"").push_escaped(v).push_raw("\"")
-                Src(v) => out.push_raw(" src=\"").push_escaped(v).push_raw("\"")
-                Srcdoc(v) => out.push_raw(" srcdoc=\"").push_escaped(v).push_raw("\"")
-                Width(v) => out.push_raw(" width=\"").push_raw(v.to_str()).push_raw("\"")
+                Sandbox(v) => out.attr("sandbox", v)
+                Src(v) => out.attr("src", v)
+                Srcdoc(v) => out.attr("srcdoc", v)
+                Width(v) => out.attr_trusted("width", v.to_str())
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -670,12 +670,12 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Form(v) => out.push_raw(" form=\"").push_escaped(v).push_raw("\"")
-                Height(v) => out.push_raw(" height=\"").push_raw(v.to_str()).push_raw("\"")
-                Name(v) => out.push_raw(" name=\"").push_escaped(v).push_raw("\"")
-                ObjectData(v) => out.push_raw(" data=\"").push_escaped(v).push_raw("\"")
-                Type(v) => out.push_raw(" type=\"").push_escaped(v).push_raw("\"")
-                Width(v) => out.push_raw(" width=\"").push_raw(v.to_str()).push_raw("\"")
+                Form(v) => out.attr("form", v)
+                Height(v) => out.attr_trusted("height", v.to_str())
+                Name(v) => out.attr("name", v)
+                ObjectData(v) => out.attr("data", v)
+                Type(v) => out.attr("type", v)
+                Width(v) => out.attr_trusted("width", v.to_str())
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -689,7 +689,7 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Src(v) => out.push_raw(" src=\"").push_escaped(v).push_raw("\"")
+                Src(v) => out.attr("src", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -703,16 +703,16 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Disabled => out.push_raw(" disabled")
-                Form(v) => out.push_raw(" form=\"").push_escaped(v).push_raw("\"")
-                Formaction(v) => out.push_raw(" formaction=\"").push_escaped(v).push_raw("\"")
+                Disabled => out.flag("disabled")
+                Form(v) => out.attr("form", v)
+                Formaction(v) => out.attr("formaction", v)
                 Formenctype(v) => {
                     word = match v {
                         FormUrlEncoded => "application/x-www-form-urlencoded"
                         MultipartFormData => "multipart/form-data"
                         TextPlain => "text/plain"
                     }
-                    out.push_raw(" formenctype=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("formenctype", word)
                 }
                 Formmethod(v) => {
                     word = match v {
@@ -720,13 +720,13 @@ Html := [
                         Post => "post"
                         Dialog => "dialog"
                     }
-                    out.push_raw(" formmethod=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("formmethod", word)
                 }
-                Formnovalidate => out.push_raw(" formnovalidate")
-                Formtarget(v) => out.push_raw(" formtarget=\"").push_escaped(v).push_raw("\"")
-                Name(v) => out.push_raw(" name=\"").push_escaped(v).push_raw("\"")
-                Type(v) => out.push_raw(" type=\"").push_escaped(v).push_raw("\"")
-                Value(v) => out.push_raw(" value=\"").push_escaped(v).push_raw("\"")
+                Formnovalidate => out.flag("formnovalidate")
+                Formtarget(v) => out.attr("formtarget", v)
+                Name(v) => out.attr("name", v)
+                Type(v) => out.attr("type", v)
+                Value(v) => out.attr("value", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -740,9 +740,9 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Disabled => out.push_raw(" disabled")
-                Form(v) => out.push_raw(" form=\"").push_escaped(v).push_raw("\"")
-                Name(v) => out.push_raw(" name=\"").push_escaped(v).push_raw("\"")
+                Disabled => out.flag("disabled")
+                Form(v) => out.attr("form", v)
+                Name(v) => out.attr("name", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -756,16 +756,16 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                AcceptCharset(v) => out.push_raw(" accept-charset=\"").push_escaped(v).push_raw("\"")
-                Action(v) => out.push_raw(" action=\"").push_escaped(v).push_raw("\"")
-                Autocomplete(v) => out.push_raw(" autocomplete=\"").push_escaped(v).push_raw("\"")
+                AcceptCharset(v) => out.attr("accept-charset", v)
+                Action(v) => out.attr("action", v)
+                Autocomplete(v) => out.attr("autocomplete", v)
                 Enctype(v) => {
                     word = match v {
                         FormUrlEncoded => "application/x-www-form-urlencoded"
                         MultipartFormData => "multipart/form-data"
                         TextPlain => "text/plain"
                     }
-                    out.push_raw(" enctype=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("enctype", word)
                 }
                 Method(v) => {
                     word = match v {
@@ -773,12 +773,12 @@ Html := [
                         Post => "post"
                         Dialog => "dialog"
                     }
-                    out.push_raw(" method=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("method", word)
                 }
-                Name(v) => out.push_raw(" name=\"").push_escaped(v).push_raw("\"")
-                Novalidate => out.push_raw(" novalidate")
-                Rel(v) => out.push_raw(" rel=\"").push_escaped(v).push_raw("\"")
-                Target(v) => out.push_raw(" target=\"").push_escaped(v).push_raw("\"")
+                Name(v) => out.attr("name", v)
+                Novalidate => out.flag("novalidate")
+                Rel(v) => out.attr("rel", v)
+                Target(v) => out.attr("target", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -792,7 +792,7 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                For(v) => out.push_raw(" for=\"").push_escaped(v).push_raw("\"")
+                For(v) => out.attr("for", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -806,12 +806,12 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                High(v) => out.push_raw(" high=\"").push_raw(v.to_str()).push_raw("\"")
-                Low(v) => out.push_raw(" low=\"").push_raw(v.to_str()).push_raw("\"")
-                Max(v) => out.push_raw(" max=\"").push_escaped(v).push_raw("\"")
-                Min(v) => out.push_raw(" min=\"").push_escaped(v).push_raw("\"")
-                Optimum(v) => out.push_raw(" optimum=\"").push_raw(v.to_str()).push_raw("\"")
-                Value(v) => out.push_raw(" value=\"").push_escaped(v).push_raw("\"")
+                High(v) => out.attr_trusted("high", v.to_str())
+                Low(v) => out.attr_trusted("low", v.to_str())
+                Max(v) => out.attr("max", v)
+                Min(v) => out.attr("min", v)
+                Optimum(v) => out.attr_trusted("optimum", v.to_str())
+                Value(v) => out.attr("value", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -825,8 +825,8 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Disabled => out.push_raw(" disabled")
-                Label(v) => out.push_raw(" label=\"").push_escaped(v).push_raw("\"")
+                Disabled => out.flag("disabled")
+                Label(v) => out.attr("label", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -840,10 +840,10 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Disabled => out.push_raw(" disabled")
-                Label(v) => out.push_raw(" label=\"").push_escaped(v).push_raw("\"")
-                Selected => out.push_raw(" selected")
-                Value(v) => out.push_raw(" value=\"").push_escaped(v).push_raw("\"")
+                Disabled => out.flag("disabled")
+                Label(v) => out.attr("label", v)
+                Selected => out.flag("selected")
+                Value(v) => out.attr("value", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -857,9 +857,9 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                For(v) => out.push_raw(" for=\"").push_escaped(v).push_raw("\"")
-                Form(v) => out.push_raw(" form=\"").push_escaped(v).push_raw("\"")
-                Name(v) => out.push_raw(" name=\"").push_escaped(v).push_raw("\"")
+                For(v) => out.attr("for", v)
+                Form(v) => out.attr("form", v)
+                Name(v) => out.attr("name", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -873,8 +873,8 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Max(v) => out.push_raw(" max=\"").push_escaped(v).push_raw("\"")
-                Value(v) => out.push_raw(" value=\"").push_escaped(v).push_raw("\"")
+                Max(v) => out.attr("max", v)
+                Value(v) => out.attr("value", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -888,13 +888,13 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Autocomplete(v) => out.push_raw(" autocomplete=\"").push_escaped(v).push_raw("\"")
-                Disabled => out.push_raw(" disabled")
-                Form(v) => out.push_raw(" form=\"").push_escaped(v).push_raw("\"")
-                Multiple => out.push_raw(" multiple")
-                Name(v) => out.push_raw(" name=\"").push_escaped(v).push_raw("\"")
-                Required => out.push_raw(" required")
-                Size(v) => out.push_raw(" size=\"").push_raw(v.to_str()).push_raw("\"")
+                Autocomplete(v) => out.attr("autocomplete", v)
+                Disabled => out.flag("disabled")
+                Form(v) => out.attr("form", v)
+                Multiple => out.flag("multiple")
+                Name(v) => out.attr("name", v)
+                Required => out.flag("required")
+                Size(v) => out.attr_trusted("size", v.to_str())
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -908,24 +908,24 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Autocomplete(v) => out.push_raw(" autocomplete=\"").push_escaped(v).push_raw("\"")
-                Cols(v) => out.push_raw(" cols=\"").push_raw(v.to_str()).push_raw("\"")
-                Dirname(v) => out.push_raw(" dirname=\"").push_escaped(v).push_raw("\"")
-                Disabled => out.push_raw(" disabled")
-                Form(v) => out.push_raw(" form=\"").push_escaped(v).push_raw("\"")
-                Maxlength(v) => out.push_raw(" maxlength=\"").push_raw(v.to_str()).push_raw("\"")
-                Minlength(v) => out.push_raw(" minlength=\"").push_raw(v.to_str()).push_raw("\"")
-                Name(v) => out.push_raw(" name=\"").push_escaped(v).push_raw("\"")
-                Placeholder(v) => out.push_raw(" placeholder=\"").push_escaped(v).push_raw("\"")
-                Readonly => out.push_raw(" readonly")
-                Required => out.push_raw(" required")
-                Rows(v) => out.push_raw(" rows=\"").push_raw(v.to_str()).push_raw("\"")
+                Autocomplete(v) => out.attr("autocomplete", v)
+                Cols(v) => out.attr_trusted("cols", v.to_str())
+                Dirname(v) => out.attr("dirname", v)
+                Disabled => out.flag("disabled")
+                Form(v) => out.attr("form", v)
+                Maxlength(v) => out.attr_trusted("maxlength", v.to_str())
+                Minlength(v) => out.attr_trusted("minlength", v.to_str())
+                Name(v) => out.attr("name", v)
+                Placeholder(v) => out.attr("placeholder", v)
+                Readonly => out.flag("readonly")
+                Required => out.flag("required")
+                Rows(v) => out.attr_trusted("rows", v.to_str())
                 Wrap(v) => {
                     word = match v {
                         Soft => "soft"
                         Hard => "hard"
                     }
-                    out.push_raw(" wrap=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("wrap", word)
                 }
                 other => Html.push_global_attr(out, other)
             }
@@ -940,26 +940,26 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Autoplay => out.push_raw(" autoplay")
-                Controls => out.push_raw(" controls")
+                Autoplay => out.flag("autoplay")
+                Controls => out.flag("controls")
                 Crossorigin(v) => {
                     word = match v {
                         Anonymous => "anonymous"
                         UseCredentials => "use-credentials"
                     }
-                    out.push_raw(" crossorigin=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("crossorigin", word)
                 }
-                Loop => out.push_raw(" loop")
-                Muted => out.push_raw(" muted")
+                Loop => out.flag("loop")
+                Muted => out.flag("muted")
                 Preload(v) => {
                     word = match v {
                         None => "none"
                         Metadata => "metadata"
                         Auto => "auto"
                     }
-                    out.push_raw(" preload=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("preload", word)
                 }
-                Src(v) => out.push_raw(" src=\"").push_escaped(v).push_raw("\"")
+                Src(v) => out.attr("src", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -973,7 +973,7 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Name(v) => out.push_raw(" name=\"").push_escaped(v).push_raw("\"")
+                Name(v) => out.attr("name", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -987,30 +987,30 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Autoplay => out.push_raw(" autoplay")
-                Controls => out.push_raw(" controls")
+                Autoplay => out.flag("autoplay")
+                Controls => out.flag("controls")
                 Crossorigin(v) => {
                     word = match v {
                         Anonymous => "anonymous"
                         UseCredentials => "use-credentials"
                     }
-                    out.push_raw(" crossorigin=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("crossorigin", word)
                 }
-                Height(v) => out.push_raw(" height=\"").push_raw(v.to_str()).push_raw("\"")
-                Loop => out.push_raw(" loop")
-                Muted => out.push_raw(" muted")
-                Playsinline => out.push_raw(" playsinline")
-                Poster(v) => out.push_raw(" poster=\"").push_escaped(v).push_raw("\"")
+                Height(v) => out.attr_trusted("height", v.to_str())
+                Loop => out.flag("loop")
+                Muted => out.flag("muted")
+                Playsinline => out.flag("playsinline")
+                Poster(v) => out.attr("poster", v)
                 Preload(v) => {
                     word = match v {
                         None => "none"
                         Metadata => "metadata"
                         Auto => "auto"
                     }
-                    out.push_raw(" preload=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("preload", word)
                 }
-                Src(v) => out.push_raw(" src=\"").push_escaped(v).push_raw("\"")
-                Width(v) => out.push_raw(" width=\"").push_raw(v.to_str()).push_raw("\"")
+                Src(v) => out.attr("src", v)
+                Width(v) => out.attr_trusted("width", v.to_str())
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1024,10 +1024,10 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Download(v) => out.push_raw(" download=\"").push_escaped(v).push_raw("\"")
-                Href(v) => out.push_raw(" href=\"").push_escaped(v).push_raw("\"")
-                Hreflang(v) => out.push_raw(" hreflang=\"").push_escaped(v).push_raw("\"")
-                Ping(v) => out.push_raw(" ping=\"").push_escaped(v).push_raw("\"")
+                Download(v) => out.attr("download", v)
+                Href(v) => out.attr("href", v)
+                Hreflang(v) => out.attr("hreflang", v)
+                Ping(v) => out.attr("ping", v)
                 Referrerpolicy(v) => {
                     word = match v {
                         NoReferrer => "no-referrer"
@@ -1039,11 +1039,11 @@ Html := [
                         StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
                         UnsafeUrl => "unsafe-url"
                     }
-                    out.push_raw(" referrerpolicy=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("referrerpolicy", word)
                 }
-                Rel(v) => out.push_raw(" rel=\"").push_escaped(v).push_raw("\"")
-                Target(v) => out.push_raw(" target=\"").push_escaped(v).push_raw("\"")
-                Type(v) => out.push_raw(" type=\"").push_escaped(v).push_raw("\"")
+                Rel(v) => out.attr("rel", v)
+                Target(v) => out.attr("target", v)
+                Type(v) => out.attr("type", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1057,7 +1057,7 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Value(v) => out.push_raw(" value=\"").push_escaped(v).push_raw("\"")
+                Value(v) => out.attr("value", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1071,7 +1071,7 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Cite(v) => out.push_raw(" cite=\"").push_escaped(v).push_raw("\"")
+                Cite(v) => out.attr("cite", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1085,7 +1085,7 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Datetime(v) => out.push_raw(" datetime=\"").push_escaped(v).push_raw("\"")
+                Datetime(v) => out.attr("datetime", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1099,7 +1099,7 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Open => out.push_raw(" open")
+                Open => out.flag("open")
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1113,8 +1113,8 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Height(v) => out.push_raw(" height=\"").push_raw(v.to_str()).push_raw("\"")
-                Width(v) => out.push_raw(" width=\"").push_raw(v.to_str()).push_raw("\"")
+                Height(v) => out.attr_trusted("height", v.to_str())
+                Width(v) => out.attr_trusted("width", v.to_str())
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1128,17 +1128,17 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Async => out.push_raw(" async")
+                Async => out.flag("async")
                 Crossorigin(v) => {
                     word = match v {
                         Anonymous => "anonymous"
                         UseCredentials => "use-credentials"
                     }
-                    out.push_raw(" crossorigin=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("crossorigin", word)
                 }
-                Defer => out.push_raw(" defer")
-                Integrity(v) => out.push_raw(" integrity=\"").push_escaped(v).push_raw("\"")
-                Nomodule => out.push_raw(" nomodule")
+                Defer => out.flag("defer")
+                Integrity(v) => out.attr("integrity", v)
+                Nomodule => out.flag("nomodule")
                 Referrerpolicy(v) => {
                     word = match v {
                         NoReferrer => "no-referrer"
@@ -1150,10 +1150,10 @@ Html := [
                         StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
                         UnsafeUrl => "unsafe-url"
                     }
-                    out.push_raw(" referrerpolicy=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("referrerpolicy", word)
                 }
-                Src(v) => out.push_raw(" src=\"").push_escaped(v).push_raw("\"")
-                Type(v) => out.push_raw(" type=\"").push_escaped(v).push_raw("\"")
+                Src(v) => out.attr("src", v)
+                Type(v) => out.attr("type", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1167,7 +1167,7 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Span(v) => out.push_raw(" span=\"").push_raw(v.to_str()).push_raw("\"")
+                Span(v) => out.attr_trusted("span", v.to_str())
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1181,9 +1181,9 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Colspan(v) => out.push_raw(" colspan=\"").push_raw(v.to_str()).push_raw("\"")
-                Headers(v) => out.push_raw(" headers=\"").push_escaped(v).push_raw("\"")
-                Rowspan(v) => out.push_raw(" rowspan=\"").push_raw(v.to_str()).push_raw("\"")
+                Colspan(v) => out.attr_trusted("colspan", v.to_str())
+                Headers(v) => out.attr("headers", v)
+                Rowspan(v) => out.attr_trusted("rowspan", v.to_str())
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1197,10 +1197,10 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Abbr(v) => out.push_raw(" abbr=\"").push_escaped(v).push_raw("\"")
-                Colspan(v) => out.push_raw(" colspan=\"").push_raw(v.to_str()).push_raw("\"")
-                Headers(v) => out.push_raw(" headers=\"").push_escaped(v).push_raw("\"")
-                Rowspan(v) => out.push_raw(" rowspan=\"").push_raw(v.to_str()).push_raw("\"")
+                Abbr(v) => out.attr("abbr", v)
+                Colspan(v) => out.attr_trusted("colspan", v.to_str())
+                Headers(v) => out.attr("headers", v)
+                Rowspan(v) => out.attr_trusted("rowspan", v.to_str())
                 Scope(v) => {
                     word = match v {
                         Row => "row"
@@ -1208,7 +1208,7 @@ Html := [
                         Rowgroup => "rowgroup"
                         Colgroup => "colgroup"
                     }
-                    out.push_raw(" scope=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("scope", word)
                 }
                 other => Html.push_global_attr(out, other)
             }
@@ -1223,9 +1223,9 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Reversed => out.push_raw(" reversed")
-                Start(v) => out.push_raw(" start=\"").push_raw(v.to_str()).push_raw("\"")
-                Type(v) => out.push_raw(" type=\"").push_escaped(v).push_raw("\"")
+                Reversed => out.flag("reversed")
+                Start(v) => out.attr_trusted("start", v.to_str())
+                Type(v) => out.attr("type", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1239,11 +1239,11 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Alt(v) => out.push_raw(" alt=\"").push_escaped(v).push_raw("\"")
-                Coords(v) => out.push_raw(" coords=\"").push_escaped(v).push_raw("\"")
-                Download(v) => out.push_raw(" download=\"").push_escaped(v).push_raw("\"")
-                Href(v) => out.push_raw(" href=\"").push_escaped(v).push_raw("\"")
-                Ping(v) => out.push_raw(" ping=\"").push_escaped(v).push_raw("\"")
+                Alt(v) => out.attr("alt", v)
+                Coords(v) => out.attr("coords", v)
+                Download(v) => out.attr("download", v)
+                Href(v) => out.attr("href", v)
+                Ping(v) => out.attr("ping", v)
                 Referrerpolicy(v) => {
                     word = match v {
                         NoReferrer => "no-referrer"
@@ -1255,9 +1255,9 @@ Html := [
                         StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
                         UnsafeUrl => "unsafe-url"
                     }
-                    out.push_raw(" referrerpolicy=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("referrerpolicy", word)
                 }
-                Rel(v) => out.push_raw(" rel=\"").push_escaped(v).push_raw("\"")
+                Rel(v) => out.attr("rel", v)
                 Shape(v) => {
                     word = match v {
                         Rect => "rect"
@@ -1265,9 +1265,9 @@ Html := [
                         Poly => "poly"
                         Default => "default"
                     }
-                    out.push_raw(" shape=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("shape", word)
                 }
-                Target(v) => out.push_raw(" target=\"").push_escaped(v).push_raw("\"")
+                Target(v) => out.attr("target", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1281,8 +1281,8 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Href(v) => out.push_raw(" href=\"").push_escaped(v).push_raw("\"")
-                Target(v) => out.push_raw(" target=\"").push_escaped(v).push_raw("\"")
+                Href(v) => out.attr("href", v)
+                Target(v) => out.attr("target", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1296,10 +1296,10 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Height(v) => out.push_raw(" height=\"").push_raw(v.to_str()).push_raw("\"")
-                Src(v) => out.push_raw(" src=\"").push_escaped(v).push_raw("\"")
-                Type(v) => out.push_raw(" type=\"").push_escaped(v).push_raw("\"")
-                Width(v) => out.push_raw(" width=\"").push_raw(v.to_str()).push_raw("\"")
+                Height(v) => out.attr_trusted("height", v.to_str())
+                Src(v) => out.attr("src", v)
+                Type(v) => out.attr("type", v)
+                Width(v) => out.attr_trusted("width", v.to_str())
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1313,13 +1313,13 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Alt(v) => out.push_raw(" alt=\"").push_escaped(v).push_raw("\"")
+                Alt(v) => out.attr("alt", v)
                 Crossorigin(v) => {
                     word = match v {
                         Anonymous => "anonymous"
                         UseCredentials => "use-credentials"
                     }
-                    out.push_raw(" crossorigin=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("crossorigin", word)
                 }
                 Decoding(v) => {
                     word = match v {
@@ -1327,16 +1327,16 @@ Html := [
                         Async => "async"
                         Auto => "auto"
                     }
-                    out.push_raw(" decoding=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("decoding", word)
                 }
-                Height(v) => out.push_raw(" height=\"").push_raw(v.to_str()).push_raw("\"")
-                Ismap => out.push_raw(" ismap")
+                Height(v) => out.attr_trusted("height", v.to_str())
+                Ismap => out.flag("ismap")
                 Loading(v) => {
                     word = match v {
                         Lazy => "lazy"
                         Eager => "eager"
                     }
-                    out.push_raw(" loading=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("loading", word)
                 }
                 Referrerpolicy(v) => {
                     word = match v {
@@ -1349,13 +1349,13 @@ Html := [
                         StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
                         UnsafeUrl => "unsafe-url"
                     }
-                    out.push_raw(" referrerpolicy=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("referrerpolicy", word)
                 }
-                Sizes(v) => out.push_raw(" sizes=\"").push_escaped(v).push_raw("\"")
-                Src(v) => out.push_raw(" src=\"").push_escaped(v).push_raw("\"")
-                Srcset(v) => out.push_raw(" srcset=\"").push_escaped(v).push_raw("\"")
-                Usemap(v) => out.push_raw(" usemap=\"").push_escaped(v).push_raw("\"")
-                Width(v) => out.push_raw(" width=\"").push_raw(v.to_str()).push_raw("\"")
+                Sizes(v) => out.attr("sizes", v)
+                Src(v) => out.attr("src", v)
+                Srcset(v) => out.attr("srcset", v)
+                Usemap(v) => out.attr("usemap", v)
+                Width(v) => out.attr_trusted("width", v.to_str())
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1369,28 +1369,28 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Accept(v) => out.push_raw(" accept=\"").push_escaped(v).push_raw("\"")
-                Alt(v) => out.push_raw(" alt=\"").push_escaped(v).push_raw("\"")
-                Autocomplete(v) => out.push_raw(" autocomplete=\"").push_escaped(v).push_raw("\"")
+                Accept(v) => out.attr("accept", v)
+                Alt(v) => out.attr("alt", v)
+                Autocomplete(v) => out.attr("autocomplete", v)
                 Capture(v) => {
                     word = match v {
                         User => "user"
                         Environment => "environment"
                     }
-                    out.push_raw(" capture=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("capture", word)
                 }
-                Checked => out.push_raw(" checked")
-                Dirname(v) => out.push_raw(" dirname=\"").push_escaped(v).push_raw("\"")
-                Disabled => out.push_raw(" disabled")
-                Form(v) => out.push_raw(" form=\"").push_escaped(v).push_raw("\"")
-                Formaction(v) => out.push_raw(" formaction=\"").push_escaped(v).push_raw("\"")
+                Checked => out.flag("checked")
+                Dirname(v) => out.attr("dirname", v)
+                Disabled => out.flag("disabled")
+                Form(v) => out.attr("form", v)
+                Formaction(v) => out.attr("formaction", v)
                 Formenctype(v) => {
                     word = match v {
                         FormUrlEncoded => "application/x-www-form-urlencoded"
                         MultipartFormData => "multipart/form-data"
                         TextPlain => "text/plain"
                     }
-                    out.push_raw(" formenctype=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("formenctype", word)
                 }
                 Formmethod(v) => {
                     word = match v {
@@ -1398,28 +1398,28 @@ Html := [
                         Post => "post"
                         Dialog => "dialog"
                     }
-                    out.push_raw(" formmethod=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("formmethod", word)
                 }
-                Formnovalidate => out.push_raw(" formnovalidate")
-                Formtarget(v) => out.push_raw(" formtarget=\"").push_escaped(v).push_raw("\"")
-                Height(v) => out.push_raw(" height=\"").push_raw(v.to_str()).push_raw("\"")
-                List(v) => out.push_raw(" list=\"").push_escaped(v).push_raw("\"")
-                Max(v) => out.push_raw(" max=\"").push_escaped(v).push_raw("\"")
-                Maxlength(v) => out.push_raw(" maxlength=\"").push_raw(v.to_str()).push_raw("\"")
-                Min(v) => out.push_raw(" min=\"").push_escaped(v).push_raw("\"")
-                Minlength(v) => out.push_raw(" minlength=\"").push_raw(v.to_str()).push_raw("\"")
-                Multiple => out.push_raw(" multiple")
-                Name(v) => out.push_raw(" name=\"").push_escaped(v).push_raw("\"")
-                Pattern(v) => out.push_raw(" pattern=\"").push_escaped(v).push_raw("\"")
-                Placeholder(v) => out.push_raw(" placeholder=\"").push_escaped(v).push_raw("\"")
-                Readonly => out.push_raw(" readonly")
-                Required => out.push_raw(" required")
-                Size(v) => out.push_raw(" size=\"").push_raw(v.to_str()).push_raw("\"")
-                Src(v) => out.push_raw(" src=\"").push_escaped(v).push_raw("\"")
-                Step(v) => out.push_raw(" step=\"").push_escaped(v).push_raw("\"")
-                Type(v) => out.push_raw(" type=\"").push_escaped(v).push_raw("\"")
-                Value(v) => out.push_raw(" value=\"").push_escaped(v).push_raw("\"")
-                Width(v) => out.push_raw(" width=\"").push_raw(v.to_str()).push_raw("\"")
+                Formnovalidate => out.flag("formnovalidate")
+                Formtarget(v) => out.attr("formtarget", v)
+                Height(v) => out.attr_trusted("height", v.to_str())
+                List(v) => out.attr("list", v)
+                Max(v) => out.attr("max", v)
+                Maxlength(v) => out.attr_trusted("maxlength", v.to_str())
+                Min(v) => out.attr("min", v)
+                Minlength(v) => out.attr_trusted("minlength", v.to_str())
+                Multiple => out.flag("multiple")
+                Name(v) => out.attr("name", v)
+                Pattern(v) => out.attr("pattern", v)
+                Placeholder(v) => out.attr("placeholder", v)
+                Readonly => out.flag("readonly")
+                Required => out.flag("required")
+                Size(v) => out.attr_trusted("size", v.to_str())
+                Src(v) => out.attr("src", v)
+                Step(v) => out.attr("step", v)
+                Type(v) => out.attr("type", v)
+                Value(v) => out.attr("value", v)
+                Width(v) => out.attr_trusted("width", v.to_str())
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1438,13 +1438,13 @@ Html := [
                         Anonymous => "anonymous"
                         UseCredentials => "use-credentials"
                     }
-                    out.push_raw(" crossorigin=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("crossorigin", word)
                 }
-                Disabled => out.push_raw(" disabled")
-                Href(v) => out.push_raw(" href=\"").push_escaped(v).push_raw("\"")
-                Hreflang(v) => out.push_raw(" hreflang=\"").push_escaped(v).push_raw("\"")
-                Integrity(v) => out.push_raw(" integrity=\"").push_escaped(v).push_raw("\"")
-                Media(v) => out.push_raw(" media=\"").push_escaped(v).push_raw("\"")
+                Disabled => out.flag("disabled")
+                Href(v) => out.attr("href", v)
+                Hreflang(v) => out.attr("hreflang", v)
+                Integrity(v) => out.attr("integrity", v)
+                Media(v) => out.attr("media", v)
                 Referrerpolicy(v) => {
                     word = match v {
                         NoReferrer => "no-referrer"
@@ -1456,11 +1456,11 @@ Html := [
                         StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
                         UnsafeUrl => "unsafe-url"
                     }
-                    out.push_raw(" referrerpolicy=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("referrerpolicy", word)
                 }
-                Rel(v) => out.push_raw(" rel=\"").push_escaped(v).push_raw("\"")
-                Sizes(v) => out.push_raw(" sizes=\"").push_escaped(v).push_raw("\"")
-                Type(v) => out.push_raw(" type=\"").push_escaped(v).push_raw("\"")
+                Rel(v) => out.attr("rel", v)
+                Sizes(v) => out.attr("sizes", v)
+                Type(v) => out.attr("type", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1474,11 +1474,11 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Charset(v) => out.push_raw(" charset=\"").push_escaped(v).push_raw("\"")
-                Content(v) => out.push_raw(" content=\"").push_escaped(v).push_raw("\"")
-                HttpEquiv(v) => out.push_raw(" http-equiv=\"").push_escaped(v).push_raw("\"")
-                Media(v) => out.push_raw(" media=\"").push_escaped(v).push_raw("\"")
-                Name(v) => out.push_raw(" name=\"").push_escaped(v).push_raw("\"")
+                Charset(v) => out.attr("charset", v)
+                Content(v) => out.attr("content", v)
+                HttpEquiv(v) => out.attr("http-equiv", v)
+                Media(v) => out.attr("media", v)
+                Name(v) => out.attr("name", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1492,13 +1492,13 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Height(v) => out.push_raw(" height=\"").push_raw(v.to_str()).push_raw("\"")
-                Media(v) => out.push_raw(" media=\"").push_escaped(v).push_raw("\"")
-                Sizes(v) => out.push_raw(" sizes=\"").push_escaped(v).push_raw("\"")
-                Src(v) => out.push_raw(" src=\"").push_escaped(v).push_raw("\"")
-                Srcset(v) => out.push_raw(" srcset=\"").push_escaped(v).push_raw("\"")
-                Type(v) => out.push_raw(" type=\"").push_escaped(v).push_raw("\"")
-                Width(v) => out.push_raw(" width=\"").push_raw(v.to_str()).push_raw("\"")
+                Height(v) => out.attr_trusted("height", v.to_str())
+                Media(v) => out.attr("media", v)
+                Sizes(v) => out.attr("sizes", v)
+                Src(v) => out.attr("src", v)
+                Srcset(v) => out.attr("srcset", v)
+                Type(v) => out.attr("type", v)
+                Width(v) => out.attr_trusted("width", v.to_str())
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1512,7 +1512,7 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Default => out.push_raw(" default")
+                Default => out.flag("default")
                 Kind(v) => {
                     word = match v {
                         Subtitles => "subtitles"
@@ -1521,11 +1521,11 @@ Html := [
                         Chapters => "chapters"
                         Metadata => "metadata"
                     }
-                    out.push_raw(" kind=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("kind", word)
                 }
-                Label(v) => out.push_raw(" label=\"").push_escaped(v).push_raw("\"")
-                Src(v) => out.push_raw(" src=\"").push_escaped(v).push_raw("\"")
-                Srclang(v) => out.push_raw(" srclang=\"").push_escaped(v).push_raw("\"")
+                Label(v) => out.attr("label", v)
+                Src(v) => out.attr("src", v)
+                Srclang(v) => out.attr("srclang", v)
                 other => Html.push_global_attr(out, other)
             }
             i = i + 1
@@ -1539,69 +1539,69 @@ Html := [
         var i = 0.U64
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
-                Abbr(v) => out.push_raw(" abbr=\"").push_escaped(v).push_raw("\"")
-                Accept(v) => out.push_raw(" accept=\"").push_escaped(v).push_raw("\"")
-                AcceptCharset(v) => out.push_raw(" accept-charset=\"").push_escaped(v).push_raw("\"")
-                Action(v) => out.push_raw(" action=\"").push_escaped(v).push_raw("\"")
-                Allow(v) => out.push_raw(" allow=\"").push_escaped(v).push_raw("\"")
-                Alt(v) => out.push_raw(" alt=\"").push_escaped(v).push_raw("\"")
-                Async => out.push_raw(" async")
-                Autocomplete(v) => out.push_raw(" autocomplete=\"").push_escaped(v).push_raw("\"")
-                Autoplay => out.push_raw(" autoplay")
+                Abbr(v) => out.attr("abbr", v)
+                Accept(v) => out.attr("accept", v)
+                AcceptCharset(v) => out.attr("accept-charset", v)
+                Action(v) => out.attr("action", v)
+                Allow(v) => out.attr("allow", v)
+                Alt(v) => out.attr("alt", v)
+                Async => out.flag("async")
+                Autocomplete(v) => out.attr("autocomplete", v)
+                Autoplay => out.flag("autoplay")
                 Capture(v) => {
                     word = match v {
                         User => "user"
                         Environment => "environment"
                     }
-                    out.push_raw(" capture=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("capture", word)
                 }
-                Charset(v) => out.push_raw(" charset=\"").push_escaped(v).push_raw("\"")
-                Checked => out.push_raw(" checked")
-                Cite(v) => out.push_raw(" cite=\"").push_escaped(v).push_raw("\"")
-                Cols(v) => out.push_raw(" cols=\"").push_raw(v.to_str()).push_raw("\"")
-                Colspan(v) => out.push_raw(" colspan=\"").push_raw(v.to_str()).push_raw("\"")
-                Content(v) => out.push_raw(" content=\"").push_escaped(v).push_raw("\"")
-                Controls => out.push_raw(" controls")
-                Coords(v) => out.push_raw(" coords=\"").push_escaped(v).push_raw("\"")
+                Charset(v) => out.attr("charset", v)
+                Checked => out.flag("checked")
+                Cite(v) => out.attr("cite", v)
+                Cols(v) => out.attr_trusted("cols", v.to_str())
+                Colspan(v) => out.attr_trusted("colspan", v.to_str())
+                Content(v) => out.attr("content", v)
+                Controls => out.flag("controls")
+                Coords(v) => out.attr("coords", v)
                 Crossorigin(v) => {
                     word = match v {
                         Anonymous => "anonymous"
                         UseCredentials => "use-credentials"
                     }
-                    out.push_raw(" crossorigin=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("crossorigin", word)
                 }
-                Datetime(v) => out.push_raw(" datetime=\"").push_escaped(v).push_raw("\"")
+                Datetime(v) => out.attr("datetime", v)
                 Decoding(v) => {
                     word = match v {
                         Sync => "sync"
                         Async => "async"
                         Auto => "auto"
                     }
-                    out.push_raw(" decoding=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("decoding", word)
                 }
-                Default => out.push_raw(" default")
-                Defer => out.push_raw(" defer")
-                Dirname(v) => out.push_raw(" dirname=\"").push_escaped(v).push_raw("\"")
-                Disabled => out.push_raw(" disabled")
-                Download(v) => out.push_raw(" download=\"").push_escaped(v).push_raw("\"")
+                Default => out.flag("default")
+                Defer => out.flag("defer")
+                Dirname(v) => out.attr("dirname", v)
+                Disabled => out.flag("disabled")
+                Download(v) => out.attr("download", v)
                 Enctype(v) => {
                     word = match v {
                         FormUrlEncoded => "application/x-www-form-urlencoded"
                         MultipartFormData => "multipart/form-data"
                         TextPlain => "text/plain"
                     }
-                    out.push_raw(" enctype=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("enctype", word)
                 }
-                For(v) => out.push_raw(" for=\"").push_escaped(v).push_raw("\"")
-                Form(v) => out.push_raw(" form=\"").push_escaped(v).push_raw("\"")
-                Formaction(v) => out.push_raw(" formaction=\"").push_escaped(v).push_raw("\"")
+                For(v) => out.attr("for", v)
+                Form(v) => out.attr("form", v)
+                Formaction(v) => out.attr("formaction", v)
                 Formenctype(v) => {
                     word = match v {
                         FormUrlEncoded => "application/x-www-form-urlencoded"
                         MultipartFormData => "multipart/form-data"
                         TextPlain => "text/plain"
                     }
-                    out.push_raw(" formenctype=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("formenctype", word)
                 }
                 Formmethod(v) => {
                     word = match v {
@@ -1609,18 +1609,18 @@ Html := [
                         Post => "post"
                         Dialog => "dialog"
                     }
-                    out.push_raw(" formmethod=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("formmethod", word)
                 }
-                Formnovalidate => out.push_raw(" formnovalidate")
-                Formtarget(v) => out.push_raw(" formtarget=\"").push_escaped(v).push_raw("\"")
-                Headers(v) => out.push_raw(" headers=\"").push_escaped(v).push_raw("\"")
-                Height(v) => out.push_raw(" height=\"").push_raw(v.to_str()).push_raw("\"")
-                High(v) => out.push_raw(" high=\"").push_raw(v.to_str()).push_raw("\"")
-                Href(v) => out.push_raw(" href=\"").push_escaped(v).push_raw("\"")
-                Hreflang(v) => out.push_raw(" hreflang=\"").push_escaped(v).push_raw("\"")
-                HttpEquiv(v) => out.push_raw(" http-equiv=\"").push_escaped(v).push_raw("\"")
-                Integrity(v) => out.push_raw(" integrity=\"").push_escaped(v).push_raw("\"")
-                Ismap => out.push_raw(" ismap")
+                Formnovalidate => out.flag("formnovalidate")
+                Formtarget(v) => out.attr("formtarget", v)
+                Headers(v) => out.attr("headers", v)
+                Height(v) => out.attr_trusted("height", v.to_str())
+                High(v) => out.attr_trusted("high", v.to_str())
+                Href(v) => out.attr("href", v)
+                Hreflang(v) => out.attr("hreflang", v)
+                HttpEquiv(v) => out.attr("http-equiv", v)
+                Integrity(v) => out.attr("integrity", v)
+                Ismap => out.flag("ismap")
                 Kind(v) => {
                     word = match v {
                         Subtitles => "subtitles"
@@ -1629,54 +1629,54 @@ Html := [
                         Chapters => "chapters"
                         Metadata => "metadata"
                     }
-                    out.push_raw(" kind=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("kind", word)
                 }
-                Label(v) => out.push_raw(" label=\"").push_escaped(v).push_raw("\"")
-                List(v) => out.push_raw(" list=\"").push_escaped(v).push_raw("\"")
+                Label(v) => out.attr("label", v)
+                List(v) => out.attr("list", v)
                 Loading(v) => {
                     word = match v {
                         Lazy => "lazy"
                         Eager => "eager"
                     }
-                    out.push_raw(" loading=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("loading", word)
                 }
-                Loop => out.push_raw(" loop")
-                Low(v) => out.push_raw(" low=\"").push_raw(v.to_str()).push_raw("\"")
-                Max(v) => out.push_raw(" max=\"").push_escaped(v).push_raw("\"")
-                Maxlength(v) => out.push_raw(" maxlength=\"").push_raw(v.to_str()).push_raw("\"")
-                Media(v) => out.push_raw(" media=\"").push_escaped(v).push_raw("\"")
+                Loop => out.flag("loop")
+                Low(v) => out.attr_trusted("low", v.to_str())
+                Max(v) => out.attr("max", v)
+                Maxlength(v) => out.attr_trusted("maxlength", v.to_str())
+                Media(v) => out.attr("media", v)
                 Method(v) => {
                     word = match v {
                         Get => "get"
                         Post => "post"
                         Dialog => "dialog"
                     }
-                    out.push_raw(" method=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("method", word)
                 }
-                Min(v) => out.push_raw(" min=\"").push_escaped(v).push_raw("\"")
-                Minlength(v) => out.push_raw(" minlength=\"").push_raw(v.to_str()).push_raw("\"")
-                Multiple => out.push_raw(" multiple")
-                Muted => out.push_raw(" muted")
-                Name(v) => out.push_raw(" name=\"").push_escaped(v).push_raw("\"")
-                Nomodule => out.push_raw(" nomodule")
-                Novalidate => out.push_raw(" novalidate")
-                ObjectData(v) => out.push_raw(" data=\"").push_escaped(v).push_raw("\"")
-                Open => out.push_raw(" open")
-                Optimum(v) => out.push_raw(" optimum=\"").push_raw(v.to_str()).push_raw("\"")
-                Pattern(v) => out.push_raw(" pattern=\"").push_escaped(v).push_raw("\"")
-                Ping(v) => out.push_raw(" ping=\"").push_escaped(v).push_raw("\"")
-                Placeholder(v) => out.push_raw(" placeholder=\"").push_escaped(v).push_raw("\"")
-                Playsinline => out.push_raw(" playsinline")
-                Poster(v) => out.push_raw(" poster=\"").push_escaped(v).push_raw("\"")
+                Min(v) => out.attr("min", v)
+                Minlength(v) => out.attr_trusted("minlength", v.to_str())
+                Multiple => out.flag("multiple")
+                Muted => out.flag("muted")
+                Name(v) => out.attr("name", v)
+                Nomodule => out.flag("nomodule")
+                Novalidate => out.flag("novalidate")
+                ObjectData(v) => out.attr("data", v)
+                Open => out.flag("open")
+                Optimum(v) => out.attr_trusted("optimum", v.to_str())
+                Pattern(v) => out.attr("pattern", v)
+                Ping(v) => out.attr("ping", v)
+                Placeholder(v) => out.attr("placeholder", v)
+                Playsinline => out.flag("playsinline")
+                Poster(v) => out.attr("poster", v)
                 Preload(v) => {
                     word = match v {
                         None => "none"
                         Metadata => "metadata"
                         Auto => "auto"
                     }
-                    out.push_raw(" preload=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("preload", word)
                 }
-                Readonly => out.push_raw(" readonly")
+                Readonly => out.flag("readonly")
                 Referrerpolicy(v) => {
                     word = match v {
                         NoReferrer => "no-referrer"
@@ -1688,14 +1688,14 @@ Html := [
                         StrictOriginWhenCrossOrigin => "strict-origin-when-cross-origin"
                         UnsafeUrl => "unsafe-url"
                     }
-                    out.push_raw(" referrerpolicy=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("referrerpolicy", word)
                 }
-                Rel(v) => out.push_raw(" rel=\"").push_escaped(v).push_raw("\"")
-                Required => out.push_raw(" required")
-                Reversed => out.push_raw(" reversed")
-                Rows(v) => out.push_raw(" rows=\"").push_raw(v.to_str()).push_raw("\"")
-                Rowspan(v) => out.push_raw(" rowspan=\"").push_raw(v.to_str()).push_raw("\"")
-                Sandbox(v) => out.push_raw(" sandbox=\"").push_escaped(v).push_raw("\"")
+                Rel(v) => out.attr("rel", v)
+                Required => out.flag("required")
+                Reversed => out.flag("reversed")
+                Rows(v) => out.attr_trusted("rows", v.to_str())
+                Rowspan(v) => out.attr_trusted("rowspan", v.to_str())
+                Sandbox(v) => out.attr("sandbox", v)
                 Scope(v) => {
                     word = match v {
                         Row => "row"
@@ -1703,9 +1703,9 @@ Html := [
                         Rowgroup => "rowgroup"
                         Colgroup => "colgroup"
                     }
-                    out.push_raw(" scope=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("scope", word)
                 }
-                Selected => out.push_raw(" selected")
+                Selected => out.flag("selected")
                 Shape(v) => {
                     word = match v {
                         Rect => "rect"
@@ -1713,28 +1713,28 @@ Html := [
                         Poly => "poly"
                         Default => "default"
                     }
-                    out.push_raw(" shape=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("shape", word)
                 }
-                Size(v) => out.push_raw(" size=\"").push_raw(v.to_str()).push_raw("\"")
-                Sizes(v) => out.push_raw(" sizes=\"").push_escaped(v).push_raw("\"")
-                Span(v) => out.push_raw(" span=\"").push_raw(v.to_str()).push_raw("\"")
-                Src(v) => out.push_raw(" src=\"").push_escaped(v).push_raw("\"")
-                Srcdoc(v) => out.push_raw(" srcdoc=\"").push_escaped(v).push_raw("\"")
-                Srclang(v) => out.push_raw(" srclang=\"").push_escaped(v).push_raw("\"")
-                Srcset(v) => out.push_raw(" srcset=\"").push_escaped(v).push_raw("\"")
-                Start(v) => out.push_raw(" start=\"").push_raw(v.to_str()).push_raw("\"")
-                Step(v) => out.push_raw(" step=\"").push_escaped(v).push_raw("\"")
-                Target(v) => out.push_raw(" target=\"").push_escaped(v).push_raw("\"")
-                Type(v) => out.push_raw(" type=\"").push_escaped(v).push_raw("\"")
-                Usemap(v) => out.push_raw(" usemap=\"").push_escaped(v).push_raw("\"")
-                Value(v) => out.push_raw(" value=\"").push_escaped(v).push_raw("\"")
-                Width(v) => out.push_raw(" width=\"").push_raw(v.to_str()).push_raw("\"")
+                Size(v) => out.attr_trusted("size", v.to_str())
+                Sizes(v) => out.attr("sizes", v)
+                Span(v) => out.attr_trusted("span", v.to_str())
+                Src(v) => out.attr("src", v)
+                Srcdoc(v) => out.attr("srcdoc", v)
+                Srclang(v) => out.attr("srclang", v)
+                Srcset(v) => out.attr("srcset", v)
+                Start(v) => out.attr_trusted("start", v.to_str())
+                Step(v) => out.attr("step", v)
+                Target(v) => out.attr("target", v)
+                Type(v) => out.attr("type", v)
+                Usemap(v) => out.attr("usemap", v)
+                Value(v) => out.attr("value", v)
+                Width(v) => out.attr_trusted("width", v.to_str())
                 Wrap(v) => {
                     word = match v {
                         Soft => "soft"
                         Hard => "hard"
                     }
-                    out.push_raw(" wrap=\"").push_raw(word).push_raw("\"")
+                    out.attr_trusted("wrap", word)
                 }
                 other => Html.push_global_attr(out, other)
             }

@@ -42,6 +42,21 @@ SafeStr := [Safe(List(U8))].{
             }
         }
 
+    ## ` name="value"` — attribute with an untrusted value, escaped.
+    attr : SafeStr, Str, Str -> SafeStr
+    attr = |buf, name, value|
+        buf.push_raw(" ").push_raw(name).push_raw("=\"").push_escaped(value).push_raw("\"")
+
+    ## ` name="value"` — attribute with a trusted value (numbers, enum
+    ## words minted by this library) emitted raw.
+    attr_trusted : SafeStr, Str, Str -> SafeStr
+    attr_trusted = |buf, name, value|
+        buf.push_raw(" ").push_raw(name).push_raw("=\"").push_raw(value).push_raw("\"")
+
+    ## ` name` — boolean attribute, bare name, never `=""`.
+    flag : SafeStr, Str -> SafeStr
+    flag = |buf, name| buf.push_raw(" ").push_raw(name)
+
     ## Escaping only substitutes ASCII bytes for ASCII sequences, so the
     ## buffer is valid UTF-8 whenever the inputs were.
     to_str : SafeStr -> Str
@@ -54,3 +69,6 @@ SafeStr := [Safe(List(U8))].{
 expect SafeStr.with_capacity(8).push_escaped("<b>&\"'").to_str() == "&lt;b&gt;&amp;&quot;&#39;"
 expect SafeStr.with_capacity(0).push_raw("<b>").to_str() == "<b>"
 expect SafeStr.with_capacity(0).push_escaped("héllo").to_str() == "héllo"
+expect SafeStr.with_capacity(0).attr("class", "a<b").to_str() == " class=\"a&lt;b\""
+expect SafeStr.with_capacity(0).attr_trusted("colspan", "2").to_str() == " colspan=\"2\""
+expect SafeStr.with_capacity(0).flag("hidden").to_str() == " hidden"
