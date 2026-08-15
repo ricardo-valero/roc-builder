@@ -1,3 +1,4 @@
 *.wasm
 result
 .DS_Store
+*.tar.zst
