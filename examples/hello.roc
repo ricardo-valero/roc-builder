@@ -1,4 +1,4 @@
-# Port of the old roc-html fork's examples/example2.roc to roc-builder.
+# The document is a data literal: variants, no wrapper functions.
 # Run:  roc examples/hello.roc
 app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.21.0/4rAQg8kUYZ3Vksr4qMQHpaFYNiHSn9GgS7gVxghd1XYV.tar.zst",
@@ -7,22 +7,22 @@ app [main!] {
 
 import pf.Stdout
 import html.Html
-import html.Attribute
 
 main! = |_args| {
-    page = Html.html(
+    page : Html.Html
+    page = Html(
         [],
         [
-            Html.body(
+            Body(
                 [],
                 [
-                    Html.h1([], [Html.text("Roc")]),
-                    Html.p(
+                    H1([], [Text("Roc")]),
+                    P(
                         [],
                         [
-                            Html.text("My favourite language is "),
-                            Html.a([Attribute.href("https://roc-lang.org/")], [Html.text("Roc")]),
-                            Html.text("!"),
+                            Text("My favourite language is "),
+                            A([Href("https://roc-lang.org/")], [Text("Roc")]),
+                            Text("!"),
                         ],
                     ),
                 ],

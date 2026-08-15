@@ -32,38 +32,44 @@ roc test package/main.roc
 
 ## Html in 10 lines
 
+Documents are data literals — one variant per element, no wrapper functions,
+no prefixes inside the tree:
+
 ```roc
 import html.Html
-import html.Attribute
 
-page = Html.html([], [
-    Html.body([], [
-        Html.h1([], [Html.text("Roc")]),
-        Html.p([], [
-            Html.text("My favourite language is "),
-            Html.a([Attribute.href("https://roc-lang.org/")], [Html.text("Roc")]),
+page : Html.Html
+page = Html([], [
+    Body([], [
+        H1([], [Text("Roc")]),
+        P([], [
+            Text("My favourite language is "),
+            A([Href("https://roc-lang.org/")], [Text("Roc")]),
         ]),
     ]),
 ])
 # Html.render(page) == "<!DOCTYPE html><html>...</html>", text always escaped
 ```
 
-See `examples/hello.roc` for the runnable version.
-
-Void elements (`br`, `img`, ...) take no children — by type, not by runtime
-check. Boolean attributes render bare (`disabled`, never `disabled=""`).
-Custom elements and `data-*`/`aria-*` attributes have explicit escape hatches.
+Void elements (`Br`, `Img`, ...) have no children slot, so a void element
+with children is unrepresentable. Boolean attributes are payload-less
+variants (`Disabled`, never `disabled=""`). `CustomEl`/`Custom`/`Data`/`Aria`
+are the escape hatches; raw HTML requires the explicitly named
+`DangerousRaw`. See `examples/hello.roc` for the runnable version.
 
 ## Migrating from Hasnep/roc-html
 
-The `Html` module keeps the same Elm-style surface (`div([attrs], [children])`,
-`Attribute.href(...)`), so most documents port unchanged. Differences:
+The tree shape is identical (attrs list, children list) — the move is
+mechanical case changes:
 
-- void elements take a single `attrs` argument (no empty children list)
-- boolean attributes use flag constructors: `disabled` instead of `disabled("")`
-- `attribute("name")("value")` becomes `Attribute.custom("name", "value")`
-- Roc keywords force a few renames: `Attribute.for_`, `Attribute.type_`,
-  and the `<var>` element is `Html.var_`
+- elements are variants, not functions: `Html.p([], [...])` becomes `P([], [...])`
+- attributes too: `Attribute.href(v)` becomes `Href(v)`; boolean attributes
+  are bare variants (`disabled("")` becomes `Disabled`)
+- void elements take a single attrs argument (no empty children list)
+- `attribute("name")("value")` becomes `Custom("name", "value")`
+- `Html.dangerously_include_unescaped_html` becomes `DangerousRaw`
+- keyword clashes disappear: `Var`, `For(...)`, `Type(...)` are ordinary
+  variants (uppercase never collides with Roc keywords)
 
 ## Sql (experimental)
 
