@@ -1,3 +1,5 @@
+import /Html/AttrName exposing [AttrName]
+
 # HTML attributes.
 #
 # Two shapes: Valued(name, value) renders as ` name="value"` (value escaped),
@@ -9,8 +11,8 @@
 #
 # `for` and `type` are Roc keywords, so those constructors are `for_`/`type_`.
 Attribute := [
-    Valued(Str, Str),
-    Flag(Str),
+    Valued(AttrName, Str),
+    Flag(AttrName),
 ].{
     is_eq : Attribute, Attribute -> Bool
     is_eq = |x, y|
@@ -22,373 +24,373 @@ Attribute := [
 
     ## Non-standard valued attribute, name emitted verbatim.
     custom : Str, Str -> Attribute
-    custom = |attr_name, value| Valued(attr_name, value)
+    custom = |attr_name, value| Valued(Custom(attr_name), value)
 
     ## Non-standard boolean attribute, name emitted verbatim.
     flag : Str -> Attribute
-    flag = |attr_name| Flag(attr_name)
+    flag = |attr_name| Flag(Custom(attr_name))
 
     ## `data-<suffix>="value"`
     data : Str, Str -> Attribute
-    data = |suffix, value| Valued("data-${suffix}", value)
+    data = |suffix, value| Valued(Custom("data-${suffix}"), value)
 
     ## `aria-<suffix>="value"`
     aria : Str, Str -> Attribute
-    aria = |suffix, value| Valued("aria-${suffix}", value)
+    aria = |suffix, value| Valued(Custom("aria-${suffix}"), value)
 
     ## Join multiple class names with spaces into one `class` attribute.
     classes : List(Str) -> Attribute
-    classes = |names| Valued("class", Str.join_with(names, " "))
+    classes = |names| Valued(Class, Str.join_with(names, " "))
 
     # Valued standard attributes
 
     accept : Str -> Attribute
-    accept = |v| Valued("accept", v)
+    accept = |v| Valued(Accept, v)
 
     accept_charset : Str -> Attribute
-    accept_charset = |v| Valued("accept-charset", v)
+    accept_charset = |v| Valued(AcceptCharset, v)
 
     accesskey : Str -> Attribute
-    accesskey = |v| Valued("accesskey", v)
+    accesskey = |v| Valued(Accesskey, v)
 
     action : Str -> Attribute
-    action = |v| Valued("action", v)
+    action = |v| Valued(Action, v)
 
     allow : Str -> Attribute
-    allow = |v| Valued("allow", v)
+    allow = |v| Valued(Allow, v)
 
     alt : Str -> Attribute
-    alt = |v| Valued("alt", v)
+    alt = |v| Valued(Alt, v)
 
     autocapitalize : Str -> Attribute
-    autocapitalize = |v| Valued("autocapitalize", v)
+    autocapitalize = |v| Valued(Autocapitalize, v)
 
     autocomplete : Str -> Attribute
-    autocomplete = |v| Valued("autocomplete", v)
+    autocomplete = |v| Valued(Autocomplete, v)
 
     capture : Str -> Attribute
-    capture = |v| Valued("capture", v)
+    capture = |v| Valued(Capture, v)
 
     charset : Str -> Attribute
-    charset = |v| Valued("charset", v)
+    charset = |v| Valued(Charset, v)
 
     cite : Str -> Attribute
-    cite = |v| Valued("cite", v)
+    cite = |v| Valued(Cite, v)
 
     class : Str -> Attribute
-    class = |v| Valued("class", v)
+    class = |v| Valued(Class, v)
 
     cols : Str -> Attribute
-    cols = |v| Valued("cols", v)
+    cols = |v| Valued(Cols, v)
 
     colspan : Str -> Attribute
-    colspan = |v| Valued("colspan", v)
+    colspan = |v| Valued(Colspan, v)
 
     content : Str -> Attribute
-    content = |v| Valued("content", v)
+    content = |v| Valued(Content, v)
 
     contenteditable : Str -> Attribute
-    contenteditable = |v| Valued("contenteditable", v)
+    contenteditable = |v| Valued(Contenteditable, v)
 
     coords : Str -> Attribute
-    coords = |v| Valued("coords", v)
+    coords = |v| Valued(Coords, v)
 
     crossorigin : Str -> Attribute
-    crossorigin = |v| Valued("crossorigin", v)
+    crossorigin = |v| Valued(Crossorigin, v)
 
     datetime : Str -> Attribute
-    datetime = |v| Valued("datetime", v)
+    datetime = |v| Valued(Datetime, v)
 
     decoding : Str -> Attribute
-    decoding = |v| Valued("decoding", v)
+    decoding = |v| Valued(Decoding, v)
 
     dir : Str -> Attribute
-    dir = |v| Valued("dir", v)
+    dir = |v| Valued(Dir, v)
 
     dirname : Str -> Attribute
-    dirname = |v| Valued("dirname", v)
+    dirname = |v| Valued(Dirname, v)
 
     download : Str -> Attribute
-    download = |v| Valued("download", v)
+    download = |v| Valued(Download, v)
 
     draggable : Str -> Attribute
-    draggable = |v| Valued("draggable", v)
+    draggable = |v| Valued(Draggable, v)
 
     enctype : Str -> Attribute
-    enctype = |v| Valued("enctype", v)
+    enctype = |v| Valued(Enctype, v)
 
     enterkeyhint : Str -> Attribute
-    enterkeyhint = |v| Valued("enterkeyhint", v)
+    enterkeyhint = |v| Valued(Enterkeyhint, v)
 
     ## `for` — named with a trailing underscore because `for` is a Roc keyword.
     for_ : Str -> Attribute
-    for_ = |v| Valued("for", v)
+    for_ = |v| Valued(For, v)
 
     form : Str -> Attribute
-    form = |v| Valued("form", v)
+    form = |v| Valued(Form, v)
 
     formaction : Str -> Attribute
-    formaction = |v| Valued("formaction", v)
+    formaction = |v| Valued(Formaction, v)
 
     formenctype : Str -> Attribute
-    formenctype = |v| Valued("formenctype", v)
+    formenctype = |v| Valued(Formenctype, v)
 
     formmethod : Str -> Attribute
-    formmethod = |v| Valued("formmethod", v)
+    formmethod = |v| Valued(Formmethod, v)
 
     formtarget : Str -> Attribute
-    formtarget = |v| Valued("formtarget", v)
+    formtarget = |v| Valued(Formtarget, v)
 
     headers : Str -> Attribute
-    headers = |v| Valued("headers", v)
+    headers = |v| Valued(Headers, v)
 
     height : Str -> Attribute
-    height = |v| Valued("height", v)
+    height = |v| Valued(Height, v)
 
     high : Str -> Attribute
-    high = |v| Valued("high", v)
+    high = |v| Valued(High, v)
 
     href : Str -> Attribute
-    href = |v| Valued("href", v)
+    href = |v| Valued(Href, v)
 
     hreflang : Str -> Attribute
-    hreflang = |v| Valued("hreflang", v)
+    hreflang = |v| Valued(Hreflang, v)
 
     http_equiv : Str -> Attribute
-    http_equiv = |v| Valued("http-equiv", v)
+    http_equiv = |v| Valued(HttpEquiv, v)
 
     id : Str -> Attribute
-    id = |v| Valued("id", v)
+    id = |v| Valued(Id, v)
 
     inputmode : Str -> Attribute
-    inputmode = |v| Valued("inputmode", v)
+    inputmode = |v| Valued(Inputmode, v)
 
     integrity : Str -> Attribute
-    integrity = |v| Valued("integrity", v)
+    integrity = |v| Valued(Integrity, v)
 
     itemprop : Str -> Attribute
-    itemprop = |v| Valued("itemprop", v)
+    itemprop = |v| Valued(Itemprop, v)
 
     kind : Str -> Attribute
-    kind = |v| Valued("kind", v)
+    kind = |v| Valued(Kind, v)
 
     label : Str -> Attribute
-    label = |v| Valued("label", v)
+    label = |v| Valued(Label, v)
 
     lang : Str -> Attribute
-    lang = |v| Valued("lang", v)
+    lang = |v| Valued(Lang, v)
 
     list : Str -> Attribute
-    list = |v| Valued("list", v)
+    list = |v| Valued(List, v)
 
     loading : Str -> Attribute
-    loading = |v| Valued("loading", v)
+    loading = |v| Valued(Loading, v)
 
     low : Str -> Attribute
-    low = |v| Valued("low", v)
+    low = |v| Valued(Low, v)
 
     max : Str -> Attribute
-    max = |v| Valued("max", v)
+    max = |v| Valued(Max, v)
 
     maxlength : Str -> Attribute
-    maxlength = |v| Valued("maxlength", v)
+    maxlength = |v| Valued(Maxlength, v)
 
     media : Str -> Attribute
-    media = |v| Valued("media", v)
+    media = |v| Valued(Media, v)
 
     method : Str -> Attribute
-    method = |v| Valued("method", v)
+    method = |v| Valued(Method, v)
 
     min : Str -> Attribute
-    min = |v| Valued("min", v)
+    min = |v| Valued(Min, v)
 
     minlength : Str -> Attribute
-    minlength = |v| Valued("minlength", v)
+    minlength = |v| Valued(Minlength, v)
 
     name : Str -> Attribute
-    name = |v| Valued("name", v)
+    name = |v| Valued(Name, v)
 
     optimum : Str -> Attribute
-    optimum = |v| Valued("optimum", v)
+    optimum = |v| Valued(Optimum, v)
 
     pattern : Str -> Attribute
-    pattern = |v| Valued("pattern", v)
+    pattern = |v| Valued(Pattern, v)
 
     ping : Str -> Attribute
-    ping = |v| Valued("ping", v)
+    ping = |v| Valued(Ping, v)
 
     placeholder : Str -> Attribute
-    placeholder = |v| Valued("placeholder", v)
+    placeholder = |v| Valued(Placeholder, v)
 
     poster : Str -> Attribute
-    poster = |v| Valued("poster", v)
+    poster = |v| Valued(Poster, v)
 
     preload : Str -> Attribute
-    preload = |v| Valued("preload", v)
+    preload = |v| Valued(Preload, v)
 
     referrerpolicy : Str -> Attribute
-    referrerpolicy = |v| Valued("referrerpolicy", v)
+    referrerpolicy = |v| Valued(Referrerpolicy, v)
 
     rel : Str -> Attribute
-    rel = |v| Valued("rel", v)
+    rel = |v| Valued(Rel, v)
 
     role : Str -> Attribute
-    role = |v| Valued("role", v)
+    role = |v| Valued(Role, v)
 
     rows : Str -> Attribute
-    rows = |v| Valued("rows", v)
+    rows = |v| Valued(Rows, v)
 
     rowspan : Str -> Attribute
-    rowspan = |v| Valued("rowspan", v)
+    rowspan = |v| Valued(Rowspan, v)
 
     sandbox : Str -> Attribute
-    sandbox = |v| Valued("sandbox", v)
+    sandbox = |v| Valued(Sandbox, v)
 
     scope : Str -> Attribute
-    scope = |v| Valued("scope", v)
+    scope = |v| Valued(Scope, v)
 
     shape : Str -> Attribute
-    shape = |v| Valued("shape", v)
+    shape = |v| Valued(Shape, v)
 
     size : Str -> Attribute
-    size = |v| Valued("size", v)
+    size = |v| Valued(Size, v)
 
     sizes : Str -> Attribute
-    sizes = |v| Valued("sizes", v)
+    sizes = |v| Valued(Sizes, v)
 
     slot : Str -> Attribute
-    slot = |v| Valued("slot", v)
+    slot = |v| Valued(Slot, v)
 
     span : Str -> Attribute
-    span = |v| Valued("span", v)
+    span = |v| Valued(Span, v)
 
     spellcheck : Str -> Attribute
-    spellcheck = |v| Valued("spellcheck", v)
+    spellcheck = |v| Valued(Spellcheck, v)
 
     src : Str -> Attribute
-    src = |v| Valued("src", v)
+    src = |v| Valued(Src, v)
 
     srcdoc : Str -> Attribute
-    srcdoc = |v| Valued("srcdoc", v)
+    srcdoc = |v| Valued(Srcdoc, v)
 
     srclang : Str -> Attribute
-    srclang = |v| Valued("srclang", v)
+    srclang = |v| Valued(Srclang, v)
 
     srcset : Str -> Attribute
-    srcset = |v| Valued("srcset", v)
+    srcset = |v| Valued(Srcset, v)
 
     start : Str -> Attribute
-    start = |v| Valued("start", v)
+    start = |v| Valued(Start, v)
 
     step : Str -> Attribute
-    step = |v| Valued("step", v)
+    step = |v| Valued(Step, v)
 
     style : Str -> Attribute
-    style = |v| Valued("style", v)
+    style = |v| Valued(Style, v)
 
     tabindex : Str -> Attribute
-    tabindex = |v| Valued("tabindex", v)
+    tabindex = |v| Valued(Tabindex, v)
 
     target : Str -> Attribute
-    target = |v| Valued("target", v)
+    target = |v| Valued(Target, v)
 
     title : Str -> Attribute
-    title = |v| Valued("title", v)
+    title = |v| Valued(Title, v)
 
     translate : Str -> Attribute
-    translate = |v| Valued("translate", v)
+    translate = |v| Valued(Translate, v)
 
     ## `type` — named with a trailing underscore because `type` is a Roc keyword.
     type_ : Str -> Attribute
-    type_ = |v| Valued("type", v)
+    type_ = |v| Valued(Type, v)
 
     usemap : Str -> Attribute
-    usemap = |v| Valued("usemap", v)
+    usemap = |v| Valued(Usemap, v)
 
     value : Str -> Attribute
-    value = |v| Valued("value", v)
+    value = |v| Valued(Value, v)
 
     width : Str -> Attribute
-    width = |v| Valued("width", v)
+    width = |v| Valued(Width, v)
 
     wrap : Str -> Attribute
-    wrap = |v| Valued("wrap", v)
+    wrap = |v| Valued(Wrap, v)
 
     # Boolean (flag) attributes — render as the bare name
 
     async : Attribute
-    async = Flag("async")
+    async = Flag(Async)
 
     autofocus : Attribute
-    autofocus = Flag("autofocus")
+    autofocus = Flag(Autofocus)
 
     autoplay : Attribute
-    autoplay = Flag("autoplay")
+    autoplay = Flag(Autoplay)
 
     checked : Attribute
-    checked = Flag("checked")
+    checked = Flag(Checked)
 
     controls : Attribute
-    controls = Flag("controls")
+    controls = Flag(Controls)
 
     default : Attribute
-    default = Flag("default")
+    default = Flag(Default)
 
     defer : Attribute
-    defer = Flag("defer")
+    defer = Flag(Defer)
 
     disabled : Attribute
-    disabled = Flag("disabled")
+    disabled = Flag(Disabled)
 
     hidden : Attribute
-    hidden = Flag("hidden")
+    hidden = Flag(Hidden)
 
     inert : Attribute
-    inert = Flag("inert")
+    inert = Flag(Inert)
 
     ismap : Attribute
-    ismap = Flag("ismap")
+    ismap = Flag(Ismap)
 
     itemscope : Attribute
-    itemscope = Flag("itemscope")
+    itemscope = Flag(Itemscope)
 
     loop : Attribute
-    loop = Flag("loop")
+    loop = Flag(Loop)
 
     multiple : Attribute
-    multiple = Flag("multiple")
+    multiple = Flag(Multiple)
 
     muted : Attribute
-    muted = Flag("muted")
+    muted = Flag(Muted)
 
     nomodule : Attribute
-    nomodule = Flag("nomodule")
+    nomodule = Flag(Nomodule)
 
     novalidate : Attribute
-    novalidate = Flag("novalidate")
+    novalidate = Flag(Novalidate)
 
     open : Attribute
-    open = Flag("open")
+    open = Flag(Open)
 
     playsinline : Attribute
-    playsinline = Flag("playsinline")
+    playsinline = Flag(Playsinline)
 
     readonly : Attribute
-    readonly = Flag("readonly")
+    readonly = Flag(Readonly)
 
     required : Attribute
-    required = Flag("required")
+    required = Flag(Required)
 
     reversed : Attribute
-    reversed = Flag("reversed")
+    reversed = Flag(Reversed)
 
     selected : Attribute
-    selected = Flag("selected")
+    selected = Flag(Selected)
 }
 
-expect Attribute.href("x") == Valued("href", "x")
-expect Attribute.disabled == Flag("disabled")
-expect Attribute.data("count", "3") == Valued("data-count", "3")
-expect Attribute.aria("label", "Close") == Valued("aria-label", "Close")
-expect Attribute.classes(["a", "b"]) == Valued("class", "a b")
-expect Attribute.for_("name") == Valued("for", "name")
+expect Attribute.href("x") == Valued(Href, "x")
+expect Attribute.disabled == Flag(Disabled)
+expect Attribute.data("count", "3") == Valued(Custom("data-count"), "3")
+expect Attribute.aria("label", "Close") == Valued(Custom("aria-label"), "Close")
+expect Attribute.classes(["a", "b"]) == Valued(Class, "a b")
+expect Attribute.for_("name") == Valued(For, "name")

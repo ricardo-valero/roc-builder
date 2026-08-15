@@ -71,9 +71,9 @@ Html := [
         while i < attrs.len() {
             total = total
                 + (
-                    match attrs.get(i) ?? Flag("") {
-                        Valued(attr_name, value) => 4 + attr_name.to_utf8().len() + value.to_utf8().len()
-                        Flag(attr_name) => 1 + attr_name.to_utf8().len()
+                    match attrs.get(i) ?? Flag(Custom("")) {
+                        Valued(attr_name, value) => 4 + attr_name.to_str().to_utf8().len() + value.to_utf8().len()
+                        Flag(attr_name) => 1 + attr_name.to_str().to_utf8().len()
                     }
                 )
             i = i + 1
@@ -108,10 +108,10 @@ Html := [
         var out = buf
         var i = 0.U64
         while i < attrs.len() {
-            out = match attrs.get(i) ?? Flag("") {
+            out = match attrs.get(i) ?? Flag(Custom("")) {
                 Valued(attr_name, value) =>
-                    out.push_raw(" ").push_raw(attr_name).push_raw("=\"").push_escaped(value).push_raw("\"")
-                Flag(attr_name) => out.push_raw(" ").push_raw(attr_name)
+                    out.push_raw(" ").push_raw(attr_name.to_str()).push_raw("=\"").push_escaped(value).push_raw("\"")
+                Flag(attr_name) => out.push_raw(" ").push_raw(attr_name.to_str())
             }
             i = i + 1
         }
