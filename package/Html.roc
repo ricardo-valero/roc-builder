@@ -1,9 +1,9 @@
 # Hand-curated source. The WHATWG applicability tables ARE this file:
 #   - GlobalAttrs below = the global attributes (+ Custom/Data/Aria hatches)
 #   - each element variant's set = globals + that element's own attributes
-#   - push_global_attr = how every global renders (written once)
+#   - attr_global = how every global renders (written once)
 #   - each attrs_g* emitter = how one element family's specifics render
-# To add a global attribute: extend GlobalAttrs and add one push_global_attr
+# To add a global attribute: extend GlobalAttrs and add one attr_global
 # arm. To add an element-specific attribute: extend that element's set and
 # its emitter. (This file was originally bootstrapped by a generator —
 # git log gen/ — now retired in favor of direct curation.)
@@ -337,37 +337,37 @@ Html := [
     render_help : Html, SafeStr -> SafeStr
     render_help = |node, buf|
         match node {
-            Html(attrs, kids) => Html.emit_el(buf, "html", attrs, kids, Html.push_global_attrs)
-            Body(attrs, kids) => Html.emit_el(buf, "body", attrs, kids, Html.push_global_attrs)
-            Address(attrs, kids) => Html.emit_el(buf, "address", attrs, kids, Html.push_global_attrs)
-            Article(attrs, kids) => Html.emit_el(buf, "article", attrs, kids, Html.push_global_attrs)
-            Aside(attrs, kids) => Html.emit_el(buf, "aside", attrs, kids, Html.push_global_attrs)
-            Footer(attrs, kids) => Html.emit_el(buf, "footer", attrs, kids, Html.push_global_attrs)
-            H1(attrs, kids) => Html.emit_el(buf, "h1", attrs, kids, Html.push_global_attrs)
-            H2(attrs, kids) => Html.emit_el(buf, "h2", attrs, kids, Html.push_global_attrs)
-            H3(attrs, kids) => Html.emit_el(buf, "h3", attrs, kids, Html.push_global_attrs)
-            H4(attrs, kids) => Html.emit_el(buf, "h4", attrs, kids, Html.push_global_attrs)
-            H5(attrs, kids) => Html.emit_el(buf, "h5", attrs, kids, Html.push_global_attrs)
-            H6(attrs, kids) => Html.emit_el(buf, "h6", attrs, kids, Html.push_global_attrs)
-            Header(attrs, kids) => Html.emit_el(buf, "header", attrs, kids, Html.push_global_attrs)
-            Main(attrs, kids) => Html.emit_el(buf, "main", attrs, kids, Html.push_global_attrs)
-            Nav(attrs, kids) => Html.emit_el(buf, "nav", attrs, kids, Html.push_global_attrs)
-            Section(attrs, kids) => Html.emit_el(buf, "section", attrs, kids, Html.push_global_attrs)
+            Html(attrs, kids) => Html.emit_el(buf, "html", attrs, kids, Html.attrs_global)
+            Body(attrs, kids) => Html.emit_el(buf, "body", attrs, kids, Html.attrs_global)
+            Address(attrs, kids) => Html.emit_el(buf, "address", attrs, kids, Html.attrs_global)
+            Article(attrs, kids) => Html.emit_el(buf, "article", attrs, kids, Html.attrs_global)
+            Aside(attrs, kids) => Html.emit_el(buf, "aside", attrs, kids, Html.attrs_global)
+            Footer(attrs, kids) => Html.emit_el(buf, "footer", attrs, kids, Html.attrs_global)
+            H1(attrs, kids) => Html.emit_el(buf, "h1", attrs, kids, Html.attrs_global)
+            H2(attrs, kids) => Html.emit_el(buf, "h2", attrs, kids, Html.attrs_global)
+            H3(attrs, kids) => Html.emit_el(buf, "h3", attrs, kids, Html.attrs_global)
+            H4(attrs, kids) => Html.emit_el(buf, "h4", attrs, kids, Html.attrs_global)
+            H5(attrs, kids) => Html.emit_el(buf, "h5", attrs, kids, Html.attrs_global)
+            H6(attrs, kids) => Html.emit_el(buf, "h6", attrs, kids, Html.attrs_global)
+            Header(attrs, kids) => Html.emit_el(buf, "header", attrs, kids, Html.attrs_global)
+            Main(attrs, kids) => Html.emit_el(buf, "main", attrs, kids, Html.attrs_global)
+            Nav(attrs, kids) => Html.emit_el(buf, "nav", attrs, kids, Html.attrs_global)
+            Section(attrs, kids) => Html.emit_el(buf, "section", attrs, kids, Html.attrs_global)
             Del(attrs, kids) => Html.emit_el(buf, "del", attrs, kids, Html.attrs_g1)
             Ins(attrs, kids) => Html.emit_el(buf, "ins", attrs, kids, Html.attrs_g1)
-            Head(attrs, kids) => Html.emit_el(buf, "head", attrs, kids, Html.push_global_attrs)
+            Head(attrs, kids) => Html.emit_el(buf, "head", attrs, kids, Html.attrs_global)
             Style(attrs, kids) => Html.emit_el(buf, "style", attrs, kids, Html.attrs_g2)
-            Title(attrs, kids) => Html.emit_el(buf, "title", attrs, kids, Html.push_global_attrs)
+            Title(attrs, kids) => Html.emit_el(buf, "title", attrs, kids, Html.attrs_global)
             Iframe(attrs, kids) => Html.emit_el(buf, "iframe", attrs, kids, Html.attrs_g3)
             Object(attrs, kids) => Html.emit_el(buf, "object", attrs, kids, Html.attrs_g4)
-            Picture(attrs, kids) => Html.emit_el(buf, "picture", attrs, kids, Html.push_global_attrs)
+            Picture(attrs, kids) => Html.emit_el(buf, "picture", attrs, kids, Html.attrs_global)
             Portal(attrs, kids) => Html.emit_el(buf, "portal", attrs, kids, Html.attrs_g5)
             Button(attrs, kids) => Html.emit_el(buf, "button", attrs, kids, Html.attrs_g6)
-            Datalist(attrs, kids) => Html.emit_el(buf, "datalist", attrs, kids, Html.push_global_attrs)
+            Datalist(attrs, kids) => Html.emit_el(buf, "datalist", attrs, kids, Html.attrs_global)
             Fieldset(attrs, kids) => Html.emit_el(buf, "fieldset", attrs, kids, Html.attrs_g7)
             Form(attrs, kids) => Html.emit_el(buf, "form", attrs, kids, Html.attrs_g8)
             Label(attrs, kids) => Html.emit_el(buf, "label", attrs, kids, Html.attrs_g9)
-            Legend(attrs, kids) => Html.emit_el(buf, "legend", attrs, kids, Html.push_global_attrs)
+            Legend(attrs, kids) => Html.emit_el(buf, "legend", attrs, kids, Html.attrs_global)
             Meter(attrs, kids) => Html.emit_el(buf, "meter", attrs, kids, Html.attrs_g10)
             Optgroup(attrs, kids) => Html.emit_el(buf, "optgroup", attrs, kids, Html.attrs_g11)
             Option(attrs, kids) => Html.emit_el(buf, "option", attrs, kids, Html.attrs_g12)
@@ -379,77 +379,77 @@ Html := [
             Map(attrs, kids) => Html.emit_el(buf, "map", attrs, kids, Html.attrs_g18)
             Video(attrs, kids) => Html.emit_el(buf, "video", attrs, kids, Html.attrs_g19)
             A(attrs, kids) => Html.emit_el(buf, "a", attrs, kids, Html.attrs_g20)
-            Abbr(attrs, kids) => Html.emit_el(buf, "abbr", attrs, kids, Html.push_global_attrs)
-            B(attrs, kids) => Html.emit_el(buf, "b", attrs, kids, Html.push_global_attrs)
-            Bdi(attrs, kids) => Html.emit_el(buf, "bdi", attrs, kids, Html.push_global_attrs)
-            Bdo(attrs, kids) => Html.emit_el(buf, "bdo", attrs, kids, Html.push_global_attrs)
-            Cite(attrs, kids) => Html.emit_el(buf, "cite", attrs, kids, Html.push_global_attrs)
-            Code(attrs, kids) => Html.emit_el(buf, "code", attrs, kids, Html.push_global_attrs)
+            Abbr(attrs, kids) => Html.emit_el(buf, "abbr", attrs, kids, Html.attrs_global)
+            B(attrs, kids) => Html.emit_el(buf, "b", attrs, kids, Html.attrs_global)
+            Bdi(attrs, kids) => Html.emit_el(buf, "bdi", attrs, kids, Html.attrs_global)
+            Bdo(attrs, kids) => Html.emit_el(buf, "bdo", attrs, kids, Html.attrs_global)
+            Cite(attrs, kids) => Html.emit_el(buf, "cite", attrs, kids, Html.attrs_global)
+            Code(attrs, kids) => Html.emit_el(buf, "code", attrs, kids, Html.attrs_global)
             Data(attrs, kids) => Html.emit_el(buf, "data", attrs, kids, Html.attrs_g21)
-            Dfn(attrs, kids) => Html.emit_el(buf, "dfn", attrs, kids, Html.push_global_attrs)
-            Em(attrs, kids) => Html.emit_el(buf, "em", attrs, kids, Html.push_global_attrs)
-            I(attrs, kids) => Html.emit_el(buf, "i", attrs, kids, Html.push_global_attrs)
-            Kbd(attrs, kids) => Html.emit_el(buf, "kbd", attrs, kids, Html.push_global_attrs)
-            Mark(attrs, kids) => Html.emit_el(buf, "mark", attrs, kids, Html.push_global_attrs)
+            Dfn(attrs, kids) => Html.emit_el(buf, "dfn", attrs, kids, Html.attrs_global)
+            Em(attrs, kids) => Html.emit_el(buf, "em", attrs, kids, Html.attrs_global)
+            I(attrs, kids) => Html.emit_el(buf, "i", attrs, kids, Html.attrs_global)
+            Kbd(attrs, kids) => Html.emit_el(buf, "kbd", attrs, kids, Html.attrs_global)
+            Mark(attrs, kids) => Html.emit_el(buf, "mark", attrs, kids, Html.attrs_global)
             Q(attrs, kids) => Html.emit_el(buf, "q", attrs, kids, Html.attrs_g22)
-            Rp(attrs, kids) => Html.emit_el(buf, "rp", attrs, kids, Html.push_global_attrs)
-            Rt(attrs, kids) => Html.emit_el(buf, "rt", attrs, kids, Html.push_global_attrs)
-            Ruby(attrs, kids) => Html.emit_el(buf, "ruby", attrs, kids, Html.push_global_attrs)
-            S(attrs, kids) => Html.emit_el(buf, "s", attrs, kids, Html.push_global_attrs)
-            Samp(attrs, kids) => Html.emit_el(buf, "samp", attrs, kids, Html.push_global_attrs)
-            Small(attrs, kids) => Html.emit_el(buf, "small", attrs, kids, Html.push_global_attrs)
-            Span(attrs, kids) => Html.emit_el(buf, "span", attrs, kids, Html.push_global_attrs)
-            Strong(attrs, kids) => Html.emit_el(buf, "strong", attrs, kids, Html.push_global_attrs)
-            Sub(attrs, kids) => Html.emit_el(buf, "sub", attrs, kids, Html.push_global_attrs)
-            Sup(attrs, kids) => Html.emit_el(buf, "sup", attrs, kids, Html.push_global_attrs)
+            Rp(attrs, kids) => Html.emit_el(buf, "rp", attrs, kids, Html.attrs_global)
+            Rt(attrs, kids) => Html.emit_el(buf, "rt", attrs, kids, Html.attrs_global)
+            Ruby(attrs, kids) => Html.emit_el(buf, "ruby", attrs, kids, Html.attrs_global)
+            S(attrs, kids) => Html.emit_el(buf, "s", attrs, kids, Html.attrs_global)
+            Samp(attrs, kids) => Html.emit_el(buf, "samp", attrs, kids, Html.attrs_global)
+            Small(attrs, kids) => Html.emit_el(buf, "small", attrs, kids, Html.attrs_global)
+            Span(attrs, kids) => Html.emit_el(buf, "span", attrs, kids, Html.attrs_global)
+            Strong(attrs, kids) => Html.emit_el(buf, "strong", attrs, kids, Html.attrs_global)
+            Sub(attrs, kids) => Html.emit_el(buf, "sub", attrs, kids, Html.attrs_global)
+            Sup(attrs, kids) => Html.emit_el(buf, "sup", attrs, kids, Html.attrs_global)
             Time(attrs, kids) => Html.emit_el(buf, "time", attrs, kids, Html.attrs_g23)
-            U(attrs, kids) => Html.emit_el(buf, "u", attrs, kids, Html.push_global_attrs)
-            Var(attrs, kids) => Html.emit_el(buf, "var", attrs, kids, Html.push_global_attrs)
+            U(attrs, kids) => Html.emit_el(buf, "u", attrs, kids, Html.attrs_global)
+            Var(attrs, kids) => Html.emit_el(buf, "var", attrs, kids, Html.attrs_global)
             Details(attrs, kids) => Html.emit_el(buf, "details", attrs, kids, Html.attrs_g24)
             Dialog(attrs, kids) => Html.emit_el(buf, "dialog", attrs, kids, Html.attrs_g24)
-            Summary(attrs, kids) => Html.emit_el(buf, "summary", attrs, kids, Html.push_global_attrs)
-            Math(attrs, kids) => Html.emit_el(buf, "math", attrs, kids, Html.push_global_attrs)
-            Svg(attrs, kids) => Html.emit_el(buf, "svg", attrs, kids, Html.push_global_attrs)
+            Summary(attrs, kids) => Html.emit_el(buf, "summary", attrs, kids, Html.attrs_global)
+            Math(attrs, kids) => Html.emit_el(buf, "math", attrs, kids, Html.attrs_global)
+            Svg(attrs, kids) => Html.emit_el(buf, "svg", attrs, kids, Html.attrs_global)
             Canvas(attrs, kids) => Html.emit_el(buf, "canvas", attrs, kids, Html.attrs_g25)
-            Noscript(attrs, kids) => Html.emit_el(buf, "noscript", attrs, kids, Html.push_global_attrs)
+            Noscript(attrs, kids) => Html.emit_el(buf, "noscript", attrs, kids, Html.attrs_global)
             Script(attrs, kids) => Html.emit_el(buf, "script", attrs, kids, Html.attrs_g26)
-            Caption(attrs, kids) => Html.emit_el(buf, "caption", attrs, kids, Html.push_global_attrs)
+            Caption(attrs, kids) => Html.emit_el(buf, "caption", attrs, kids, Html.attrs_global)
             Colgroup(attrs, kids) => Html.emit_el(buf, "colgroup", attrs, kids, Html.attrs_g27)
-            Table(attrs, kids) => Html.emit_el(buf, "table", attrs, kids, Html.push_global_attrs)
-            Tbody(attrs, kids) => Html.emit_el(buf, "tbody", attrs, kids, Html.push_global_attrs)
+            Table(attrs, kids) => Html.emit_el(buf, "table", attrs, kids, Html.attrs_global)
+            Tbody(attrs, kids) => Html.emit_el(buf, "tbody", attrs, kids, Html.attrs_global)
             Td(attrs, kids) => Html.emit_el(buf, "td", attrs, kids, Html.attrs_g28)
-            Tfoot(attrs, kids) => Html.emit_el(buf, "tfoot", attrs, kids, Html.push_global_attrs)
+            Tfoot(attrs, kids) => Html.emit_el(buf, "tfoot", attrs, kids, Html.attrs_global)
             Th(attrs, kids) => Html.emit_el(buf, "th", attrs, kids, Html.attrs_g29)
-            Thead(attrs, kids) => Html.emit_el(buf, "thead", attrs, kids, Html.push_global_attrs)
-            Tr(attrs, kids) => Html.emit_el(buf, "tr", attrs, kids, Html.push_global_attrs)
+            Thead(attrs, kids) => Html.emit_el(buf, "thead", attrs, kids, Html.attrs_global)
+            Tr(attrs, kids) => Html.emit_el(buf, "tr", attrs, kids, Html.attrs_global)
             Blockquote(attrs, kids) => Html.emit_el(buf, "blockquote", attrs, kids, Html.attrs_g22)
-            Dd(attrs, kids) => Html.emit_el(buf, "dd", attrs, kids, Html.push_global_attrs)
-            Div(attrs, kids) => Html.emit_el(buf, "div", attrs, kids, Html.push_global_attrs)
-            Dl(attrs, kids) => Html.emit_el(buf, "dl", attrs, kids, Html.push_global_attrs)
-            Dt(attrs, kids) => Html.emit_el(buf, "dt", attrs, kids, Html.push_global_attrs)
-            Figcaption(attrs, kids) => Html.emit_el(buf, "figcaption", attrs, kids, Html.push_global_attrs)
-            Figure(attrs, kids) => Html.emit_el(buf, "figure", attrs, kids, Html.push_global_attrs)
+            Dd(attrs, kids) => Html.emit_el(buf, "dd", attrs, kids, Html.attrs_global)
+            Div(attrs, kids) => Html.emit_el(buf, "div", attrs, kids, Html.attrs_global)
+            Dl(attrs, kids) => Html.emit_el(buf, "dl", attrs, kids, Html.attrs_global)
+            Dt(attrs, kids) => Html.emit_el(buf, "dt", attrs, kids, Html.attrs_global)
+            Figcaption(attrs, kids) => Html.emit_el(buf, "figcaption", attrs, kids, Html.attrs_global)
+            Figure(attrs, kids) => Html.emit_el(buf, "figure", attrs, kids, Html.attrs_global)
             Li(attrs, kids) => Html.emit_el(buf, "li", attrs, kids, Html.attrs_g21)
-            Menu(attrs, kids) => Html.emit_el(buf, "menu", attrs, kids, Html.push_global_attrs)
+            Menu(attrs, kids) => Html.emit_el(buf, "menu", attrs, kids, Html.attrs_global)
             Ol(attrs, kids) => Html.emit_el(buf, "ol", attrs, kids, Html.attrs_g30)
-            P(attrs, kids) => Html.emit_el(buf, "p", attrs, kids, Html.push_global_attrs)
-            Pre(attrs, kids) => Html.emit_el(buf, "pre", attrs, kids, Html.push_global_attrs)
-            Ul(attrs, kids) => Html.emit_el(buf, "ul", attrs, kids, Html.push_global_attrs)
+            P(attrs, kids) => Html.emit_el(buf, "p", attrs, kids, Html.attrs_global)
+            Pre(attrs, kids) => Html.emit_el(buf, "pre", attrs, kids, Html.attrs_global)
+            Ul(attrs, kids) => Html.emit_el(buf, "ul", attrs, kids, Html.attrs_global)
             Slot(attrs, kids) => Html.emit_el(buf, "slot", attrs, kids, Html.attrs_g18)
-            Template(attrs, kids) => Html.emit_el(buf, "template", attrs, kids, Html.push_global_attrs)
+            Template(attrs, kids) => Html.emit_el(buf, "template", attrs, kids, Html.attrs_global)
             Area(attrs) => Html.emit_void(buf, "area", attrs, Html.attrs_g31)
             Base(attrs) => Html.emit_void(buf, "base", attrs, Html.attrs_g32)
-            Br(attrs) => Html.emit_void(buf, "br", attrs, Html.push_global_attrs)
+            Br(attrs) => Html.emit_void(buf, "br", attrs, Html.attrs_global)
             Col(attrs) => Html.emit_void(buf, "col", attrs, Html.attrs_g27)
             Embed(attrs) => Html.emit_void(buf, "embed", attrs, Html.attrs_g33)
-            Hr(attrs) => Html.emit_void(buf, "hr", attrs, Html.push_global_attrs)
+            Hr(attrs) => Html.emit_void(buf, "hr", attrs, Html.attrs_global)
             Img(attrs) => Html.emit_void(buf, "img", attrs, Html.attrs_g34)
             Input(attrs) => Html.emit_void(buf, "input", attrs, Html.attrs_g35)
             Link(attrs) => Html.emit_void(buf, "link", attrs, Html.attrs_g36)
             Meta(attrs) => Html.emit_void(buf, "meta", attrs, Html.attrs_g37)
             Source(attrs) => Html.emit_void(buf, "source", attrs, Html.attrs_g38)
             Track(attrs) => Html.emit_void(buf, "track", attrs, Html.attrs_g39)
-            Wbr(attrs) => Html.emit_void(buf, "wbr", attrs, Html.push_global_attrs)
+            Wbr(attrs) => Html.emit_void(buf, "wbr", attrs, Html.attrs_global)
             Text(content) => buf.push_escaped(content)
             DangerousRaw(content) => buf.push_raw(content)
             CustomEl(tag, attrs, kids) => Html.emit_el(buf, tag, attrs, kids, Html.attrs_g40)
@@ -484,8 +484,8 @@ Html := [
     ## handles BEFORE delegating here — the catch-all is unreachable via
     ## that path. Internal: do not call with a non-global attribute.
     ## Attribute NAMES are trusted (emitted raw); VALUES are escaped.
-    push_global_attr : SafeStr, GlobalAttrs([..]) -> SafeStr
-    push_global_attr = |out, attr|
+    attr_global : SafeStr, GlobalAttrs([..]) -> SafeStr
+    attr_global = |out, attr|
         match attr {
             Accesskey(v) => out.attr("accesskey", v)
             Autocapitalize(v) => out.attr_trusted("autocapitalize", Html.autocapitalize_word(v))
@@ -512,16 +512,16 @@ Html := [
             Custom(k, v) => out.attr(k, v)
             Data(k, v) => out.attr("data-${k}", v)
             Aria(k, v) => out.attr("aria-${k}", v)
-            _ => crash("unreachable: non-global attribute delegated to push_global_attr")
+            _ => crash("unreachable: non-global attribute delegated to attr_global")
         }
 
     ## Shared attribute loop for elements with no specific attributes.
-    push_global_attrs : SafeStr, List(GlobalAttrs([..])) -> SafeStr
-    push_global_attrs = |buf, attrs| {
+    attrs_global : SafeStr, List(GlobalAttrs([..])) -> SafeStr
+    attrs_global = |buf, attrs| {
         var out = buf
         var i = 0.U64
         while i < attrs.len() {
-            out = Html.push_global_attr(out, attrs.get(i) ?? Hidden)
+            out = Html.attr_global(out, attrs.get(i) ?? Hidden)
             i = i + 1
         }
         out
@@ -704,7 +704,7 @@ Html := [
             Hard => "hard"
         }
     # Per-element emitters: ONLY that element's specific attrs, then
-    # delegation to push_global_attr for everything shared.
+    # delegation to attr_global for everything shared.
 
     attrs_g1 : SafeStr, List(GlobalAttrs([Cite(Str), Datetime(Str)])) -> SafeStr
     attrs_g1 = |buf, attrs| {
@@ -714,7 +714,7 @@ Html := [
             out = match attrs.get(i) ?? Hidden {
                 Cite(v) => out.attr("cite", v)
                 Datetime(v) => out.attr("datetime", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -728,7 +728,7 @@ Html := [
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
                 Media(v) => out.attr("media", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -750,7 +750,7 @@ Html := [
                 Src(v) => out.attr("src", v)
                 Srcdoc(v) => out.attr("srcdoc", v)
                 Width(v) => out.attr_trusted("width", v.to_str())
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -769,7 +769,7 @@ Html := [
                 ObjectData(v) => out.attr("data", v)
                 Type(v) => out.attr("type", v)
                 Width(v) => out.attr_trusted("width", v.to_str())
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -783,7 +783,7 @@ Html := [
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
                 Src(v) => out.attr("src", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -806,7 +806,7 @@ Html := [
                 Name(v) => out.attr("name", v)
                 Type(v) => out.attr("type", v)
                 Value(v) => out.attr("value", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -822,7 +822,7 @@ Html := [
                 Disabled => out.flag("disabled")
                 Form(v) => out.attr("form", v)
                 Name(v) => out.attr("name", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -844,7 +844,7 @@ Html := [
                 Novalidate => out.flag("novalidate")
                 Rel(v) => out.attr("rel", v)
                 Target(v) => out.attr("target", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -858,7 +858,7 @@ Html := [
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
                 For(v) => out.attr("for", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -877,7 +877,7 @@ Html := [
                 Min(v) => out.attr("min", v)
                 Optimum(v) => out.attr_trusted("optimum", v.to_str())
                 Value(v) => out.attr("value", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -892,7 +892,7 @@ Html := [
             out = match attrs.get(i) ?? Hidden {
                 Disabled => out.flag("disabled")
                 Label(v) => out.attr("label", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -909,7 +909,7 @@ Html := [
                 Label(v) => out.attr("label", v)
                 Selected => out.flag("selected")
                 Value(v) => out.attr("value", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -925,7 +925,7 @@ Html := [
                 For(v) => out.attr("for", v)
                 Form(v) => out.attr("form", v)
                 Name(v) => out.attr("name", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -940,7 +940,7 @@ Html := [
             out = match attrs.get(i) ?? Hidden {
                 Max(v) => out.attr("max", v)
                 Value(v) => out.attr("value", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -960,7 +960,7 @@ Html := [
                 Name(v) => out.attr("name", v)
                 Required => out.flag("required")
                 Size(v) => out.attr_trusted("size", v.to_str())
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -986,7 +986,7 @@ Html := [
                 Required => out.flag("required")
                 Rows(v) => out.attr_trusted("rows", v.to_str())
                 Wrap(v) => out.attr_trusted("wrap", Html.wrap_word(v))
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1006,7 +1006,7 @@ Html := [
                 Muted => out.flag("muted")
                 Preload(v) => out.attr_trusted("preload", Html.preload_word(v))
                 Src(v) => out.attr("src", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1020,7 +1020,7 @@ Html := [
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
                 Name(v) => out.attr("name", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1044,7 +1044,7 @@ Html := [
                 Preload(v) => out.attr_trusted("preload", Html.preload_word(v))
                 Src(v) => out.attr("src", v)
                 Width(v) => out.attr_trusted("width", v.to_str())
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1065,7 +1065,7 @@ Html := [
                 Rel(v) => out.attr("rel", v)
                 Target(v) => out.attr("target", v)
                 Type(v) => out.attr("type", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1079,7 +1079,7 @@ Html := [
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
                 Value(v) => out.attr("value", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1093,7 +1093,7 @@ Html := [
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
                 Cite(v) => out.attr("cite", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1107,7 +1107,7 @@ Html := [
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
                 Datetime(v) => out.attr("datetime", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1121,7 +1121,7 @@ Html := [
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
                 Open => out.flag("open")
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1136,7 +1136,7 @@ Html := [
             out = match attrs.get(i) ?? Hidden {
                 Height(v) => out.attr_trusted("height", v.to_str())
                 Width(v) => out.attr_trusted("width", v.to_str())
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1157,7 +1157,7 @@ Html := [
                 Referrerpolicy(v) => out.attr_trusted("referrerpolicy", Html.referrerpolicy_word(v))
                 Src(v) => out.attr("src", v)
                 Type(v) => out.attr("type", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1171,7 +1171,7 @@ Html := [
         while i < attrs.len() {
             out = match attrs.get(i) ?? Hidden {
                 Span(v) => out.attr_trusted("span", v.to_str())
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1187,7 +1187,7 @@ Html := [
                 Colspan(v) => out.attr_trusted("colspan", v.to_str())
                 Headers(v) => out.attr("headers", v)
                 Rowspan(v) => out.attr_trusted("rowspan", v.to_str())
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1205,7 +1205,7 @@ Html := [
                 Headers(v) => out.attr("headers", v)
                 Rowspan(v) => out.attr_trusted("rowspan", v.to_str())
                 Scope(v) => out.attr_trusted("scope", Html.scope_word(v))
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1221,7 +1221,7 @@ Html := [
                 Reversed => out.flag("reversed")
                 Start(v) => out.attr_trusted("start", v.to_str())
                 Type(v) => out.attr("type", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1243,7 +1243,7 @@ Html := [
                 Rel(v) => out.attr("rel", v)
                 Shape(v) => out.attr_trusted("shape", Html.shape_word(v))
                 Target(v) => out.attr("target", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1258,7 +1258,7 @@ Html := [
             out = match attrs.get(i) ?? Hidden {
                 Href(v) => out.attr("href", v)
                 Target(v) => out.attr("target", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1275,7 +1275,7 @@ Html := [
                 Src(v) => out.attr("src", v)
                 Type(v) => out.attr("type", v)
                 Width(v) => out.attr_trusted("width", v.to_str())
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1300,7 +1300,7 @@ Html := [
                 Srcset(v) => out.attr("srcset", v)
                 Usemap(v) => out.attr("usemap", v)
                 Width(v) => out.attr_trusted("width", v.to_str())
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1344,7 +1344,7 @@ Html := [
                 Type(v) => out.attr("type", v)
                 Value(v) => out.attr("value", v)
                 Width(v) => out.attr_trusted("width", v.to_str())
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1367,7 +1367,7 @@ Html := [
                 Rel(v) => out.attr("rel", v)
                 Sizes(v) => out.attr("sizes", v)
                 Type(v) => out.attr("type", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1385,7 +1385,7 @@ Html := [
                 HttpEquiv(v) => out.attr("http-equiv", v)
                 Media(v) => out.attr("media", v)
                 Name(v) => out.attr("name", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1405,7 +1405,7 @@ Html := [
                 Srcset(v) => out.attr("srcset", v)
                 Type(v) => out.attr("type", v)
                 Width(v) => out.attr_trusted("width", v.to_str())
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1423,7 +1423,7 @@ Html := [
                 Label(v) => out.attr("label", v)
                 Src(v) => out.attr("src", v)
                 Srclang(v) => out.attr("srclang", v)
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
@@ -1530,7 +1530,7 @@ Html := [
                 Value(v) => out.attr("value", v)
                 Width(v) => out.attr_trusted("width", v.to_str())
                 Wrap(v) => out.attr_trusted("wrap", Html.wrap_word(v))
-                other => Html.push_global_attr(out, other)
+                other => Html.attr_global(out, other)
             }
             i = i + 1
         }
