@@ -73,9 +73,9 @@ card = |cls| [Class(cls), Id("main")]
 validated). Raw HTML requires the explicitly named `DangerousRaw`. See
 `examples/hello.roc` for the runnable version.
 
-`package/Html.roc` is generated — the applicability tables live in
-`gen/generate_html.roc` (a Roc app — the package generates itself); edit
-that and run `roc gen/generate_html.roc` from the repo root.
+`package/Html.roc` is hand-curated; the WHATWG applicability tables are
+the type declarations themselves (`GlobalAttrs` + each element's set), and
+every global attribute renders through one `push_global_attr` function.
 
 ## Migrating from Hasnep/roc-html
 
