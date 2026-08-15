@@ -53,10 +53,13 @@ page = Html([], [
 ```
 
 Void elements (`Br`, `Img`, ...) have no children slot, so a void element
-with children is unrepresentable. Boolean attributes are payload-less
-variants (`Disabled`, never `disabled=""`). `CustomEl`/`Custom`/`Data`/`Aria`
-are the escape hatches; raw HTML requires the explicitly named
-`DangerousRaw`. See `examples/hello.roc` for the runnable version.
+with children is unrepresentable. Attribute payloads are typed:
+`Colspan(U64)`, `Tabindex(-1)`, `Dir(Rtl)`, `Method(Post)`,
+`Enctype(MultipartFormData)` (renders the full MIME string), and boolean
+attributes are payload-less variants (`Disabled`, never `disabled=""`).
+`CustomEl`/`Custom`/`Data`/`Aria` are the escape hatches; raw HTML requires
+the explicitly named `DangerousRaw`. See `examples/hello.roc` for the
+runnable version.
 
 ## Migrating from Hasnep/roc-html
 
