@@ -74,7 +74,8 @@ validated). Raw HTML requires the explicitly named `DangerousRaw`. See
 `examples/hello.roc` for the runnable version.
 
 `package/Html.roc` is generated — the applicability tables live in
-`gen/generate_html.py`; edit that and run `python3 gen/generate_html.py`.
+`gen/generate_html.roc` (a Roc app — the package generates itself); edit
+that and run `roc gen/generate_html.roc` from the repo root.
 
 ## Migrating from Hasnep/roc-html
 

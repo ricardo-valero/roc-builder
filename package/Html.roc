@@ -1,7 +1,7 @@
 # GENERATED FILE — do not edit by hand. Regenerate with:
-#     python3 gen/generate_html.py
+#     roc gen/generate_html.roc
 # The WHATWG applicability tables (globals vs element-specific attributes),
-# payload types, and element shapes all live in that script.
+# payload types, and element shapes all live in that app.
 import /Html/SafeStr exposing [SafeStr]
 
 # The WHATWG global attributes (+ Custom/Data/Aria escape hatches), with an
