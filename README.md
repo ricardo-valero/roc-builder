@@ -53,13 +53,28 @@ page = Html([], [
 ```
 
 Void elements (`Br`, `Img`, ...) have no children slot, so a void element
-with children is unrepresentable. Attribute payloads are typed:
-`Colspan(U64)`, `Tabindex(-1)`, `Dir(Rtl)`, `Method(Post)`,
-`Enctype(MultipartFormData)` (renders the full MIME string), and boolean
-attributes are payload-less variants (`Disabled`, never `disabled=""`).
-`CustomEl`/`Custom`/`Data`/`Aria` are the escape hatches; raw HTML requires
-the explicitly named `DangerousRaw`. See `examples/hello.roc` for the
-runnable version.
+with children is unrepresentable. Attribute payloads are typed —
+`Colspan(U64)`, `Tabindex(-1)`, `Dir(Rtl)`, `Enctype(MultipartFormData)`
+(renders the full MIME string) — and boolean attributes are payload-less
+variants (`Disabled`, never `disabled=""`).
+
+**Attributes are scoped per element** (WHATWG HTML Living Standard): each
+element accepts the ~25 global attributes (plus the `Custom`/`Data`/`Aria`
+escape hatches) and only its own content attributes. `Input([Colspan(2)])`
+is a type error. Shared attribute helpers use an open annotation:
+
+```roc
+card : Str -> List([Class(Str), Id(Str), ..])
+card = |cls| [Class(cls), Id("main")]
+# usable in any element's attribute list
+```
+
+`CustomEl` accepts the full attribute superset (unknown elements can't be
+validated). Raw HTML requires the explicitly named `DangerousRaw`. See
+`examples/hello.roc` for the runnable version.
+
+`package/Html.roc` is generated — the applicability tables live in
+`gen/generate_html.py`; edit that and run `python3 gen/generate_html.py`.
 
 ## Migrating from Hasnep/roc-html
 
@@ -74,6 +89,11 @@ mechanical case changes:
 - `Html.dangerously_include_unescaped_html` becomes `DangerousRaw`
 - `render` now renders fragments (was `render_without_doc_type`); the
   doctype-prefixed document render is `render_doc`
+
+Migrating v0.1 → v0.2: misplaced attributes (valid nowhere per WHATWG) now
+fail to type-check — fix the HTML; shared attribute helpers need open
+annotations (`List([Class(Str), ..])`); the `<object>` `data` attribute is
+`ObjectData(Str)`.
 - keyword clashes disappear: `Var`, `For(...)`, `Type(...)` are ordinary
   variants (uppercase never collides with Roc keywords)
 

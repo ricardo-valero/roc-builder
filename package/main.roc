@@ -1,7 +1,6 @@
-package [Html, Attribute] {}
+package [Html] {}
 
 import Html
-import Html/Attribute
 
 # Non-exposed modules, imported so `roc test package/main.roc` runs their expects
 import Html/SafeStr
