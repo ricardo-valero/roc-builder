@@ -227,15 +227,15 @@ def attr_decl(variant):
     raise ValueError(variant)
 
 
-def set_decls(specifics):
+def global_decls():
     decls = [attr_decl(v) for v in GLOBALS]
     decls += ["Custom(Str, Str)", "Data(Str, Str)", "Aria(Str, Str)"]
-    decls += [attr_decl(v) for v in sorted(specifics)]
     return decls
 
 
 def set_text(specifics):
-    return "[" + ", ".join(set_decls(specifics)) + "]"
+    ext = "[" + ", ".join(attr_decl(v) for v in sorted(specifics)) + "]"
+    return f"GlobalAttrs({ext})"
 
 
 def attr_arm(variant):
@@ -288,6 +288,15 @@ def main():
     L.append("# payload types, and element shapes all live in that script.")
     L.append("import /Html/SafeStr exposing [SafeStr]")
     L.append("")
+    L.append("# The WHATWG global attributes (+ Custom/Data/Aria escape hatches), with an")
+    L.append("# extension slot for each element's own attributes: GlobalAttrs([Checked, ...]).")
+    L.append("GlobalAttrs(ext) : [")
+    gd = global_decls()
+    for j in range(0, len(gd), 5):
+        L.append("    " + " ".join(d + "," for d in gd[j:j+5]))
+    L.append("    ..ext,")
+    L.append("]")
+    L.append("")
     L.append("# An HTML document as data: one variant per element, and each element's")
     L.append("# attribute list is scoped per the WHATWG HTML Living Standard — the")
     L.append("# global attributes (plus Custom/Data/Aria escape hatches) and only that")
@@ -334,13 +343,20 @@ def main():
     for name, _, void in all_elements:
         tag = name.lower()
         if void:
-            L.append(f"            {name}(attrs) => {2 + len(tag)} + attrs.len() * 32")
+            L.append(f"            {name}(attrs) => Html.void_size({2 + len(tag)}, attrs.len())")
         else:
-            L.append(f"            {name}(attrs, kids) => {5 + 2 * len(tag)} + attrs.len() * 32 + Html.kids_size(kids)")
+            L.append(f"            {name}(attrs, kids) => Html.el_size({5 + 2 * len(tag)}, attrs.len(), kids)")
     L.append("            Text(content) => content.to_utf8().len() * 2")
     L.append("            DangerousRaw(content) => content.to_utf8().len()")
-    L.append("            CustomEl(tag, attrs, kids) => 5 + 2 * tag.to_utf8().len() + attrs.len() * 32 + Html.kids_size(kids)")
+    L.append("            CustomEl(tag, attrs, kids) => Html.el_size(5 + 2 * tag.to_utf8().len(), attrs.len(), kids)")
     L.append("        }")
+    L.append("")
+    L.append("    ## base framing + 32 bytes per attribute (+ children).")
+    L.append("    el_size : U64, U64, List(Html) -> U64")
+    L.append("    el_size = |base, n_attrs, kids| base + n_attrs * 32 + Html.kids_size(kids)")
+    L.append("")
+    L.append("    void_size : U64, U64 -> U64")
+    L.append("    void_size = |base, n_attrs| base + n_attrs * 32")
     L.append("")
     L.append("    kids_size : List(Html) -> U64")
     L.append("    kids_size = |kids| {")

@@ -4,6 +4,17 @@
 # payload types, and element shapes all live in that script.
 import /Html/SafeStr exposing [SafeStr]
 
+# The WHATWG global attributes (+ Custom/Data/Aria escape hatches), with an
+# extension slot for each element's own attributes: GlobalAttrs([Checked, ...]).
+GlobalAttrs(ext) : [
+    Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]),
+    Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str),
+    Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str),
+    Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64),
+    Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str),
+    ..ext,
+]
+
 # An HTML document as data: one variant per element, and each element's
 # attribute list is scoped per the WHATWG HTML Living Standard — the
 # global attributes (plus Custom/Data/Aria escape hatches) and only that
@@ -15,138 +26,138 @@ import /Html/SafeStr exposing [SafeStr]
 # (unknown elements cannot be validated).
 Html := [
     # Main root
-    Html(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
+    Html(List(GlobalAttrs([])), List(Html)),
     # Sectioning root
-    Body(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
+    Body(List(GlobalAttrs([])), List(Html)),
     # Content sectioning
-    Address(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Article(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Aside(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Footer(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    H1(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    H2(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    H3(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    H4(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    H5(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    H6(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Header(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Main(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Nav(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Section(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
+    Address(List(GlobalAttrs([])), List(Html)),
+    Article(List(GlobalAttrs([])), List(Html)),
+    Aside(List(GlobalAttrs([])), List(Html)),
+    Footer(List(GlobalAttrs([])), List(Html)),
+    H1(List(GlobalAttrs([])), List(Html)),
+    H2(List(GlobalAttrs([])), List(Html)),
+    H3(List(GlobalAttrs([])), List(Html)),
+    H4(List(GlobalAttrs([])), List(Html)),
+    H5(List(GlobalAttrs([])), List(Html)),
+    H6(List(GlobalAttrs([])), List(Html)),
+    Header(List(GlobalAttrs([])), List(Html)),
+    Main(List(GlobalAttrs([])), List(Html)),
+    Nav(List(GlobalAttrs([])), List(Html)),
+    Section(List(GlobalAttrs([])), List(Html)),
     # Demarcating edits
-    Del(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Cite(Str), Datetime(Str)]), List(Html)),
-    Ins(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Cite(Str), Datetime(Str)]), List(Html)),
+    Del(List(GlobalAttrs([Cite(Str), Datetime(Str)])), List(Html)),
+    Ins(List(GlobalAttrs([Cite(Str), Datetime(Str)])), List(Html)),
     # Document metadata
-    Head(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Style(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Media(Str)]), List(Html)),
-    Title(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
+    Head(List(GlobalAttrs([])), List(Html)),
+    Style(List(GlobalAttrs([Media(Str)])), List(Html)),
+    Title(List(GlobalAttrs([])), List(Html)),
     # Embedded content
-    Iframe(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Allow(Str), Height(U64), Loading([Lazy, Eager]), Name(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Sandbox(Str), Src(Str), Srcdoc(Str), Width(U64)]), List(Html)),
-    Object(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Form(Str), Height(U64), Name(Str), ObjectData(Str), Type(Str), Width(U64)]), List(Html)),
-    Picture(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Portal(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Src(Str)]), List(Html)),
+    Iframe(List(GlobalAttrs([Allow(Str), Height(U64), Loading([Lazy, Eager]), Name(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Sandbox(Str), Src(Str), Srcdoc(Str), Width(U64)])), List(Html)),
+    Object(List(GlobalAttrs([Form(Str), Height(U64), Name(Str), ObjectData(Str), Type(Str), Width(U64)])), List(Html)),
+    Picture(List(GlobalAttrs([])), List(Html)),
+    Portal(List(GlobalAttrs([Src(Str)])), List(Html)),
     # Forms
-    Button(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Disabled, Form(Str), Formaction(Str), Formenctype([FormUrlEncoded, MultipartFormData, TextPlain]), Formmethod([Get, Post, Dialog]), Formnovalidate, Formtarget(Str), Name(Str), Type(Str), Value(Str)]), List(Html)),
-    Datalist(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Fieldset(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Disabled, Form(Str), Name(Str)]), List(Html)),
-    Form(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), AcceptCharset(Str), Action(Str), Autocomplete(Str), Enctype([FormUrlEncoded, MultipartFormData, TextPlain]), Method([Get, Post, Dialog]), Name(Str), Novalidate, Rel(Str), Target(Str)]), List(Html)),
-    Label(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), For(Str)]), List(Html)),
-    Legend(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Meter(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), High(F64), Low(F64), Max(Str), Min(Str), Optimum(F64), Value(Str)]), List(Html)),
-    Optgroup(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Disabled, Label(Str)]), List(Html)),
-    Option(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Disabled, Label(Str), Selected, Value(Str)]), List(Html)),
-    Output(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), For(Str), Form(Str), Name(Str)]), List(Html)),
-    Progress(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Max(Str), Value(Str)]), List(Html)),
-    Select(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Autocomplete(Str), Disabled, Form(Str), Multiple, Name(Str), Required, Size(U64)]), List(Html)),
-    Textarea(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Autocomplete(Str), Cols(U64), Dirname(Str), Disabled, Form(Str), Maxlength(U64), Minlength(U64), Name(Str), Placeholder(Str), Readonly, Required, Rows(U64), Wrap([Soft, Hard])]), List(Html)),
+    Button(List(GlobalAttrs([Disabled, Form(Str), Formaction(Str), Formenctype([FormUrlEncoded, MultipartFormData, TextPlain]), Formmethod([Get, Post, Dialog]), Formnovalidate, Formtarget(Str), Name(Str), Type(Str), Value(Str)])), List(Html)),
+    Datalist(List(GlobalAttrs([])), List(Html)),
+    Fieldset(List(GlobalAttrs([Disabled, Form(Str), Name(Str)])), List(Html)),
+    Form(List(GlobalAttrs([AcceptCharset(Str), Action(Str), Autocomplete(Str), Enctype([FormUrlEncoded, MultipartFormData, TextPlain]), Method([Get, Post, Dialog]), Name(Str), Novalidate, Rel(Str), Target(Str)])), List(Html)),
+    Label(List(GlobalAttrs([For(Str)])), List(Html)),
+    Legend(List(GlobalAttrs([])), List(Html)),
+    Meter(List(GlobalAttrs([High(F64), Low(F64), Max(Str), Min(Str), Optimum(F64), Value(Str)])), List(Html)),
+    Optgroup(List(GlobalAttrs([Disabled, Label(Str)])), List(Html)),
+    Option(List(GlobalAttrs([Disabled, Label(Str), Selected, Value(Str)])), List(Html)),
+    Output(List(GlobalAttrs([For(Str), Form(Str), Name(Str)])), List(Html)),
+    Progress(List(GlobalAttrs([Max(Str), Value(Str)])), List(Html)),
+    Select(List(GlobalAttrs([Autocomplete(Str), Disabled, Form(Str), Multiple, Name(Str), Required, Size(U64)])), List(Html)),
+    Textarea(List(GlobalAttrs([Autocomplete(Str), Cols(U64), Dirname(Str), Disabled, Form(Str), Maxlength(U64), Minlength(U64), Name(Str), Placeholder(Str), Readonly, Required, Rows(U64), Wrap([Soft, Hard])])), List(Html)),
     # Image and multimedia
-    Audio(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Autoplay, Controls, Crossorigin([Anonymous, UseCredentials]), Loop, Muted, Preload([None, Metadata, Auto]), Src(Str)]), List(Html)),
-    Map(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Name(Str)]), List(Html)),
-    Video(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Autoplay, Controls, Crossorigin([Anonymous, UseCredentials]), Height(U64), Loop, Muted, Playsinline, Poster(Str), Preload([None, Metadata, Auto]), Src(Str), Width(U64)]), List(Html)),
+    Audio(List(GlobalAttrs([Autoplay, Controls, Crossorigin([Anonymous, UseCredentials]), Loop, Muted, Preload([None, Metadata, Auto]), Src(Str)])), List(Html)),
+    Map(List(GlobalAttrs([Name(Str)])), List(Html)),
+    Video(List(GlobalAttrs([Autoplay, Controls, Crossorigin([Anonymous, UseCredentials]), Height(U64), Loop, Muted, Playsinline, Poster(Str), Preload([None, Metadata, Auto]), Src(Str), Width(U64)])), List(Html)),
     # Inline text semantics
-    A(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Download(Str), Href(Str), Hreflang(Str), Ping(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Target(Str), Type(Str)]), List(Html)),
-    Abbr(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    B(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Bdi(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Bdo(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Cite(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Code(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Data(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Value(Str)]), List(Html)),
-    Dfn(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Em(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    I(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Kbd(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Mark(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Q(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Cite(Str)]), List(Html)),
-    Rp(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Rt(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Ruby(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    S(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Samp(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Small(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Span(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Strong(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Sub(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Sup(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Time(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Datetime(Str)]), List(Html)),
-    U(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Var(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
+    A(List(GlobalAttrs([Download(Str), Href(Str), Hreflang(Str), Ping(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Target(Str), Type(Str)])), List(Html)),
+    Abbr(List(GlobalAttrs([])), List(Html)),
+    B(List(GlobalAttrs([])), List(Html)),
+    Bdi(List(GlobalAttrs([])), List(Html)),
+    Bdo(List(GlobalAttrs([])), List(Html)),
+    Cite(List(GlobalAttrs([])), List(Html)),
+    Code(List(GlobalAttrs([])), List(Html)),
+    Data(List(GlobalAttrs([Value(Str)])), List(Html)),
+    Dfn(List(GlobalAttrs([])), List(Html)),
+    Em(List(GlobalAttrs([])), List(Html)),
+    I(List(GlobalAttrs([])), List(Html)),
+    Kbd(List(GlobalAttrs([])), List(Html)),
+    Mark(List(GlobalAttrs([])), List(Html)),
+    Q(List(GlobalAttrs([Cite(Str)])), List(Html)),
+    Rp(List(GlobalAttrs([])), List(Html)),
+    Rt(List(GlobalAttrs([])), List(Html)),
+    Ruby(List(GlobalAttrs([])), List(Html)),
+    S(List(GlobalAttrs([])), List(Html)),
+    Samp(List(GlobalAttrs([])), List(Html)),
+    Small(List(GlobalAttrs([])), List(Html)),
+    Span(List(GlobalAttrs([])), List(Html)),
+    Strong(List(GlobalAttrs([])), List(Html)),
+    Sub(List(GlobalAttrs([])), List(Html)),
+    Sup(List(GlobalAttrs([])), List(Html)),
+    Time(List(GlobalAttrs([Datetime(Str)])), List(Html)),
+    U(List(GlobalAttrs([])), List(Html)),
+    Var(List(GlobalAttrs([])), List(Html)),
     # Interactive elements
-    Details(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Open]), List(Html)),
-    Dialog(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Open]), List(Html)),
-    Summary(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
+    Details(List(GlobalAttrs([Open])), List(Html)),
+    Dialog(List(GlobalAttrs([Open])), List(Html)),
+    Summary(List(GlobalAttrs([])), List(Html)),
     # SVG and MathML
-    Math(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Svg(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
+    Math(List(GlobalAttrs([])), List(Html)),
+    Svg(List(GlobalAttrs([])), List(Html)),
     # Scripting
-    Canvas(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Height(U64), Width(U64)]), List(Html)),
-    Noscript(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Script(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Async, Crossorigin([Anonymous, UseCredentials]), Defer, Integrity(Str), Nomodule, Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Src(Str), Type(Str)]), List(Html)),
+    Canvas(List(GlobalAttrs([Height(U64), Width(U64)])), List(Html)),
+    Noscript(List(GlobalAttrs([])), List(Html)),
+    Script(List(GlobalAttrs([Async, Crossorigin([Anonymous, UseCredentials]), Defer, Integrity(Str), Nomodule, Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Src(Str), Type(Str)])), List(Html)),
     # Table content
-    Caption(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Colgroup(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Span(U64)]), List(Html)),
-    Table(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Tbody(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Td(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Colspan(U64), Headers(Str), Rowspan(U64)]), List(Html)),
-    Tfoot(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Th(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Abbr(Str), Colspan(U64), Headers(Str), Rowspan(U64), Scope([Row, Col, Rowgroup, Colgroup])]), List(Html)),
-    Thead(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Tr(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
+    Caption(List(GlobalAttrs([])), List(Html)),
+    Colgroup(List(GlobalAttrs([Span(U64)])), List(Html)),
+    Table(List(GlobalAttrs([])), List(Html)),
+    Tbody(List(GlobalAttrs([])), List(Html)),
+    Td(List(GlobalAttrs([Colspan(U64), Headers(Str), Rowspan(U64)])), List(Html)),
+    Tfoot(List(GlobalAttrs([])), List(Html)),
+    Th(List(GlobalAttrs([Abbr(Str), Colspan(U64), Headers(Str), Rowspan(U64), Scope([Row, Col, Rowgroup, Colgroup])])), List(Html)),
+    Thead(List(GlobalAttrs([])), List(Html)),
+    Tr(List(GlobalAttrs([])), List(Html)),
     # Text content
-    Blockquote(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Cite(Str)]), List(Html)),
-    Dd(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Div(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Dl(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Dt(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Figcaption(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Figure(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Li(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Value(Str)]), List(Html)),
-    Menu(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Ol(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Reversed, Start(I64), Type(Str)]), List(Html)),
-    P(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Pre(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
-    Ul(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
+    Blockquote(List(GlobalAttrs([Cite(Str)])), List(Html)),
+    Dd(List(GlobalAttrs([])), List(Html)),
+    Div(List(GlobalAttrs([])), List(Html)),
+    Dl(List(GlobalAttrs([])), List(Html)),
+    Dt(List(GlobalAttrs([])), List(Html)),
+    Figcaption(List(GlobalAttrs([])), List(Html)),
+    Figure(List(GlobalAttrs([])), List(Html)),
+    Li(List(GlobalAttrs([Value(Str)])), List(Html)),
+    Menu(List(GlobalAttrs([])), List(Html)),
+    Ol(List(GlobalAttrs([Reversed, Start(I64), Type(Str)])), List(Html)),
+    P(List(GlobalAttrs([])), List(Html)),
+    Pre(List(GlobalAttrs([])), List(Html)),
+    Ul(List(GlobalAttrs([])), List(Html)),
     # Web components
-    Slot(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Name(Str)]), List(Html)),
-    Template(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]), List(Html)),
+    Slot(List(GlobalAttrs([Name(Str)])), List(Html)),
+    Template(List(GlobalAttrs([])), List(Html)),
     # Void elements — no children slot, no closing tag
-    Area(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Alt(Str), Coords(Str), Download(Str), Href(Str), Ping(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Shape([Rect, Circle, Poly, Default]), Target(Str)])),
-    Base(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Href(Str), Target(Str)])),
-    Br(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)])),
-    Col(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Span(U64)])),
-    Embed(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Height(U64), Src(Str), Type(Str), Width(U64)])),
-    Hr(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)])),
-    Img(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Alt(Str), Crossorigin([Anonymous, UseCredentials]), Decoding([Sync, Async, Auto]), Height(U64), Ismap, Loading([Lazy, Eager]), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Sizes(Str), Src(Str), Srcset(Str), Usemap(Str), Width(U64)])),
-    Input(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Accept(Str), Alt(Str), Autocomplete(Str), Capture([User, Environment]), Checked, Dirname(Str), Disabled, Form(Str), Formaction(Str), Formenctype([FormUrlEncoded, MultipartFormData, TextPlain]), Formmethod([Get, Post, Dialog]), Formnovalidate, Formtarget(Str), Height(U64), List(Str), Max(Str), Maxlength(U64), Min(Str), Minlength(U64), Multiple, Name(Str), Pattern(Str), Placeholder(Str), Readonly, Required, Size(U64), Src(Str), Step(Str), Type(Str), Value(Str), Width(U64)])),
-    Link(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Crossorigin([Anonymous, UseCredentials]), Disabled, Href(Str), Hreflang(Str), Integrity(Str), Media(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Sizes(Str), Type(Str)])),
-    Meta(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Charset(Str), Content(Str), HttpEquiv(Str), Media(Str), Name(Str)])),
-    Source(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Height(U64), Media(Str), Sizes(Str), Src(Str), Srcset(Str), Type(Str), Width(U64)])),
-    Track(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Default, Kind([Subtitles, Captions, Descriptions, Chapters, Metadata]), Label(Str), Src(Str), Srclang(Str)])),
-    Wbr(List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)])),
+    Area(List(GlobalAttrs([Alt(Str), Coords(Str), Download(Str), Href(Str), Ping(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Shape([Rect, Circle, Poly, Default]), Target(Str)]))),
+    Base(List(GlobalAttrs([Href(Str), Target(Str)]))),
+    Br(List(GlobalAttrs([]))),
+    Col(List(GlobalAttrs([Span(U64)]))),
+    Embed(List(GlobalAttrs([Height(U64), Src(Str), Type(Str), Width(U64)]))),
+    Hr(List(GlobalAttrs([]))),
+    Img(List(GlobalAttrs([Alt(Str), Crossorigin([Anonymous, UseCredentials]), Decoding([Sync, Async, Auto]), Height(U64), Ismap, Loading([Lazy, Eager]), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Sizes(Str), Src(Str), Srcset(Str), Usemap(Str), Width(U64)]))),
+    Input(List(GlobalAttrs([Accept(Str), Alt(Str), Autocomplete(Str), Capture([User, Environment]), Checked, Dirname(Str), Disabled, Form(Str), Formaction(Str), Formenctype([FormUrlEncoded, MultipartFormData, TextPlain]), Formmethod([Get, Post, Dialog]), Formnovalidate, Formtarget(Str), Height(U64), List(Str), Max(Str), Maxlength(U64), Min(Str), Minlength(U64), Multiple, Name(Str), Pattern(Str), Placeholder(Str), Readonly, Required, Size(U64), Src(Str), Step(Str), Type(Str), Value(Str), Width(U64)]))),
+    Link(List(GlobalAttrs([Crossorigin([Anonymous, UseCredentials]), Disabled, Href(Str), Hreflang(Str), Integrity(Str), Media(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Sizes(Str), Type(Str)]))),
+    Meta(List(GlobalAttrs([Charset(Str), Content(Str), HttpEquiv(Str), Media(Str), Name(Str)]))),
+    Source(List(GlobalAttrs([Height(U64), Media(Str), Sizes(Str), Src(Str), Srcset(Str), Type(Str), Width(U64)]))),
+    Track(List(GlobalAttrs([Default, Kind([Subtitles, Captions, Descriptions, Chapters, Metadata]), Label(Str), Src(Str), Srclang(Str)]))),
+    Wbr(List(GlobalAttrs([]))),
     # Leaves and escape hatches
     Text(Str),
     DangerousRaw(Str),
-    CustomEl(Str, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Abbr(Str), Accept(Str), AcceptCharset(Str), Action(Str), Allow(Str), Alt(Str), Async, Autocomplete(Str), Autoplay, Capture([User, Environment]), Charset(Str), Checked, Cite(Str), Cols(U64), Colspan(U64), Content(Str), Controls, Coords(Str), Crossorigin([Anonymous, UseCredentials]), Datetime(Str), Decoding([Sync, Async, Auto]), Default, Defer, Dirname(Str), Disabled, Download(Str), Enctype([FormUrlEncoded, MultipartFormData, TextPlain]), For(Str), Form(Str), Formaction(Str), Formenctype([FormUrlEncoded, MultipartFormData, TextPlain]), Formmethod([Get, Post, Dialog]), Formnovalidate, Formtarget(Str), Headers(Str), Height(U64), High(F64), Href(Str), Hreflang(Str), HttpEquiv(Str), Integrity(Str), Ismap, Kind([Subtitles, Captions, Descriptions, Chapters, Metadata]), Label(Str), List(Str), Loading([Lazy, Eager]), Loop, Low(F64), Max(Str), Maxlength(U64), Media(Str), Method([Get, Post, Dialog]), Min(Str), Minlength(U64), Multiple, Muted, Name(Str), Nomodule, Novalidate, ObjectData(Str), Open, Optimum(F64), Pattern(Str), Ping(Str), Placeholder(Str), Playsinline, Poster(Str), Preload([None, Metadata, Auto]), Readonly, Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Required, Reversed, Rows(U64), Rowspan(U64), Sandbox(Str), Scope([Row, Col, Rowgroup, Colgroup]), Selected, Shape([Rect, Circle, Poly, Default]), Size(U64), Sizes(Str), Span(U64), Src(Str), Srcdoc(Str), Srclang(Str), Srcset(Str), Start(I64), Step(Str), Target(Str), Type(Str), Usemap(Str), Value(Str), Width(U64), Wrap([Soft, Hard])]), List(Html)),
+    CustomEl(Str, List(GlobalAttrs([Abbr(Str), Accept(Str), AcceptCharset(Str), Action(Str), Allow(Str), Alt(Str), Async, Autocomplete(Str), Autoplay, Capture([User, Environment]), Charset(Str), Checked, Cite(Str), Cols(U64), Colspan(U64), Content(Str), Controls, Coords(Str), Crossorigin([Anonymous, UseCredentials]), Datetime(Str), Decoding([Sync, Async, Auto]), Default, Defer, Dirname(Str), Disabled, Download(Str), Enctype([FormUrlEncoded, MultipartFormData, TextPlain]), For(Str), Form(Str), Formaction(Str), Formenctype([FormUrlEncoded, MultipartFormData, TextPlain]), Formmethod([Get, Post, Dialog]), Formnovalidate, Formtarget(Str), Headers(Str), Height(U64), High(F64), Href(Str), Hreflang(Str), HttpEquiv(Str), Integrity(Str), Ismap, Kind([Subtitles, Captions, Descriptions, Chapters, Metadata]), Label(Str), List(Str), Loading([Lazy, Eager]), Loop, Low(F64), Max(Str), Maxlength(U64), Media(Str), Method([Get, Post, Dialog]), Min(Str), Minlength(U64), Multiple, Muted, Name(Str), Nomodule, Novalidate, ObjectData(Str), Open, Optimum(F64), Pattern(Str), Ping(Str), Placeholder(Str), Playsinline, Poster(Str), Preload([None, Metadata, Auto]), Readonly, Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Required, Reversed, Rows(U64), Rowspan(U64), Sandbox(Str), Scope([Row, Col, Rowgroup, Colgroup]), Selected, Shape([Rect, Circle, Poly, Default]), Size(U64), Sizes(Str), Span(U64), Src(Str), Srcdoc(Str), Srclang(Str), Srcset(Str), Start(I64), Step(Str), Target(Str), Type(Str), Usemap(Str), Value(Str), Width(U64), Wrap([Soft, Hard])])), List(Html)),
 ].{
     ## Render just the node — for fragments.
     render : Html -> Str
@@ -169,123 +180,130 @@ Html := [
     size_hint : Html -> U64
     size_hint = |node|
         match node {
-            Html(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Body(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Address(attrs, kids) => 19 + attrs.len() * 32 + Html.kids_size(kids)
-            Article(attrs, kids) => 19 + attrs.len() * 32 + Html.kids_size(kids)
-            Aside(attrs, kids) => 15 + attrs.len() * 32 + Html.kids_size(kids)
-            Footer(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            H1(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            H2(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            H3(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            H4(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            H5(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            H6(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            Header(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Main(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Nav(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Section(attrs, kids) => 19 + attrs.len() * 32 + Html.kids_size(kids)
-            Del(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Ins(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Head(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Style(attrs, kids) => 15 + attrs.len() * 32 + Html.kids_size(kids)
-            Title(attrs, kids) => 15 + attrs.len() * 32 + Html.kids_size(kids)
-            Iframe(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Object(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Picture(attrs, kids) => 19 + attrs.len() * 32 + Html.kids_size(kids)
-            Portal(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Button(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Datalist(attrs, kids) => 21 + attrs.len() * 32 + Html.kids_size(kids)
-            Fieldset(attrs, kids) => 21 + attrs.len() * 32 + Html.kids_size(kids)
-            Form(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Label(attrs, kids) => 15 + attrs.len() * 32 + Html.kids_size(kids)
-            Legend(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Meter(attrs, kids) => 15 + attrs.len() * 32 + Html.kids_size(kids)
-            Optgroup(attrs, kids) => 21 + attrs.len() * 32 + Html.kids_size(kids)
-            Option(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Output(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Progress(attrs, kids) => 21 + attrs.len() * 32 + Html.kids_size(kids)
-            Select(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Textarea(attrs, kids) => 21 + attrs.len() * 32 + Html.kids_size(kids)
-            Audio(attrs, kids) => 15 + attrs.len() * 32 + Html.kids_size(kids)
-            Map(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Video(attrs, kids) => 15 + attrs.len() * 32 + Html.kids_size(kids)
-            A(attrs, kids) => 7 + attrs.len() * 32 + Html.kids_size(kids)
-            Abbr(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            B(attrs, kids) => 7 + attrs.len() * 32 + Html.kids_size(kids)
-            Bdi(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Bdo(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Cite(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Code(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Data(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Dfn(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Em(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            I(attrs, kids) => 7 + attrs.len() * 32 + Html.kids_size(kids)
-            Kbd(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Mark(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Q(attrs, kids) => 7 + attrs.len() * 32 + Html.kids_size(kids)
-            Rp(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            Rt(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            Ruby(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            S(attrs, kids) => 7 + attrs.len() * 32 + Html.kids_size(kids)
-            Samp(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Small(attrs, kids) => 15 + attrs.len() * 32 + Html.kids_size(kids)
-            Span(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Strong(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Sub(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Sup(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Time(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            U(attrs, kids) => 7 + attrs.len() * 32 + Html.kids_size(kids)
-            Var(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Details(attrs, kids) => 19 + attrs.len() * 32 + Html.kids_size(kids)
-            Dialog(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Summary(attrs, kids) => 19 + attrs.len() * 32 + Html.kids_size(kids)
-            Math(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Svg(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Canvas(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Noscript(attrs, kids) => 21 + attrs.len() * 32 + Html.kids_size(kids)
-            Script(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Caption(attrs, kids) => 19 + attrs.len() * 32 + Html.kids_size(kids)
-            Colgroup(attrs, kids) => 21 + attrs.len() * 32 + Html.kids_size(kids)
-            Table(attrs, kids) => 15 + attrs.len() * 32 + Html.kids_size(kids)
-            Tbody(attrs, kids) => 15 + attrs.len() * 32 + Html.kids_size(kids)
-            Td(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            Tfoot(attrs, kids) => 15 + attrs.len() * 32 + Html.kids_size(kids)
-            Th(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            Thead(attrs, kids) => 15 + attrs.len() * 32 + Html.kids_size(kids)
-            Tr(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            Blockquote(attrs, kids) => 25 + attrs.len() * 32 + Html.kids_size(kids)
-            Dd(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            Div(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Dl(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            Dt(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            Figcaption(attrs, kids) => 25 + attrs.len() * 32 + Html.kids_size(kids)
-            Figure(attrs, kids) => 17 + attrs.len() * 32 + Html.kids_size(kids)
-            Li(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            Menu(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Ol(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            P(attrs, kids) => 7 + attrs.len() * 32 + Html.kids_size(kids)
-            Pre(attrs, kids) => 11 + attrs.len() * 32 + Html.kids_size(kids)
-            Ul(attrs, kids) => 9 + attrs.len() * 32 + Html.kids_size(kids)
-            Slot(attrs, kids) => 13 + attrs.len() * 32 + Html.kids_size(kids)
-            Template(attrs, kids) => 21 + attrs.len() * 32 + Html.kids_size(kids)
-            Area(attrs) => 6 + attrs.len() * 32
-            Base(attrs) => 6 + attrs.len() * 32
-            Br(attrs) => 4 + attrs.len() * 32
-            Col(attrs) => 5 + attrs.len() * 32
-            Embed(attrs) => 7 + attrs.len() * 32
-            Hr(attrs) => 4 + attrs.len() * 32
-            Img(attrs) => 5 + attrs.len() * 32
-            Input(attrs) => 7 + attrs.len() * 32
-            Link(attrs) => 6 + attrs.len() * 32
-            Meta(attrs) => 6 + attrs.len() * 32
-            Source(attrs) => 8 + attrs.len() * 32
-            Track(attrs) => 7 + attrs.len() * 32
-            Wbr(attrs) => 5 + attrs.len() * 32
+            Html(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Body(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Address(attrs, kids) => Html.el_size(19, attrs.len(), kids)
+            Article(attrs, kids) => Html.el_size(19, attrs.len(), kids)
+            Aside(attrs, kids) => Html.el_size(15, attrs.len(), kids)
+            Footer(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            H1(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            H2(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            H3(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            H4(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            H5(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            H6(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            Header(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Main(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Nav(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Section(attrs, kids) => Html.el_size(19, attrs.len(), kids)
+            Del(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Ins(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Head(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Style(attrs, kids) => Html.el_size(15, attrs.len(), kids)
+            Title(attrs, kids) => Html.el_size(15, attrs.len(), kids)
+            Iframe(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Object(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Picture(attrs, kids) => Html.el_size(19, attrs.len(), kids)
+            Portal(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Button(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Datalist(attrs, kids) => Html.el_size(21, attrs.len(), kids)
+            Fieldset(attrs, kids) => Html.el_size(21, attrs.len(), kids)
+            Form(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Label(attrs, kids) => Html.el_size(15, attrs.len(), kids)
+            Legend(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Meter(attrs, kids) => Html.el_size(15, attrs.len(), kids)
+            Optgroup(attrs, kids) => Html.el_size(21, attrs.len(), kids)
+            Option(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Output(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Progress(attrs, kids) => Html.el_size(21, attrs.len(), kids)
+            Select(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Textarea(attrs, kids) => Html.el_size(21, attrs.len(), kids)
+            Audio(attrs, kids) => Html.el_size(15, attrs.len(), kids)
+            Map(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Video(attrs, kids) => Html.el_size(15, attrs.len(), kids)
+            A(attrs, kids) => Html.el_size(7, attrs.len(), kids)
+            Abbr(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            B(attrs, kids) => Html.el_size(7, attrs.len(), kids)
+            Bdi(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Bdo(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Cite(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Code(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Data(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Dfn(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Em(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            I(attrs, kids) => Html.el_size(7, attrs.len(), kids)
+            Kbd(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Mark(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Q(attrs, kids) => Html.el_size(7, attrs.len(), kids)
+            Rp(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            Rt(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            Ruby(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            S(attrs, kids) => Html.el_size(7, attrs.len(), kids)
+            Samp(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Small(attrs, kids) => Html.el_size(15, attrs.len(), kids)
+            Span(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Strong(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Sub(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Sup(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Time(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            U(attrs, kids) => Html.el_size(7, attrs.len(), kids)
+            Var(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Details(attrs, kids) => Html.el_size(19, attrs.len(), kids)
+            Dialog(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Summary(attrs, kids) => Html.el_size(19, attrs.len(), kids)
+            Math(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Svg(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Canvas(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Noscript(attrs, kids) => Html.el_size(21, attrs.len(), kids)
+            Script(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Caption(attrs, kids) => Html.el_size(19, attrs.len(), kids)
+            Colgroup(attrs, kids) => Html.el_size(21, attrs.len(), kids)
+            Table(attrs, kids) => Html.el_size(15, attrs.len(), kids)
+            Tbody(attrs, kids) => Html.el_size(15, attrs.len(), kids)
+            Td(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            Tfoot(attrs, kids) => Html.el_size(15, attrs.len(), kids)
+            Th(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            Thead(attrs, kids) => Html.el_size(15, attrs.len(), kids)
+            Tr(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            Blockquote(attrs, kids) => Html.el_size(25, attrs.len(), kids)
+            Dd(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            Div(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Dl(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            Dt(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            Figcaption(attrs, kids) => Html.el_size(25, attrs.len(), kids)
+            Figure(attrs, kids) => Html.el_size(17, attrs.len(), kids)
+            Li(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            Menu(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Ol(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            P(attrs, kids) => Html.el_size(7, attrs.len(), kids)
+            Pre(attrs, kids) => Html.el_size(11, attrs.len(), kids)
+            Ul(attrs, kids) => Html.el_size(9, attrs.len(), kids)
+            Slot(attrs, kids) => Html.el_size(13, attrs.len(), kids)
+            Template(attrs, kids) => Html.el_size(21, attrs.len(), kids)
+            Area(attrs) => Html.void_size(6, attrs.len())
+            Base(attrs) => Html.void_size(6, attrs.len())
+            Br(attrs) => Html.void_size(4, attrs.len())
+            Col(attrs) => Html.void_size(5, attrs.len())
+            Embed(attrs) => Html.void_size(7, attrs.len())
+            Hr(attrs) => Html.void_size(4, attrs.len())
+            Img(attrs) => Html.void_size(5, attrs.len())
+            Input(attrs) => Html.void_size(7, attrs.len())
+            Link(attrs) => Html.void_size(6, attrs.len())
+            Meta(attrs) => Html.void_size(6, attrs.len())
+            Source(attrs) => Html.void_size(8, attrs.len())
+            Track(attrs) => Html.void_size(7, attrs.len())
+            Wbr(attrs) => Html.void_size(5, attrs.len())
             Text(content) => content.to_utf8().len() * 2
             DangerousRaw(content) => content.to_utf8().len()
-            CustomEl(tag, attrs, kids) => 5 + 2 * tag.to_utf8().len() + attrs.len() * 32 + Html.kids_size(kids)
+            CustomEl(tag, attrs, kids) => Html.el_size(5 + 2 * tag.to_utf8().len(), attrs.len(), kids)
         }
+
+    ## base framing + 32 bytes per attribute (+ children).
+    el_size : U64, U64, List(Html) -> U64
+    el_size = |base, n_attrs, kids| base + n_attrs * 32 + Html.kids_size(kids)
+
+    void_size : U64, U64 -> U64
+    void_size = |base, n_attrs| base + n_attrs * 32
 
     kids_size : List(Html) -> U64
     kids_size = |kids| {
@@ -433,7 +451,7 @@ Html := [
 
     # One attribute-emitter per distinct attribute set. Attribute NAMES are
     # trusted (emitted raw); VALUES are escaped. Flags render bare.
-    attrs_g0 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str)]) -> SafeStr
+    attrs_g0 : SafeStr, List(GlobalAttrs([])) -> SafeStr
     attrs_g0 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -535,7 +553,7 @@ Html := [
         out
     }
 
-    attrs_g1 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Cite(Str), Datetime(Str)]) -> SafeStr
+    attrs_g1 : SafeStr, List(GlobalAttrs([Cite(Str), Datetime(Str)])) -> SafeStr
     attrs_g1 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -639,7 +657,7 @@ Html := [
         out
     }
 
-    attrs_g2 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Media(Str)]) -> SafeStr
+    attrs_g2 : SafeStr, List(GlobalAttrs([Media(Str)])) -> SafeStr
     attrs_g2 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -742,7 +760,7 @@ Html := [
         out
     }
 
-    attrs_g3 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Allow(Str), Height(U64), Loading([Lazy, Eager]), Name(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Sandbox(Str), Src(Str), Srcdoc(Str), Width(U64)]) -> SafeStr
+    attrs_g3 : SafeStr, List(GlobalAttrs([Allow(Str), Height(U64), Loading([Lazy, Eager]), Name(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Sandbox(Str), Src(Str), Srcdoc(Str), Width(U64)])) -> SafeStr
     attrs_g3 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -871,7 +889,7 @@ Html := [
         out
     }
 
-    attrs_g4 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Form(Str), Height(U64), Name(Str), ObjectData(Str), Type(Str), Width(U64)]) -> SafeStr
+    attrs_g4 : SafeStr, List(GlobalAttrs([Form(Str), Height(U64), Name(Str), ObjectData(Str), Type(Str), Width(U64)])) -> SafeStr
     attrs_g4 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -979,7 +997,7 @@ Html := [
         out
     }
 
-    attrs_g5 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Src(Str)]) -> SafeStr
+    attrs_g5 : SafeStr, List(GlobalAttrs([Src(Str)])) -> SafeStr
     attrs_g5 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -1082,7 +1100,7 @@ Html := [
         out
     }
 
-    attrs_g6 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Disabled, Form(Str), Formaction(Str), Formenctype([FormUrlEncoded, MultipartFormData, TextPlain]), Formmethod([Get, Post, Dialog]), Formnovalidate, Formtarget(Str), Name(Str), Type(Str), Value(Str)]) -> SafeStr
+    attrs_g6 : SafeStr, List(GlobalAttrs([Disabled, Form(Str), Formaction(Str), Formenctype([FormUrlEncoded, MultipartFormData, TextPlain]), Formmethod([Get, Post, Dialog]), Formnovalidate, Formtarget(Str), Name(Str), Type(Str), Value(Str)])) -> SafeStr
     attrs_g6 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -1208,7 +1226,7 @@ Html := [
         out
     }
 
-    attrs_g7 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Disabled, Form(Str), Name(Str)]) -> SafeStr
+    attrs_g7 : SafeStr, List(GlobalAttrs([Disabled, Form(Str), Name(Str)])) -> SafeStr
     attrs_g7 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -1313,7 +1331,7 @@ Html := [
         out
     }
 
-    attrs_g8 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), AcceptCharset(Str), Action(Str), Autocomplete(Str), Enctype([FormUrlEncoded, MultipartFormData, TextPlain]), Method([Get, Post, Dialog]), Name(Str), Novalidate, Rel(Str), Target(Str)]) -> SafeStr
+    attrs_g8 : SafeStr, List(GlobalAttrs([AcceptCharset(Str), Action(Str), Autocomplete(Str), Enctype([FormUrlEncoded, MultipartFormData, TextPlain]), Method([Get, Post, Dialog]), Name(Str), Novalidate, Rel(Str), Target(Str)])) -> SafeStr
     attrs_g8 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -1438,7 +1456,7 @@ Html := [
         out
     }
 
-    attrs_g9 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), For(Str)]) -> SafeStr
+    attrs_g9 : SafeStr, List(GlobalAttrs([For(Str)])) -> SafeStr
     attrs_g9 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -1541,7 +1559,7 @@ Html := [
         out
     }
 
-    attrs_g10 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), High(F64), Low(F64), Max(Str), Min(Str), Optimum(F64), Value(Str)]) -> SafeStr
+    attrs_g10 : SafeStr, List(GlobalAttrs([High(F64), Low(F64), Max(Str), Min(Str), Optimum(F64), Value(Str)])) -> SafeStr
     attrs_g10 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -1649,7 +1667,7 @@ Html := [
         out
     }
 
-    attrs_g11 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Disabled, Label(Str)]) -> SafeStr
+    attrs_g11 : SafeStr, List(GlobalAttrs([Disabled, Label(Str)])) -> SafeStr
     attrs_g11 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -1753,7 +1771,7 @@ Html := [
         out
     }
 
-    attrs_g12 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Disabled, Label(Str), Selected, Value(Str)]) -> SafeStr
+    attrs_g12 : SafeStr, List(GlobalAttrs([Disabled, Label(Str), Selected, Value(Str)])) -> SafeStr
     attrs_g12 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -1859,7 +1877,7 @@ Html := [
         out
     }
 
-    attrs_g13 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), For(Str), Form(Str), Name(Str)]) -> SafeStr
+    attrs_g13 : SafeStr, List(GlobalAttrs([For(Str), Form(Str), Name(Str)])) -> SafeStr
     attrs_g13 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -1964,7 +1982,7 @@ Html := [
         out
     }
 
-    attrs_g14 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Max(Str), Value(Str)]) -> SafeStr
+    attrs_g14 : SafeStr, List(GlobalAttrs([Max(Str), Value(Str)])) -> SafeStr
     attrs_g14 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -2068,7 +2086,7 @@ Html := [
         out
     }
 
-    attrs_g15 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Autocomplete(Str), Disabled, Form(Str), Multiple, Name(Str), Required, Size(U64)]) -> SafeStr
+    attrs_g15 : SafeStr, List(GlobalAttrs([Autocomplete(Str), Disabled, Form(Str), Multiple, Name(Str), Required, Size(U64)])) -> SafeStr
     attrs_g15 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -2177,7 +2195,7 @@ Html := [
         out
     }
 
-    attrs_g16 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Autocomplete(Str), Cols(U64), Dirname(Str), Disabled, Form(Str), Maxlength(U64), Minlength(U64), Name(Str), Placeholder(Str), Readonly, Required, Rows(U64), Wrap([Soft, Hard])]) -> SafeStr
+    attrs_g16 : SafeStr, List(GlobalAttrs([Autocomplete(Str), Cols(U64), Dirname(Str), Disabled, Form(Str), Maxlength(U64), Minlength(U64), Name(Str), Placeholder(Str), Readonly, Required, Rows(U64), Wrap([Soft, Hard])])) -> SafeStr
     attrs_g16 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -2298,7 +2316,7 @@ Html := [
         out
     }
 
-    attrs_g17 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Autoplay, Controls, Crossorigin([Anonymous, UseCredentials]), Loop, Muted, Preload([None, Metadata, Auto]), Src(Str)]) -> SafeStr
+    attrs_g17 : SafeStr, List(GlobalAttrs([Autoplay, Controls, Crossorigin([Anonymous, UseCredentials]), Loop, Muted, Preload([None, Metadata, Auto]), Src(Str)])) -> SafeStr
     attrs_g17 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -2420,7 +2438,7 @@ Html := [
         out
     }
 
-    attrs_g18 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Name(Str)]) -> SafeStr
+    attrs_g18 : SafeStr, List(GlobalAttrs([Name(Str)])) -> SafeStr
     attrs_g18 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -2523,7 +2541,7 @@ Html := [
         out
     }
 
-    attrs_g19 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Autoplay, Controls, Crossorigin([Anonymous, UseCredentials]), Height(U64), Loop, Muted, Playsinline, Poster(Str), Preload([None, Metadata, Auto]), Src(Str), Width(U64)]) -> SafeStr
+    attrs_g19 : SafeStr, List(GlobalAttrs([Autoplay, Controls, Crossorigin([Anonymous, UseCredentials]), Height(U64), Loop, Muted, Playsinline, Poster(Str), Preload([None, Metadata, Auto]), Src(Str), Width(U64)])) -> SafeStr
     attrs_g19 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -2649,7 +2667,7 @@ Html := [
         out
     }
 
-    attrs_g20 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Download(Str), Href(Str), Hreflang(Str), Ping(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Target(Str), Type(Str)]) -> SafeStr
+    attrs_g20 : SafeStr, List(GlobalAttrs([Download(Str), Href(Str), Hreflang(Str), Ping(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Target(Str), Type(Str)])) -> SafeStr
     attrs_g20 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -2771,7 +2789,7 @@ Html := [
         out
     }
 
-    attrs_g21 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Value(Str)]) -> SafeStr
+    attrs_g21 : SafeStr, List(GlobalAttrs([Value(Str)])) -> SafeStr
     attrs_g21 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -2874,7 +2892,7 @@ Html := [
         out
     }
 
-    attrs_g22 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Cite(Str)]) -> SafeStr
+    attrs_g22 : SafeStr, List(GlobalAttrs([Cite(Str)])) -> SafeStr
     attrs_g22 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -2977,7 +2995,7 @@ Html := [
         out
     }
 
-    attrs_g23 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Datetime(Str)]) -> SafeStr
+    attrs_g23 : SafeStr, List(GlobalAttrs([Datetime(Str)])) -> SafeStr
     attrs_g23 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -3080,7 +3098,7 @@ Html := [
         out
     }
 
-    attrs_g24 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Open]) -> SafeStr
+    attrs_g24 : SafeStr, List(GlobalAttrs([Open])) -> SafeStr
     attrs_g24 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -3183,7 +3201,7 @@ Html := [
         out
     }
 
-    attrs_g25 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Height(U64), Width(U64)]) -> SafeStr
+    attrs_g25 : SafeStr, List(GlobalAttrs([Height(U64), Width(U64)])) -> SafeStr
     attrs_g25 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -3287,7 +3305,7 @@ Html := [
         out
     }
 
-    attrs_g26 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Async, Crossorigin([Anonymous, UseCredentials]), Defer, Integrity(Str), Nomodule, Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Src(Str), Type(Str)]) -> SafeStr
+    attrs_g26 : SafeStr, List(GlobalAttrs([Async, Crossorigin([Anonymous, UseCredentials]), Defer, Integrity(Str), Nomodule, Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Src(Str), Type(Str)])) -> SafeStr
     attrs_g26 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -3415,7 +3433,7 @@ Html := [
         out
     }
 
-    attrs_g27 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Span(U64)]) -> SafeStr
+    attrs_g27 : SafeStr, List(GlobalAttrs([Span(U64)])) -> SafeStr
     attrs_g27 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -3518,7 +3536,7 @@ Html := [
         out
     }
 
-    attrs_g28 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Colspan(U64), Headers(Str), Rowspan(U64)]) -> SafeStr
+    attrs_g28 : SafeStr, List(GlobalAttrs([Colspan(U64), Headers(Str), Rowspan(U64)])) -> SafeStr
     attrs_g28 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -3623,7 +3641,7 @@ Html := [
         out
     }
 
-    attrs_g29 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Abbr(Str), Colspan(U64), Headers(Str), Rowspan(U64), Scope([Row, Col, Rowgroup, Colgroup])]) -> SafeStr
+    attrs_g29 : SafeStr, List(GlobalAttrs([Abbr(Str), Colspan(U64), Headers(Str), Rowspan(U64), Scope([Row, Col, Rowgroup, Colgroup])])) -> SafeStr
     attrs_g29 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -3738,7 +3756,7 @@ Html := [
         out
     }
 
-    attrs_g30 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Reversed, Start(I64), Type(Str)]) -> SafeStr
+    attrs_g30 : SafeStr, List(GlobalAttrs([Reversed, Start(I64), Type(Str)])) -> SafeStr
     attrs_g30 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -3843,7 +3861,7 @@ Html := [
         out
     }
 
-    attrs_g31 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Alt(Str), Coords(Str), Download(Str), Href(Str), Ping(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Shape([Rect, Circle, Poly, Default]), Target(Str)]) -> SafeStr
+    attrs_g31 : SafeStr, List(GlobalAttrs([Alt(Str), Coords(Str), Download(Str), Href(Str), Ping(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Shape([Rect, Circle, Poly, Default]), Target(Str)])) -> SafeStr
     attrs_g31 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -3974,7 +3992,7 @@ Html := [
         out
     }
 
-    attrs_g32 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Href(Str), Target(Str)]) -> SafeStr
+    attrs_g32 : SafeStr, List(GlobalAttrs([Href(Str), Target(Str)])) -> SafeStr
     attrs_g32 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -4078,7 +4096,7 @@ Html := [
         out
     }
 
-    attrs_g33 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Height(U64), Src(Str), Type(Str), Width(U64)]) -> SafeStr
+    attrs_g33 : SafeStr, List(GlobalAttrs([Height(U64), Src(Str), Type(Str), Width(U64)])) -> SafeStr
     attrs_g33 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -4184,7 +4202,7 @@ Html := [
         out
     }
 
-    attrs_g34 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Alt(Str), Crossorigin([Anonymous, UseCredentials]), Decoding([Sync, Async, Auto]), Height(U64), Ismap, Loading([Lazy, Eager]), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Sizes(Str), Src(Str), Srcset(Str), Usemap(Str), Width(U64)]) -> SafeStr
+    attrs_g34 : SafeStr, List(GlobalAttrs([Alt(Str), Crossorigin([Anonymous, UseCredentials]), Decoding([Sync, Async, Auto]), Height(U64), Ismap, Loading([Lazy, Eager]), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Sizes(Str), Src(Str), Srcset(Str), Usemap(Str), Width(U64)])) -> SafeStr
     attrs_g34 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -4329,7 +4347,7 @@ Html := [
         out
     }
 
-    attrs_g35 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Accept(Str), Alt(Str), Autocomplete(Str), Capture([User, Environment]), Checked, Dirname(Str), Disabled, Form(Str), Formaction(Str), Formenctype([FormUrlEncoded, MultipartFormData, TextPlain]), Formmethod([Get, Post, Dialog]), Formnovalidate, Formtarget(Str), Height(U64), List(Str), Max(Str), Maxlength(U64), Min(Str), Minlength(U64), Multiple, Name(Str), Pattern(Str), Placeholder(Str), Readonly, Required, Size(U64), Src(Str), Step(Str), Type(Str), Value(Str), Width(U64)]) -> SafeStr
+    attrs_g35 : SafeStr, List(GlobalAttrs([Accept(Str), Alt(Str), Autocomplete(Str), Capture([User, Environment]), Checked, Dirname(Str), Disabled, Form(Str), Formaction(Str), Formenctype([FormUrlEncoded, MultipartFormData, TextPlain]), Formmethod([Get, Post, Dialog]), Formnovalidate, Formtarget(Str), Height(U64), List(Str), Max(Str), Maxlength(U64), Min(Str), Minlength(U64), Multiple, Name(Str), Pattern(Str), Placeholder(Str), Readonly, Required, Size(U64), Src(Str), Step(Str), Type(Str), Value(Str), Width(U64)])) -> SafeStr
     attrs_g35 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -4482,7 +4500,7 @@ Html := [
         out
     }
 
-    attrs_g36 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Crossorigin([Anonymous, UseCredentials]), Disabled, Href(Str), Hreflang(Str), Integrity(Str), Media(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Sizes(Str), Type(Str)]) -> SafeStr
+    attrs_g36 : SafeStr, List(GlobalAttrs([Crossorigin([Anonymous, UseCredentials]), Disabled, Href(Str), Hreflang(Str), Integrity(Str), Media(Str), Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Sizes(Str), Type(Str)])) -> SafeStr
     attrs_g36 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -4612,7 +4630,7 @@ Html := [
         out
     }
 
-    attrs_g37 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Charset(Str), Content(Str), HttpEquiv(Str), Media(Str), Name(Str)]) -> SafeStr
+    attrs_g37 : SafeStr, List(GlobalAttrs([Charset(Str), Content(Str), HttpEquiv(Str), Media(Str), Name(Str)])) -> SafeStr
     attrs_g37 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -4719,7 +4737,7 @@ Html := [
         out
     }
 
-    attrs_g38 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Height(U64), Media(Str), Sizes(Str), Src(Str), Srcset(Str), Type(Str), Width(U64)]) -> SafeStr
+    attrs_g38 : SafeStr, List(GlobalAttrs([Height(U64), Media(Str), Sizes(Str), Src(Str), Srcset(Str), Type(Str), Width(U64)])) -> SafeStr
     attrs_g38 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -4828,7 +4846,7 @@ Html := [
         out
     }
 
-    attrs_g39 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Default, Kind([Subtitles, Captions, Descriptions, Chapters, Metadata]), Label(Str), Src(Str), Srclang(Str)]) -> SafeStr
+    attrs_g39 : SafeStr, List(GlobalAttrs([Default, Kind([Subtitles, Captions, Descriptions, Chapters, Metadata]), Label(Str), Src(Str), Srclang(Str)])) -> SafeStr
     attrs_g39 = |buf, attrs| {
         var out = buf
         var i = 0.U64
@@ -4944,7 +4962,7 @@ Html := [
         out
     }
 
-    attrs_g40 : SafeStr, List([Accesskey(Str), Autocapitalize([Off, On, None, Sentences, Words, Characters]), Autofocus, Class(Str), Contenteditable([True, False, PlaintextOnly]), Dir([Ltr, Rtl, Auto]), Draggable([True, False]), Enterkeyhint([Enter, Done, Go, Next, Previous, Search, Send]), Hidden, Id(Str), Inert, Inputmode([None, Text, Decimal, Numeric, Tel, Search, Email, Url]), Itemprop(Str), Itemscope, Lang(Str), Role(Str), Slot(Str), Spellcheck([True, False]), Style(Str), Tabindex(I64), Title(Str), Translate([Yes, No]), Custom(Str, Str), Data(Str, Str), Aria(Str, Str), Abbr(Str), Accept(Str), AcceptCharset(Str), Action(Str), Allow(Str), Alt(Str), Async, Autocomplete(Str), Autoplay, Capture([User, Environment]), Charset(Str), Checked, Cite(Str), Cols(U64), Colspan(U64), Content(Str), Controls, Coords(Str), Crossorigin([Anonymous, UseCredentials]), Datetime(Str), Decoding([Sync, Async, Auto]), Default, Defer, Dirname(Str), Disabled, Download(Str), Enctype([FormUrlEncoded, MultipartFormData, TextPlain]), For(Str), Form(Str), Formaction(Str), Formenctype([FormUrlEncoded, MultipartFormData, TextPlain]), Formmethod([Get, Post, Dialog]), Formnovalidate, Formtarget(Str), Headers(Str), Height(U64), High(F64), Href(Str), Hreflang(Str), HttpEquiv(Str), Integrity(Str), Ismap, Kind([Subtitles, Captions, Descriptions, Chapters, Metadata]), Label(Str), List(Str), Loading([Lazy, Eager]), Loop, Low(F64), Max(Str), Maxlength(U64), Media(Str), Method([Get, Post, Dialog]), Min(Str), Minlength(U64), Multiple, Muted, Name(Str), Nomodule, Novalidate, ObjectData(Str), Open, Optimum(F64), Pattern(Str), Ping(Str), Placeholder(Str), Playsinline, Poster(Str), Preload([None, Metadata, Auto]), Readonly, Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Required, Reversed, Rows(U64), Rowspan(U64), Sandbox(Str), Scope([Row, Col, Rowgroup, Colgroup]), Selected, Shape([Rect, Circle, Poly, Default]), Size(U64), Sizes(Str), Span(U64), Src(Str), Srcdoc(Str), Srclang(Str), Srcset(Str), Start(I64), Step(Str), Target(Str), Type(Str), Usemap(Str), Value(Str), Width(U64), Wrap([Soft, Hard])]) -> SafeStr
+    attrs_g40 : SafeStr, List(GlobalAttrs([Abbr(Str), Accept(Str), AcceptCharset(Str), Action(Str), Allow(Str), Alt(Str), Async, Autocomplete(Str), Autoplay, Capture([User, Environment]), Charset(Str), Checked, Cite(Str), Cols(U64), Colspan(U64), Content(Str), Controls, Coords(Str), Crossorigin([Anonymous, UseCredentials]), Datetime(Str), Decoding([Sync, Async, Auto]), Default, Defer, Dirname(Str), Disabled, Download(Str), Enctype([FormUrlEncoded, MultipartFormData, TextPlain]), For(Str), Form(Str), Formaction(Str), Formenctype([FormUrlEncoded, MultipartFormData, TextPlain]), Formmethod([Get, Post, Dialog]), Formnovalidate, Formtarget(Str), Headers(Str), Height(U64), High(F64), Href(Str), Hreflang(Str), HttpEquiv(Str), Integrity(Str), Ismap, Kind([Subtitles, Captions, Descriptions, Chapters, Metadata]), Label(Str), List(Str), Loading([Lazy, Eager]), Loop, Low(F64), Max(Str), Maxlength(U64), Media(Str), Method([Get, Post, Dialog]), Min(Str), Minlength(U64), Multiple, Muted, Name(Str), Nomodule, Novalidate, ObjectData(Str), Open, Optimum(F64), Pattern(Str), Ping(Str), Placeholder(Str), Playsinline, Poster(Str), Preload([None, Metadata, Auto]), Readonly, Referrerpolicy([NoReferrer, NoReferrerWhenDowngrade, Origin, OriginWhenCrossOrigin, SameOrigin, StrictOrigin, StrictOriginWhenCrossOrigin, UnsafeUrl]), Rel(Str), Required, Reversed, Rows(U64), Rowspan(U64), Sandbox(Str), Scope([Row, Col, Rowgroup, Colgroup]), Selected, Shape([Rect, Circle, Poly, Default]), Size(U64), Sizes(Str), Span(U64), Src(Str), Srcdoc(Str), Srclang(Str), Srcset(Str), Start(I64), Step(Str), Target(Str), Type(Str), Usemap(Str), Value(Str), Width(U64), Wrap([Soft, Hard])])) -> SafeStr
     attrs_g40 = |buf, attrs| {
         var out = buf
         var i = 0.U64
