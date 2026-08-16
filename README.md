@@ -3,8 +3,8 @@
 Typed builders for generating structured text from Roc — the dual of
 [roc-parser](https://github.com/ricardo-valero/roc-parser):
 
-- a **parser** goes `Str → AST`, validating on the way *in*
-- a **builder** goes `AST → Str`, correct by construction on the way *out*
+- a **parser** goes `Str → AST`, validating on the way _in_
+- a **builder** goes `AST → Str`, correct by construction on the way _out_
 
 Each target language is a module. The grammar of the target is modeled as a
 typed AST, constructors make invalid documents unrepresentable, and a render
@@ -13,10 +13,10 @@ parameterization for SQL).
 
 ## Modules
 
-| Module | Status       | Output                          |
-| ------ | ------------ | ------------------------------- |
-| `Html` | v0.1         | escaped HTML `Str`              |
-| `Sql`  | experimental | `{ sql : Str, params : List }`  |
+| Module | Status       | Output                         |
+| ------ | ------------ | ------------------------------ |
+| `Html` | v0.1         | escaped HTML `Str`             |
+| `Sql`  | experimental | `{ sql : Str, params : List }` |
 
 `Sql` is not yet in the package export list; its API is still settling.
 
@@ -71,7 +71,7 @@ card = |cls| [Class(cls), Id("main")]
 
 `CustomEl` accepts the full attribute superset (unknown elements can't be
 validated). Raw HTML requires the explicitly named `DangerousRaw`. See
-`examples/hello.roc` for the runnable version.
+`example/hello.roc` for the runnable version.
 
 `package/Html.roc` is hand-curated; the WHATWG applicability tables are
 the type declarations themselves (`GlobalAttrs` + each element's set), and
@@ -95,33 +95,61 @@ Migrating v0.1 → v0.2: misplaced attributes (valid nowhere per WHATWG) now
 fail to type-check — fix the HTML; shared attribute helpers need open
 annotations (`List([Class(Str), ..])`); the `<object>` `data` attribute is
 `ObjectData(Str)`.
+
 - keyword clashes disappear: `Var`, `For(...)`, `Type(...)` are ordinary
   variants (uppercase never collides with Roc keywords)
 
 ## Sql (experimental)
 
-Queries are scoped data — each clause's continuation union offers only the
-clauses SQL allows next, so an out-of-order or repeated clause is
-unrepresentable, and every complete query provably contains exactly one
-SELECT:
+Queries are scoped data over a schema context. Tables are declared once as
+type namespaces; a SOURCE (FROM + JOINs + your named scope) is a reusable
+value; clauses branch so a skipped clause is simply absent; and after
+`Group`, downstream lambdas see only the grouped row — γ changes the row
+type, so `g.qty` after grouping by genre is a compile error.
 
 ```roc
-books = Sql.table("books", |c| { id: c("id"), genre: c("genre") })
+Db :: [].{
+    Books :: [].{
+        table : Str
+        table = "books"
+        cols : { id : Scalar(Col), genre : Scalar(Col) }
+        cols = { id: Slot(("books", "id")), genre: Slot(("books", "genre")) }
+    }
+    Sales :: [].{ ... }
+}
 
-q : Sql.Sql
-q = From(books.name,
-        Where(Expr.of(books.cols.genre).eq(Expr.text("scifi")),
-            Select([books.cols.genre, Expr.count_all.as_("n").raw()], Done)))
-# q.render(Postgres) == { sql: "SELECT books.genre, COUNT(*) AS n FROM books WHERE books.genre = $1",
-#                         params: [Text("scifi")] }
+tables = {
+    from: Db.Books.table,
+    joins: [Inner(Db.Sales.table, Eq(Db.Sales.cols.book_id, Db.Books.cols.id))],
+    scope: { book: Db.Books.cols, sale: Db.Sales.cols },
+    slot_sql: Sql.std_col,
+}
+
+q = Query(tables,
+        Where(|{ sale, .. }| Eq(Year(sale.sale_date), I64(2024)),
+        Group(|{ book, sale, .. }| {
+            keys: [book.genre],
+            row: { genre: book.genre, total: Sum(sale.qty) },
+        },
+        Having(|{ total, .. }| Gt(total, I64(100)),
+        Select(|{ genre, total, .. }| [genre, As(total, "total_sold")],
+        Order(|{ total, .. }| [(total, Desc)],
+        Limit(5, End)))))))
+
+q2 = Query(tables, Select(|{ book, .. }| [book.genre], End))
+# Sql.render(q, Postgres) == { sql: "SELECT books.genre, SUM(sales.qty) AS total_sold FROM ... LIMIT 5",
+#                              params: [I64(2024), I64(100)] }
 ```
 
-Conditions are kind-typed: `Where(Expr.i64(5), ...)` and
-`Expr.text("x").eq(Expr.i64(1))` are type errors. Literals only ever render
-as placeholders — `Frag`'s `push`/`bind` are the sole ways into the SQL
-string, so injection is unrepresentable too. SELECT/GROUP BY lists are
-heterogeneous: schema columns drop in raw; computed expressions end with
-`.raw()`. Still not exported; exercised by `roc test package/main.roc`.
+Conditions (`Cond`) and scalars (`Scalar`) are separate grammars —
+`Where(I64(5), ...)` is unrepresentable; HAVING without GROUP BY and double
+clauses are type errors; every complete query has exactly one SELECT; and
+`Frag`'s push/bind are the only ways into the SQL string, so injection is
+unrepresentable. The column representation is a type parameter (`slot`) —
+contexts may swap in their own (e.g. a closed tag union for hard column
+scoping). Deferred pending compiler fixes: bare literals (`from_numeral` on
+parameterized types segfaults) and CASE expressions. Still not exported;
+exercised by `roc test package/main.roc`.
 ## Provenance
 
 Grew out of two experiments: the `wip-element-api` branch of a roc-html fork

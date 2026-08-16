@@ -1,3 +1,4 @@
+.direnv/
 *.wasm
 result
 .DS_Store

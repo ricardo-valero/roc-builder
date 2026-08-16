@@ -1,5 +1,5 @@
 # The document is a data literal: variants, no wrapper functions.
-# Run:  roc examples/hello.roc
+# Run:  roc example/hello.roc
 app [main!] {
     pf: platform "https://github.com/roc-lang/basic-cli/releases/download/0.21.0/4rAQg8kUYZ3Vksr4qMQHpaFYNiHSn9GgS7gVxghd1XYV.tar.zst",
     html: "../package/main.roc",
